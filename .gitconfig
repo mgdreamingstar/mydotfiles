@@ -1,0 +1,21 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+#	name = root
+#	email = root@DESKTOP-21R0JBT.localdomain
+	name = Moz's PC
+        email = gruicn@gmail.com
+[core]
+	# 中文乱码
+	quotepath = false
+
+	# 使用 dos2unix 转换文件的换行符
+	# find . -type f -exec dos2unix {} +
+	# 提交时转换为LF，检出时不转换
+	autocrlf = input
+	# 拒绝提交包含混合换行符的文件
+	safelf = true
+
+	editor = vi
+[credential]
+	helper = store
