@@ -1,0 +1,25 @@
+DOMAIN-SUFFIX,weibo.com,DIRECT // Added for webpage: vs.biz.weibo.com:443
+USER-AGENT,Weibo*,DIRECT
+USER-AGENT,%E7%BD%91%E6%98%93%E9%82%AE%E7%AE%B1%E5%A4%A7%E5%B8%88*,DIRECT // 网易邮箱大师
+DOMAIN-SUFFIX,10jqka.com.cn,DIRECT // Added for webpage: stat.10jqka.com.cn:443
+DOMAIN-SUFFIX,growingio.com,DIRECT // Added for webpage: t.growingio.com:443
+USER-AGENT,GTData_lgd*,DIRECT // 金十数据
+DOMAIN-SUFFIX,toggl.com,DIRECT // Added for webpage: www.toggl.com:443
+USER-AGENT,NeteaseMusic*,DIRECT
+USER-AGENT,Toggl*,DIRECT
+USER-AGENT,MarginNote*,DIRECT
+USER-AGENT,eleme*,DIRECT
+USER-AGENT,ScannerPro*,DIRECT
+USER-AGENT,Pushcut*,DIRECT
+USER-AGENT,Taker*,DIRECT
+DOMAIN-SUFFIX,sinaimg.cn,DIRECT // Added for webpage: tvax3.sinaimg.cn:443
+DOMAIN-SUFFIX,majsoul.com,DIRECT // Added for webpage: adawddl.majsoul.com:443
+DOMAIN-SUFFIX,BUAA.edu.cn,DIRECT
+DOMAIN-SUFFIX,slack.com,DIRECT
+USER-AGENT,bili*,DIRECT
+DOMAIN-SUFFIX,mozooo.ink,DIRECT
+DOMAIN-SUFFIX,majsoul.com,DIRECT // Added for webpage: adawddl.majsoul.com:443
+DOMAIN-SUFFIX,BUAA.edu.cn,DIRECT
+DOMAIN-SUFFIX,slack.com,DIRECT
+USER-AGENT,bili,DIRECT
+DOMAIN-SUFFIX,mozooo.ink,DIRECT
