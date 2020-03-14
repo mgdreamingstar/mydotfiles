@@ -1,0 +1,136 @@
+DOMAIN-SUFFIX,weibo.com,DIRECT // Added for webpage: vs.biz.weibo.com:443
+USER-AGENT,Weibo*,DIRECT
+DOMAIN-SUFFIX,game.brawlstarsgame.com,PROXY // Added for webpage: game.brawlstarsgame.com:9339
+USER-AGENT,%E7%BD%91%E6%98%93%E9%82%AE%E7%AE%B1%E5%A4%A7%E5%B8%88*,DIRECT // 网易邮箱大师
+DOMAIN-SUFFIX,10jqka.com.cn,DIRECT // Added for webpage: stat.10jqka.com.cn:443
+DOMAIN-SUFFIX,v.dajuku.com,PROXY // Added for webpage: v.dajuku.com:443
+DOMAIN-SUFFIX,schiffgold.com,PROXY // Added for webpage: https://schiffgold.com/key-gold-news/a-bullish-outlook-for-silver-and-other-silver-news/
+DOMAIN-SUFFIX,politico.com,PROXY // Added for webpage: https://www.politico.com/
+DOMAIN-SUFFIX,tv2.xboku.com,PROXY // Added for webpage: tv2.xboku.com:443
+DOMAIN-SUFFIX,surplusvalue.club,PROXY // Added for webpage: https://www.surplusvalue.club/
+DOMAIN-SUFFIX,growingio.com,DIRECT // Added for webpage: t.growingio.com:443
+USER-AGENT,GTData_lgd*,DIRECT // 金十数据
+DOMAIN-SUFFIX,bmartin.cc,PROXY // Added for webpage: www.bmartin.cc:443
+DOMAIN-SUFFIX,japan-cov-19.now.sh,PROXY // Added for webpage: https://japan-cov-19.now.sh/
+DOMAIN-SUFFIX,ipfs.io,PROXY // Added for webpage: ipfs.io:443
+DOMAIN-SUFFIX,ahkscript.org,PROXY // Added for webpage: http://ahkscript.org/favicon.ico
+DOMAIN-SUFFIX,live.com,PROXY // Added for webpage: login.live.com:443
+DOMAIN-SUFFIX,officeapps.live.com,PROXY // Added for webpage: odc.officeapps.live.com:443
+DOMAIN-SUFFIX,picsew.app,PROXY // Added for webpage: docs.picsew.app:443
+DOMAIN-SUFFIX,cvws.icloud-content.com,x1.0 新加坡3 - v2ray // Added for webpage: cvws.icloud-content.com:443
+DOMAIN-SUFFIX,thesweetsetup.com,PROXY // Added for webpage: thesweetsetup.com:443
+USER-AGENT,Reeder*,PROXY
+DOMAIN-SUFFIX,toggl.com,DIRECT // Added for webpage: www.toggl.com:443
+DOMAIN-SUFFIX,artstation.com,PROXY // Added for webpage: cdn-learning.artstation.com:443
+DOMAIN-SUFFIX,agenda.community,PROXY // Added for webpage: agenda.community:443
+DOMAIN,Fantastical*,PROXY
+DOMAIN-SUFFIX,raindrop.io,PROXY // Added for webpage: stella.raindrop.io:443
+USER-AGENT,Overcast*,PROXY
+DOMAIN-SUFFIX,overcast.fm,PROXY // Added for webpage: api.overcast.fm:443
+DOMAIN-SUFFIX,cdn-b-east.streamable.com,PROXY // Added for webpage: cdn-b-east.streamable.com:443
+USER-AGENT,NeteaseMusic*,DIRECT
+DOMAIN-SUFFIX,stanford.edu,PROXY // Added for webpage: web.stanford.edu:443
+DOMAIN-SUFFIX,jsboxbbs.com,PROXY // Added for webpage: jsboxbbs.com:443
+USER-AGENT,Toggl*,DIRECT
+USER-AGENT,PDFExpert*,PROXY
+DOMAIN-SUFFIX,sbj.cnipa.gov.cn,PROXY // Added for webpage: http://wcjs.sbj.cnipa.gov.cn/eventid/2779-2498-4145.png
+USER-AGENT,TheEnd*,PROXY
+USER-AGENT,MarginNote*,DIRECT
+USER-AGENT,Todoist*,PROXY
+DOMAIN-SUFFIX,literatureandlatte.com,PROXY // Added for webpage: www.literatureandlatte.com:443
+USER-AGENT,eleme*,DIRECT
+USER-AGENT,Apollo*,PROXY
+USER-AGENT,ScannerPro*,DIRECT
+USER-AGENT,Pocket*,PROXY
+USER-AGENT,Pushcut*,DIRECT
+USER-AGENT,Taker*,DIRECT
+DOMAIN-SUFFIX,kapeli.com,PROXY // Added for webpage: tokyo.kapeli.com:443
+DOMAIN-SUFFIX,liverpoolfc.com,PROXY // Added for webpage: www.liverpoolfc.com:443
+DOMAIN-SUFFIX,ankiweb.net,PROXY // Added for webpage: sync.ankiweb.net:443
+DOMAIN-SUFFIX,pocketcasts.com,PROXY // Added for webpage: api.pocketcasts.com:443
+DOMAIN-SUFFIX,giphy.com,PROXY // Added for webpage: media.giphy.com:443
+DOMAIN-SUFFIX,football-data.org,PROXY // Added for webpage: api.football-data.org:80 (http://api.football-data.org/v2/competitions/CL/matches)
+DOMAIN-SUFFIX,jpush.cn,REJECT // Added for webpage: stats.jpush.cn:443
+DOMAIN-SUFFIX,sinaimg.cn,DIRECT // Added for webpage: tvax3.sinaimg.cn:443
+DOMAIN-SUFFIX,agentneo.xyz,PROXY // Added for webpage: agentneo.xyz:443
+DOMAIN-SUFFIX,pushcut.io,PROXY // Added for webpage: api.pushcut.io:443
+DOMAIN-SUFFIX,zapier.com,PROXY // Added for webpage: cdn.zapier.com:443
+DOMAIN-SUFFIX,audioscrobbler.com,PROXY // Added for webpage: ws.audioscrobbler.com:443
+DOMAIN-SUFFIX,pushcut.io,PROXY // Added for webpage: api.pushcut.io:443
+DOMAIN-SUFFIX,musixmatch.com,PROXY // Added for webpage: static.musixmatch.com:443
+DOMAIN-SUFFIX,thetype.com,PROXY // Added for webpage: thetype.com:443
+DOMAIN-SUFFIX,redditstatic.com,PROXY // Added for webpage: www.redditstatic.com:443
+DOMAIN-SUFFIX,macstories.net,PROXY // Added for webpage: www.macstories.net:443
+DOMAIN-SUFFIX,googleapis.com,PROXY // Added for webpage: www.googleapis.com:443
+DOMAIN-SUFFIX,slack.com,PROXY // Added for webpage: slack.com:443
+DOMAIN-SUFFIX,getpocket.com,PROXY // Added for webpage: getpocket.com:443
+DOMAIN-SUFFIX,pocket-image-cache.com,PROXY
+DOMAIN-SUFFIX,kaiche.co,PROXY // Added for webpage: kaiche.co:443
+DOMAIN-SUFFIX,npmjs.org,PROXY // Added for webpage: registry.npmjs.org:443
+DOMAIN-SUFFIX,skysports.com,PROXY // Added for webpage: www.skysports.com:443
+DOMAIN-SUFFIX,aaxads.com,PROXY // Added for webpage: c.aaxads.com:443
+DOMAIN-SUFFIX,appcenter.ms,PROXY // Added for webpage: in.appcenter.ms:443
+DOMAIN-SUFFIX,todoist.com,PROXY // Added for webpage: ios.todoist.com:443
+DOMAIN-SUFFIX,steampowered.com,PROXY // Added for webpage: help.steampowered.com:443
+DOMAIN-SUFFIX,pinboard.in,PROXY // Added for webpage: api.pinboard.in:443
+DOMAIN-SUFFIX,myunidays.com,PROXY // Added for webpage: www.myunidays.com:443
+DOMAIN-SUFFIX,akamaized.net,PROXY // Added for webpage: 30vod-adaptive.akamaized.net:443
+DOMAIN-SUFFIX,trust-provider.com,PROXY // Added for webpage: http://ocsp.trust-provider.com/MFYwVKADAgEAME0wSzBJMAkGBSsOAwIaBQAEFHyxZlScq9tE7mImFq30ZXv3etWUBBStvZh6NLQm9%2FrEJlTvA73gJMtUGgIQdti3htHzUk%2FulT5xQD2Z1Q%3D%3D
+DOMAIN-SUFFIX,fireside.fm,PROXY // Added for webpage: aphid.fireside.fm:443
+DOMAIN-SUFFIX,dayone.me,PROXY // Added for webpage: dayone.me:443
+DOMAIN-SUFFIX,zotero.org,PROXY // Added for webpage: www.zotero.org:443
+DOMAIN-SUFFIX,getdrafts.com,PROXY // Added for webpage: actions.getdrafts.com:443
+DOMAIN-SUFFIX,miro.com,PROXY // Added for webpage: miro.com:443
+DOMAIN-SUFFIX,wikimedia.org,PROXY // Added for webpage: upload.wikimedia.org:443
+DOMAIN,anchor.fm,PROXY // Added for webpage: anchor.fm:443
+DOMAIN-SUFFIX,unsplash.com,PROXY // Added for webpage: api.unsplash.com:443
+DOMAIN-SUFFIX,goo.gl,PROXY // Added for webpage: photos.app.goo.gl:443
+DOMAIN-SUFFIX,ifttt.com,PROXY // Added for webpage: buffalo-ios.ifttt.com:443
+DOMAIN-SUFFIX,toggl.com,PROXY // Added for webpage: mobile.toggl.com:443
+DOMAIN-SUFFIX,slack-edge.com,PROXY // Added for webpage: ca.slack-edge.com:443
+DOMAIN-SUFFIX,majsoul.com,DIRECT // Added for webpage: adawddl.majsoul.com:443
+DOMAIN-SUFFIX,nintendo.net,PROXY
+DOMAIN-SUFFIX,nintendo.com,PROXY
+DOMAIN-SUFFIX,nintendowifi.net,PROXY
+DOMAIN-SUFFIX,BUAA.edu.cn,DIRECT
+DOMAIN-SUFFIX,coursera.org,PROXY
+DOMAIN-SUFFIX,slack.com,DIRECT
+DOMAIN-SUFFIX,githubusercontent.com,PROXY
+USER-AGENT,bili*,DIRECT
+DOMAIN-SUFFIX,mozooo.ink,DIRECT
+DOMAIN-SUFFIX,getpocket.com,PROXY // Added for webpage: getpocket.com:443
+DOMAIN-SUFFIX,pocket-image-cache.com,PROXY
+DOMAIN-SUFFIX,kaiche.co,PROXY // Added for webpage: kaiche.co:443
+DOMAIN-SUFFIX,npmjs.org,PROXY // Added for webpage: registry.npmjs.org:443
+DOMAIN-SUFFIX,skysports.com,PROXY // Added for webpage: www.skysports.com:443
+DOMAIN-SUFFIX,aaxads.com,PROXY // Added for webpage: c.aaxads.com:443
+DOMAIN-SUFFIX,appcenter.ms,PROXY // Added for webpage: in.appcenter.ms:443
+DOMAIN-SUFFIX,todoist.com,PROXY // Added for webpage: ios.todoist.com:443
+DOMAIN-SUFFIX,steampowered.com,PROXY // Added for webpage: help.steampowered.com:443
+DOMAIN-SUFFIX,pinboard.in,PROXY // Added for webpage: api.pinboard.in:443
+DOMAIN-SUFFIX,myunidays.com,PROXY // Added for webpage: www.myunidays.com:443
+DOMAIN-SUFFIX,akamaized.net,PROXY // Added for webpage: 30vod-adaptive.akamaized.net:443
+DOMAIN-SUFFIX,trust-provider.com,PROXY // Added for webpage: http://ocsp.trust-provider.com/MFYwVKADAgEAME0wSzBJMAkGBSsOAwIaBQAEFHyxZlScq9tE7mImFq30ZXv3etWUBBStvZh6NLQm9%2FrEJlTvA73gJMtUGgIQdti3htHzUk%2FulT5xQD2Z1Q%3D%3D
+DOMAIN-SUFFIX,fireside.fm,PROXY // Added for webpage: aphid.fireside.fm:443
+DOMAIN-SUFFIX,dayone.me,PROXY // Added for webpage: dayone.me:443
+DOMAIN-SUFFIX,zotero.org,PROXY // Added for webpage: www.zotero.org:443
+DOMAIN-SUFFIX,getdrafts.com,PROXY // Added for webpage: actions.getdrafts.com:443
+DOMAIN-SUFFIX,miro.com,PROXY // Added for webpage: miro.com:443
+DOMAIN-SUFFIX,wikimedia.org,PROXY // Added for webpage: upload.wikimedia.org:443
+DOMAIN,anchor.fm,PROXY // Added for webpage: anchor.fm:443
+DOMAIN-SUFFIX,pocketcasts.com,PROXY // Added for webpage: api.pocketcasts.com:443
+DOMAIN-SUFFIX,unsplash.com,PROXY // Added for webpage: api.unsplash.com:443
+DOMAIN-SUFFIX,goo.gl,PROXY // Added for webpage: photos.app.goo.gl:443
+DOMAIN-SUFFIX,ifttt.com,PROXY // Added for webpage: buffalo-ios.ifttt.com:443
+DOMAIN-SUFFIX,toggl.com,PROXY // Added for webpage: mobile.toggl.com:443
+DOMAIN-SUFFIX,slack-edge.com,PROXY // Added for webpage: ca.slack-edge.com:443
+DOMAIN-SUFFIX,majsoul.com,DIRECT // Added for webpage: adawddl.majsoul.com:443
+DOMAIN-SUFFIX,nintendo.net,PROXY
+DOMAIN-SUFFIX,nintendo.com,PROXY
+DOMAIN-SUFFIX,nintendowifi.net,PROXY
+DOMAIN-SUFFIX,BUAA.edu.cn,DIRECT
+DOMAIN-SUFFIX,coursera.org,PROXY
+DOMAIN-SUFFIX,slack.com,DIRECT
+DOMAIN-SUFFIX,githubusercontent.com,PROXY
+USER-AGENT,bili,DIRECT
+DOMAIN-SUFFIX,mozooo.ink,DIRECT
