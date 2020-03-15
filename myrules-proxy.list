@@ -1,5 +1,4 @@
 DOMAIN-SUFFIX,appcenter.ms,PROXY // add for toggl
-DOMAIN-SUFFIX,game.brawlstarsgame.com,PROXY // Added for webpage: game.brawlstarsgame.com:9339
 DOMAIN-SUFFIX,v.dajuku.com,PROXY // Added for webpage: v.dajuku.com:443
 DOMAIN-SUFFIX,schiffgold.com,PROXY // Added for webpage: https://schiffgold.com/key-gold-news/a-bullish-outlook-for-silver-and-other-silver-news/
 DOMAIN-SUFFIX,politico.com,PROXY // Added for webpage: https://www.politico.com/
