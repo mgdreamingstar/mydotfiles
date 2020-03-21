@@ -117,6 +117,20 @@ alias de="conda deactivate"
 alias ju="jupyter notebook --allow-root"
 alias ip="ipython"
 
+proxyon() {
+	export https_proxy=http://127.0.0.1:7890
+	export http_proxy=http://127.0.0.1:7890
+	export all_proxy=socks5://127.0.0.1:7891
+        echo "HTTP/HTTPS Proxy on"
+}
+
+proxyoff() {
+	unset http_proxy
+	unset https_proxy
+	unset all_proxy
+	echo "HTTP/HTTPS Proxy off"
+}
+
 
 
 # . /root/anaconda3/etc/profile.d/conda.sh  # commented out by conda initialize
