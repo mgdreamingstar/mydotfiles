@@ -3,7 +3,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'kien/ctrlp.vim', {'on': []}
 Plug 'lervag/vimtex'
-Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips', {'on': []}
 Plug 'honza/vim-snippets'
 Plug 'altercation/vim-colors-solarized'
 Plug 'mhartington/oceanic-next'
@@ -12,14 +12,19 @@ Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'joshdick/onedark.vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
 call plug#end()
 
 " nvim-qt 设置
-au VimEnter GuiTabline 0  " show airline's tabline, not nvim-qt's
-au VimEnter GuiPopupmenu 0  " show leaderf's popup, not nvim-qt's
+" au VimEnter GuiTabline 0  " show airline's tabline, not nvim-qt's
+" au VimEnter GuiPopupmenu 0  " show leaderf's popup, not nvim-qt's
 
 " 并进入工作目录
-autocmd VimEnter * NERDTree D:\mozli\Documents\github\
+if has('win32') || has('win64')
+    autocmd VimEnter * NERDTree D:\mozli\Documents\github\
+endif
+
 " " 当打开 NERDTree 窗口时，自动显示 Bookmarks
 let NERDTreeShowBookmarks=1
 let NERDTreeShowHidden=1
@@ -27,7 +32,7 @@ let NERDTreeShowHidden=1
 wincmd w
 autocmd VimEnter * wincmd w
 " " 只有 NERDTree 窗口时退出
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " " 关闭NERDTree快捷键
 map <F8> :NERDTreeToggle<cr>
 
@@ -36,15 +41,8 @@ nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " change the dir of nerdtree and move back the cursor
 " autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
-function! Change_nerdtree_dir() 
-  cd %:p:h
-  NERDTreeCWD 
-  wincmd p
-  pwd
-endfunction
 
-nnoremap <C-o> :call Change_nerdtree_dir()<cr>
-
+noremap <M-o> :call moz#Change_nerdtree_dir()<cr>
 " returns true iff is NERDTree open/active
 " function! IsNTOpen()        
 "   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
@@ -63,11 +61,11 @@ nnoremap <C-o> :call Change_nerdtree_dir()<cr>
 
 """  UltiSnips """""""""""""""""""""""""
 " let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsExpandTrigger = '<tab>'
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:UltiSnipsListSnippets = '<C-Tab>'
-let g:UltiSnipsSnippetDirectories = ['.vim\UltiSnips','UltiSnips']
+" let g:UltiSnipsExpandTrigger = '<tab>'
+" let g:UltiSnipsJumpForwardTrigger = '<tab>'
+" let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+" let g:UltiSnipsListSnippets = '<C-Tab>'
+" let g:UltiSnipsSnippetDirectories = ['.vim\UltiSnips','UltiSnips']
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
@@ -87,27 +85,40 @@ let g:ctrlp_cmd = 'CtrlPMRU'
 """ LeaderF Settings
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
+let g:Lf_PreviewHorizontalPosition = 'right'
 let g:Lf_StlSeparator = { 'left': '►', 'right': '◄', 'font': '' }
  
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
-let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_WorkingDirectoryMode = 'AFc'
 let g:Lf_WindowHeight = 0.30
-" let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_CacheDirectory = expand('~/.vim/cache')
 " let g:Lf_ShowRelativePath = 0
 let g:Lf_HideHelp = 1
 " let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'File': 1, 'Buffer': 1, 'Mru':1, 'Colorscheme':1, 'Function':1, 'BufTag':1, 'Gtags':1}
+let g:Lf_PreviewPopupWidth = 300
 
 " autocomplete in command 
 cnoremap <leader>lf LeaderfFile 
-cnoremap <leader>d1 D:\mozli\Documents\GitHub
+
+if has('win32') || has('win64')
+    cnoremap <leader>d1 D:\mozli\Documents\GitHub
+endif
+
 map <M-h> :LeaderfHelp<cr>
 
 let g:Lf_ShortcutF = '<leader>ff'
-noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
-noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
-noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+noremap <leader>fb :LeaderfBuffer<CR>
+noremap <leader>fm :LeaderfMru<CR>
+noremap <leader>ft :LeaderfBufTag<CR>
+noremap <leader>fl :LeaderfLine<CR>
+
+
+let g:Lf_NormalMap = {
+                     \ "File": [["u", 'exec :LeaderfFile .. <cr>']]
+\}
+
+let g:Lf_CommandMap = {'<C-]>':['<CR>']}
 
 " search word under cursor, the pattern is treated as regex, and enter normal mode directly
 noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
@@ -129,8 +140,47 @@ xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen -e %s ", leaderf#Rg#vi
 noremap go :<C-U>Leaderf! rg --recall<CR>
 
 " should use `Leaderf gtags --update` first
-let g:Lf_GtagsAutoGenerate = 0
+""" Gtag Settings
+let $GTAGSLABEL = 'native-pygments'
+
+if has('win32') || has('win64')
+    let $GTAGSCONF = 'D:\Program Files\gtags663\share\gtags\gtags.conf'
+endif
+
+let g:Lf_GtagsAutoGenerate = 1
 let g:Lf_Gtagslabel = 'native-pygments'
+
+" gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 同时开启 ctags 和 gtags 支持：
+let g:gutentags_modules = []
+if executable('ctags')
+    let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+    let g:gutentags_modules += ['gtags_cscope']
+endif
+
+" 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+" 配置 ctags 的参数，老的 Exuberant-ctags 不能有 --extra=+q，注意
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" 如果使用 universal ctags 需要增加下面一行，老的 Exuberant-ctags 不能加下一行
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+
+" 禁用 gutentags 自动加载 gtags 数据库的行为
+let g:gutentags_auto_add_gtags_cscope = 0
+
+
+" keybindings
 noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
 noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
 noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
@@ -187,8 +237,8 @@ else
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -280,10 +330,35 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+" coc-snippets settings
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
 
-""" Gtag Settings
-let $GTAGSLABEL = 'native-pygments'
-let $GTAGSCONF = 'D:\Program Files\gtag-global-6.6.3\gtags.conf'
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
 
 """ General Settings
 
@@ -294,6 +369,10 @@ set encoding=utf-8
 set termencoding=utf-8
 set langmenu=zh_CN
 let $LANG = 'en_US.UTF-8'
+set ts=4  " tab = 4 spaces
+set expandtab
+set noswapfile  " don't use swap file
+
 
 " Or if you have Neovim >= 0.1.5
 if (has("termguicolors"))
@@ -308,10 +387,13 @@ colorscheme onedark
 
 let mapleader=","
 
+
+if has('win32') || has('win64')
 " nmap <leader>s :source D:\Program Files\Neovim\share\nvim\sysinit.vim<cr>
 " nmap <leader>e :e D:\Program Files\Neovim\share\nvim\sysinit.vim<cr>
-nmap <leader>s :source C:\Users\GRC\AppData\Local\nvim\init.vim<cr>
-nmap <leader>e :e C:\Users\GRC\AppData\Local\nvim\init.vim<cr>
+    nmap <leader>s :source C:\Users\GRC\AppData\Local\nvim\init.vim<cr>
+    nmap <leader>e :e C:\Users\GRC\AppData\Local\nvim\init.vim<cr>
+endif
 
 
 " 分割窗口
@@ -348,7 +430,8 @@ vmap <C-c> "+y
 vnoremap <BS> d
 vnoremap <C-C> "+y
 vnoremap <C-Insert> "+y
-imap <C-V>		"+gP
-map <S-Insert>		"+gP
-cmap <C-V>		<C-R>+
-cmap <S-Insert>		<C-R>+
+imap <C-V>      "+gP
+map <S-Insert>      "+gP
+cmap <C-V>      <C-R>+
+cmap <S-Insert>     <C-R>+
+" let g:gutentags_define_advanced_commands = 1
