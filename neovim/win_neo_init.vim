@@ -3,7 +3,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'kien/ctrlp.vim', {'on': []}
 Plug 'lervag/vimtex'
-Plug 'SirVer/ultisnips', {'on': []}
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'altercation/vim-colors-solarized'
 Plug 'mhartington/oceanic-next'
@@ -64,8 +64,8 @@ noremap <M-o> :call moz#Change_nerdtree_dir()<cr>
 " let g:UltiSnipsExpandTrigger = '<tab>'
 " let g:UltiSnipsJumpForwardTrigger = '<tab>'
 " let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-" let g:UltiSnipsListSnippets = '<C-Tab>'
-" let g:UltiSnipsSnippetDirectories = ['.vim\UltiSnips','UltiSnips']
+let g:UltiSnipsListSnippets = '<C-Tab>'
+let g:UltiSnipsSnippetDirectories = ['.vim\UltiSnips','UltiSnips']
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
@@ -98,11 +98,10 @@ let g:Lf_HideHelp = 1
 let g:Lf_PreviewResult = {'File': 1, 'Buffer': 1, 'Mru':1, 'Colorscheme':1, 'Function':1, 'BufTag':1, 'Gtags':1}
 let g:Lf_PreviewPopupWidth = 300
 
-" autocomplete in command 
-cnoremap <leader>lf LeaderfFile 
 
 if has('win32') || has('win64')
-    cnoremap <leader>d1 D:\mozli\Documents\GitHub
+    " autocomplete in command 
+    cnoremap lfd1 LeaderfFile D:\mozli\Documents\GitHub
 endif
 
 map <M-h> :LeaderfHelp<cr>
