@@ -12,15 +12,22 @@ Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'joshdick/onedark.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
+Plug 'skywind3000/vim-preview'
+Plug 'skywind3000/vim-quickui'
+Plug 'airblade/vim-gitgutter'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'machakann/vim-highlightedyank'
+Plug 'sillybun/vim-repl'
 call plug#end()
 
 " nvim-qt 设置
 " au VimEnter GuiTabline 0  " show airline's tabline, not nvim-qt's
 " au VimEnter GuiPopupmenu 0  " show leaderf's popup, not nvim-qt's
 
-" 并进入工作目录
+" 进入工作目录
 if has('win32') || has('win64')
     autocmd VimEnter * NERDTree D:\mozli\Documents\github\
 endif
@@ -101,23 +108,23 @@ let g:Lf_PreviewPopupWidth = 300
 
 if has('win32') || has('win64')
     " autocomplete in command 
-    cnoremap lfd1 LeaderfFile D:\mozli\Documents\GitHub
+    cnoremap 'ld1 LeaderfFile D:\mozli\Documents\GitHub
 endif
 
-map <M-h> :LeaderfHelp<cr>
+map <leader>h :LeaderfHelp<cr>
 
 let g:Lf_ShortcutF = '<leader>ff'
-noremap <leader>fb :LeaderfBuffer<CR>
-noremap <leader>fm :LeaderfMru<CR>
-noremap <leader>ft :LeaderfBufTag<CR>
-noremap <leader>fl :LeaderfLine<CR>
+noremap <leader>b :LeaderfBuffer<CR>
+noremap <F3> :LeaderfMru<CR>
+noremap <F4> :LeaderfBufTag<CR>
+noremap <leader>l :LeaderfLine<CR>
 
 
 let g:Lf_NormalMap = {
                      \ "File": [["u", 'exec :LeaderfFile .. <cr>']]
 \}
 
-let g:Lf_CommandMap = {'<C-]>':['<CR>']}
+" let g:Lf_CommandMap = {'<C-]>':['<CR>']}
 
 " search word under cursor, the pattern is treated as regex, and enter normal mode directly
 noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
@@ -358,6 +365,43 @@ endfunction
 
 let g:coc_snippet_next = '<tab>'
 
+""" GitGutter Settings
+map <leader>ggt :GitGutterToggle " 切换是否开启 vim-gitgutter
+" set the default value of updatetime to 100ms
+set updatetime=100
+let g:gitgutter_max_signs = 800
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+nmap <leader>ha <Plug>(GitGutterStageHunk)
+nmap <leader>hr <Plug>(GitGutterUndoHunk)
+nmap <leader>hv <Plug>(GitGutterPreviewHunk)
+
+
+""" vim-repl
+let g:repl_program = {
+            \   'python': 'ipython',
+            \   'default': 'zsh',
+            \   'r': 'R',
+            \   'lua': 'lua',
+            \   }
+let g:repl_predefine_python = {
+            \   'numpy': 'import numpy as np',
+            \   'matplotlib': 'from matplotlib import pyplot as plt'
+            \   }
+let g:repl_cursor_down = 1
+let g:repl_python_automerge = 1
+let g:repl_ipython_version = '7'
+nnoremap <leader>r :REPLToggle<Cr>
+autocmd Filetype python nnoremap <F12> <Esc>:REPLDebugStopAtCurrentLine<Cr>
+autocmd Filetype python nnoremap <F10> <Esc>:REPLPDBN<Cr>
+autocmd Filetype python nnoremap <F11> <Esc>:REPLPDBS<Cr>
+let g:repl_position = 3
+" let g:repl_width = None                        " 窗口宽度
+" let g:repl_height = None                       " 窗口高度
+let g:sendtorepl_invoke_key = "<leader>w"      " 传送代码快捷键，默认为<leader>w
+let g:repl_position = 0                        " 0表示出现在下方，1表示出现在上方，2在左边，3在右边
+let g:repl_stayatrepl_when_open = 0            " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
+
 
 """ General Settings
 
@@ -371,6 +415,7 @@ let $LANG = 'en_US.UTF-8'
 set ts=4  " tab = 4 spaces
 set expandtab
 set noswapfile  " don't use swap file
+set number
 
 
 " Or if you have Neovim >= 0.1.5
@@ -381,7 +426,8 @@ endif
 " Theme
 syntax enable
 " colorscheme OceanicNext
-colorscheme onedark
+" colorscheme onedark
+colorscheme dracula
 
 
 let mapleader=","
@@ -400,37 +446,54 @@ map <Bar> <C-W>v<C-W><Right>
 map -     <C-W>s<C-W><Down>
 
 " 在分割窗口之间移动
-nmap <C-j> <C-W>j
-nmap <C-k> <C-W>k
-nmap <C-h> <C-W>h
-nmap <C-l> <C-W>l
+nmap <A-h> <C-w>h
+nmap <A-j> <C-w>j
+nmap <A-k> <C-w>k
+nmap <A-l> <C-w>l
+
+tnoremap <Esc> <C-\><C-n>
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
 " always split windows vertically
-" set splitright
-" set diffopt+=vertical
-" silent! set splitvertical
-" if v:errmsg != ''
-"   cabbrev split vert split
-"   cabbrev hsplit split
-"   cabbrev help vert help
-"   noremap <C-w>] :vert botright wincmd ]<CR>
-"   noremap <C-w><C-]> :vert botright wincmd ]<CR>
-" else
-"   cabbrev hsplit hor split
-" endif
+set splitright
+set diffopt+=vertical
+silent! set splitvertical
+if v:errmsg != ''
+  cabbrev split vert split
+  cabbrev hsplit split
+  cabbrev help vert help
+  noremap <C-w>] :vert botright wincmd ]<CR>
+  noremap <C-w><C-]> :vert botright wincmd ]<CR>
+else
+  cabbrev hsplit hor split
+endif
 
+" terminal
+map <leader>tt :vnew term://bash<cr>
 
-nnoremap <F2> :setlocal number!<cr>
+nnoremap <F2> :setlocal relativenumber!<cr>
 nnoremap <leader>w :set wrap!<cr>
 nnoremap <space> za
 
-inoremap <C-d> <Esc>yypi
-imap <C-v> "+gP
-vmap <C-c> "+y
+" copy and paste
+inoremap <C-d> <Esc>:call moz#Duplicate_line()<cr>a
+imap <C-v>  <C-R>+ 
+vmap <C-c>  "+y
+imap <silent> <S-Insert> <Esc>"+pa
+cmap <C-V>     <C-R>+
+cmap <S-Insert>     <C-R>+
 vnoremap <BS> d
 vnoremap <C-C> "+y
 vnoremap <C-Insert> "+y
-imap <C-V>      "+gP
-map <S-Insert>      "+gP
-cmap <C-V>      <C-R>+
-cmap <S-Insert>     <C-R>+
 " let g:gutentags_define_advanced_commands = 1
