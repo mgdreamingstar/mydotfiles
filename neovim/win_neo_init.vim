@@ -23,6 +23,11 @@ elseif
     " set python3
 endif
 
+
+" set location of init.vim
+let g:initvim_location = nvim_config_basedir . '/init.vim'
+
+
 " ===
 " === Auto load for first time uses
 " ===
@@ -464,12 +469,16 @@ noremap <M-o> :call moz#Change_nerdtree_dir()<cr>
 
 
 """  UltiSnips """""""""""""""""""""""""
-let g:UltiSnipsUsePythonVersion = 2
+if !has('python3')
+    let g:UltiSnipsUsePythonVersion = 2
+else
+    let g:UltiSnipsUsePythonVersion = 3
+
 " let g:UltiSnipsExpandTrigger = '<tab>'
 " let g:UltiSnipsJumpForwardTrigger = '<tab>'
 " let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 let g:UltiSnipsListSnippets = '<C-Tab>'
-let g:UltiSnipsSnippetDirectories = ['.vim\UltiSnips','UltiSnips']
+let g:UltiSnipsSnippetDirectories = [nvim_config_basedir . '\UltiSnips','UltiSnips']
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
@@ -801,16 +810,8 @@ let g:repl_position = 0                        " 0表示出现在下方，1表�
 let g:repl_stayatrepl_when_open = 0            " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
 
 
-if g:iswindows
-" nmap <leader>s :source D:\Program Files\Neovim\share\nvim\sysinit.vim<cr>
-" nmap <leader>e :e D:\Program Files\Neovim\share\nvim\sysinit.vim<cr>
-  nmap <leader>s :source D:\mozli\Documents\GitHub\mydotfiles\neovim\win_neo_init.vim<cr>
-  nmap <leader>e :e D:\mozli\Documents\GitHub\mydotfiles\neovim\win_neo_init.vim<cr>
-elseif g:islinux
-  nmap <leader>s :source /root/GitHub/mydotfiles/win_neo_init.vim<cr>
-  nmap <leader>e :e /root/GitHub/mydotfiles/win_neo_init.vim<cr>
-endif
-
+nmap <leader>s :source initvim_location<cr>
+nmap <leader>e :e initvim_location<cr>
 
 
 " ===
