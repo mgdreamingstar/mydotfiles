@@ -9,8 +9,26 @@
 " Author: @moz
 
 
-set rtp+=C:\Users\GRC\.vim
-call plug#begin('~/.vim/plugged')
+" ===
+" === Auto load for first time uses
+" ===
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+				
+if has('win32') || has('win64') || has('win16') || has('win95')
+	let g:iswindows = 1
+	let g:islinux = 0
+	set rtp+=C:\Users\GRC\.vim
+elseif
+	let g:islinux = 1
+	let g:iswindows = 0
+	set rtp+=~/.local/share/nvim/site/autoload
+endif
+
+call plug#begin('~/.config/nvim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'kien/ctrlp.vim', {'on': []}
 Plug 'lervag/vimtex'
@@ -390,7 +408,7 @@ endfunc
 " === Markdown Settings
 " ===
 " Snippets
-if has('win32') || has('win64')
+if g:iswindows
   source C:\Users\GRC\AppData\Local\nvim\md_keymaps.vim
   "let g:python3_host_prog = 'D:\Anaconda\envs\new3\python'
 endif
@@ -401,7 +419,7 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 
 " NERDTree
 " 进入工作目录
-if has('win32') || has('win64')
+if g:iswindows
     autocmd VimEnter * NERDTree D:\mozli\Documents\github\
 endif
 
@@ -480,7 +498,7 @@ let g:Lf_PreviewResult = {'File': 1, 'Buffer': 1, 'Mru':1, 'Colorscheme':1, 'Fun
 let g:Lf_PreviewPopupWidth = 300
 
 
-if has('win32') || has('win64')
+if g:iswindows
     " autocomplete in command 
     cnoremap 'ld1 LeaderfFile D:\mozli\Documents\GitHub
 endif
@@ -523,7 +541,7 @@ noremap go :<C-U>Leaderf! rg --recall<CR>
 """ Gtag Settings
 let $GTAGSLABEL = 'native-pygments'
 
-if has('win32') || has('win64')
+if g:iswindows
     let $GTAGSCONF = 'D:\Program Files\gtags663\share\gtags\gtags.conf'
 endif
 
@@ -778,11 +796,14 @@ let g:repl_position = 0                        " 0表示出现在下方，1表�
 let g:repl_stayatrepl_when_open = 0            " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
 
 
-if has('win32') || has('win64')
+if g:iswindows
 " nmap <leader>s :source D:\Program Files\Neovim\share\nvim\sysinit.vim<cr>
 " nmap <leader>e :e D:\Program Files\Neovim\share\nvim\sysinit.vim<cr>
   nmap <leader>s :source D:\mozli\Documents\GitHub\mydotfiles\neovim\win_neo_init.vim<cr>
   nmap <leader>e :e D:\mozli\Documents\GitHub\mydotfiles\neovim\win_neo_init.vim<cr>
+elseif g:islinux
+  nmap <leader>s :source /root/GitHub/mydotfiles/win_neo_init.vim<cr>
+  nmap <leader>e :e /root/GitHub/mydotfiles/win_neo_init.vim<cr>
 endif
 
 
@@ -987,7 +1008,11 @@ noremap \\ :Calendar -view=clock -position=here<CR>
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 let g:calendar_debug = 1
-let g:calendar_cache_directory = 'C:\Users\GRC\.cache\calendar.vim'
+
+if g:iswindows
+	let g:calendar_cache_directory = 'C:\Users\GRC\.cache\calendar.vim'
+endif
+
 augroup calendar-mappings
 	autocmd!
 	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_up)
@@ -1006,4 +1031,6 @@ augroup calendar-mappings
 augroup END
 
 " credentials
-source C:\Users\Grc\.cache\calendar.vim\credentials.vim
+if g:iswindows
+	source C:\Users\Grc\.cache\calendar.vim\credentials.vim
+endif 
