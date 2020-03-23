@@ -13,5 +13,4 @@ function! moz#Duplicate_line()
   let s:pos[1] = s:pos[1] + 1
   :execute "normal \<Esc>yyp"
   call setpos(".", s:pos)
-  append
 endfunction

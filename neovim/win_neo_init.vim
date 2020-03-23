@@ -1,3 +1,14 @@
+" 
+"                            _                    
+"  _ __ ___   ___ ______   _(_)_ __ ___  _ __ ___ 
+" | '_ ` _ \ / _ \_  /\ \ / / | '_ ` _ \| '__/ __|
+" | | | | | | (_) / /  \ V /| | | | | | | | | (__ 
+" |_| |_| |_|\___/___|  \_/ |_|_| |_| |_|_|  \___|
+"                                                 
+
+" Author: @moz
+
+
 set rtp+=C:\Users\GRC\.vim
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
@@ -18,15 +29,372 @@ Plug 'skywind3000/gutentags_plus'
 Plug 'skywind3000/vim-preview'
 Plug 'skywind3000/vim-quickui'
 Plug 'airblade/vim-gitgutter'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi'
 Plug 'machakann/vim-highlightedyank'
-Plug 'sillybun/vim-repl'
+" Plug 'sillybun/vim-repl'
+Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
+Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
+Plug 'tweekmonster/braceless.vim'
+
+" Markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
+Plug 'theniceboy/bullets.vim'
+
+" Editor Enhancement
+"Plug 'Raimondi/delimitMate'
+Plug 'scrooloose/nerdcommenter' " in <leader>cn to comment a line
+Plug 'AndrewRadev/switch.vim' " gs to switch
+Plug 'tpope/vim-surround' " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
+Plug 'gcmt/wildfire.vim' " in Visual mode, type k' to select all text in '', or type k) k] k} kp
+Plug 'junegunn/vim-after-object' " da= to delete what's after =
+Plug 'junegunn/vim-easy-align' " gaip= to align the = in paragraph, 
+Plug 'tpope/vim-capslock' " Ctrl+L (insert) to toggle capslock
+Plug 'easymotion/vim-easymotion'
+Plug 'Konfekt/FastFold'
+"Plug 'junegunn/vim-peekaboo'
+"Plug 'wellle/context.vim'
+Plug 'svermeulen/vim-subversive' 
+
+" For general writing
+Plug 'junegunn/goyo.vim'
+
+" Bookmarks
+"Plug 'kshenoy/vim-signature'
+Plug 'MattesGroeger/vim-bookmarks'
+
+" Find & Replace
+Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
+Plug 'osyo-manga/vim-anzu'
+
+" Documentation
+"Plug 'KabbAmine/zeavim.vim' " <LEADER>z to find doc
+
+" Mini Vim-APP
+"Plug 'voldikss/vim-floaterm'
+"Plug 'liuchengxu/vim-clap'
+"Plug 'jceb/vim-orgmode'
+"Plug 'mhinz/vim-startify'
+
+" Vim Applications
+Plug 'itchyny/calendar.vim'
+
+" Other visual enhancement
+Plug 'ryanoasis/vim-devicons'
+Plug 'luochen1990/rainbow'
+Plug 'mg979/vim-xtabline'
+Plug 'wincent/terminus'
+
+" Other useful utilities
+Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
+Plug 'makerj/vim-pdf'
+"Plug 'xolox/vim-session'
+"Plug 'xolox/vim-misc' " vim-session dep
+
+" Dependencies
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'kana/vim-textobj-user'
+Plug 'roxma/nvim-yarp'
+
 call plug#end()
 
-" nvim-qt 设置
-" au VimEnter GuiTabline 0  " show airline's tabline, not nvim-qt's
-" au VimEnter GuiPopupmenu 0  " show leaderf's popup, not nvim-qt's
 
+""" General Settings
+
+set clipboard+=unnamed
+set ignorecase
+set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936
+set encoding=utf-8
+set termencoding=utf-8
+set langmenu=zh_CN
+let $LANG = 'en_US.UTF-8'
+set ts=4  " tab = 4 spaces
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set noswapfile  " don't use swap file
+set number
+set autochdir
+set autoindent
+set list  " show tab and other special chars
+set listchars=tab:>-,trail:▫ 
+set scrolloff=4
+set viewoptions=cursor,folds
+set indentexpr=
+set foldmethod=indent
+set foldlevel=99
+set foldenable
+set formatoptions-=tc
+set splitright
+set splitbelow
+set noshowmode
+set showcmd
+set wildmenu
+set smartcase
+set inccommand=split
+set completeopt=longest,noinsert,menuone,noselect,preview
+set ttyfast  " make scroll faster
+set lazyredraw  " faster redraw
+set visualbell
+set colorcolumn=80
+set virtualedit=block
+
+
+
+" Or if you have Neovim >= 0.1.5
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+" Theme
+syntax enable
+" colorscheme OceanicNext
+" colorscheme onedark
+colorscheme dracula
+
+
+let mapleader=","
+" noremap ; :
+inoremap <Capslock> <Esc>
+
+" Save & Quit
+noremap Q :q<cr>
+noremap <C-q> :qa<cr>
+noremap S :w<cr>
+
+" copy to end of line
+noremap Y y$
+" copy to system clipboard
+vnoremap Y "+y
+
+" indent
+noremap < <<
+noremap > >>
+
+" disable current highlight
+noremap <leader><cr> :nohlsearch<cr>
+
+" find two same words/chars adjacent
+noremap <leader>dw /\(\<\w\+\>\)\_s*\1
+
+" movement
+noremap <silent> U 5k
+noremap <silent> E 5j
+noremap <silent> W 5w
+noremap <silent> B 5b
+
+" N: goto the start of this line
+noremap <silent> H 0
+" I: goto the end of this line
+noremap <silent> L $
+
+" move the screen without move the cursor
+noremap <C-U> 5<C-y>
+noremap <C-E> 5<C-e>
+
+" insert mode: move to end
+inoremap <C-e> <Esc>A
+
+" command mode: move cursor 
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <M-b> <S-Left>
+cnoremap <M-f> <S-Right> 
+
+" split screen
+" Disable the default s key
+noremap s <nop>
+
+" split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
+noremap sk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+noremap sj :set splitbelow<CR>:split<CR>
+noremap sh :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
+noremap sl :set splitright<CR>:vsplit<CR> 
+
+" Resize splits with arrow keys
+noremap <up> :res +5<CR>
+noremap <down> :res -5<CR>
+noremap <left> :vertical resize-5<CR>
+noremap <right> :vertical resize+5<CR>
+
+" Place the two screens up and down
+noremap su <C-w>t<C-w>K
+" Place the two screens side by side
+noremap sv <C-w>t<C-w>H 
+
+" Rotate screens
+noremap srh <C-w>b<C-w>K
+noremap srv <C-w>b<C-w>H
+
+" Press <leader> + q to close the window below the current window or any
+" window
+noremap <LEADER>q <C-w>j:q<CR> 
+
+" ===
+" === Tab management
+" ===
+" Create a new tab with tu
+noremap tu :tabe<CR>
+
+" Move around tabs with tn and ti
+" left
+noremap th :-tabnext<CR> 
+" right
+noremap tl :+tabnext<CR>
+
+" Move the tabs with tmn and tmi
+noremap tmh :-tabmove<CR>
+noremap tml :+tabmove<CR>
+
+nnoremap M :setlocal relativenumber!<cr>
+nnoremap <leader>w :set wrap!<cr>
+
+" Folding
+nnoremap <leader>o za
+
+" Open up lazygit
+noremap \g :term lazygit<CR>
+noremap <c-k> :tabe<CR>:-tabmove<CR>:term lazygit<CR>
+
+" Open up pudb
+noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
+"noremap <f5> :tab sp<CR>:term python3 -m pudb %<CR>
+"
+" copy and paste
+inoremap <C-d> <Esc>:call moz#Duplicate_line()<cr>a
+imap <C-v>  <C-R>+ 
+vmap <C-c>  "+y
+imap <silent> <S-Insert> <Esc>"+pa
+cmap <C-V>     <C-R>+
+cmap <S-Insert>     <C-R>+
+vnoremap <BS> d
+vnoremap <C-C> "+y
+vnoremap <C-Insert> "+y
+
+
+" 在分割窗口之间移动
+nmap <A-h> <C-w>h
+nmap <A-j> <C-w>j
+nmap <A-k> <C-w>k
+nmap <A-l> <C-w>l
+
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+
+" always split windows vertically
+set splitright
+set diffopt+=vertical
+silent! set splitvertical
+if v:errmsg != ''
+  cabbrev split vert split
+  cabbrev hsplit split
+  cabbrev help vert help
+  noremap <C-w>] :vert botright wincmd ]<CR>
+  noremap <C-w><C-]> :vert botright wincmd ]<CR>
+else
+  cabbrev hsplit hor split
+endif
+
+" terminal
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-O> <C-\><C-n><C-O>
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+map <leader>tt :vnew term://bash<cr>
+au TermOpen * startinsert
+" nnoremap \t :tabe<cr>:-tabmove<cr>:term sh -c 'st'<cr><C-\><C-N>:q<cr>
+
+" if has('windows')
+"     set shell=D:\cmder\cmder_shell.bat
+"     set shellpipe=|
+"     set shellredir=>
+" endif
+
+" Opening a terminal window
+noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
+
+" Press space twice to jump to the next '<++>' and edit it
+noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
+
+" Spelling Check with <space>sc
+noremap <LEADER>sc :set spell!<CR>
+
+" Call figlet
+if !has('win32') && !has('win64')
+    noremap tx :r !figlet
+endif
+
+" location list
+noremap <leader>- :lN<cr>
+noremap <leader>= :lne<cr>
+
+" find and replace something
+noremap \s :%s//g<left><left>
+
+" Compile function
+noremap \r :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        set splitbelow
+        exec "!g++ -std=c++11 % -Wall -o %<"
+        :sp
+        :res -15
+        :term ./%<
+    elseif &filetype == 'java'
+        exec "!javac %"
+        exec "!time java %<"
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        set splitbelow
+        :sp
+        :term python3 %
+    elseif &filetype == 'html'
+        silent! exec "!".g:mkdp_browser." % &"
+    elseif &filetype == 'markdown'
+        exec "MarkdownPreview"
+    elseif &filetype == 'tex'
+        silent! exec "VimtexStop"
+        silent! exec "VimtexCompile"
+    elseif &filetype == 'dart'
+        CocCommand flutter.run
+    elseif &filetype == 'go'
+        set splitbelow
+        :sp
+        :term go run .
+    endif
+endfunc
+
+
+
+" ===
+" === Markdown Settings
+" ===
+" Snippets
+if has('win32') || has('win64')
+  source C:\Users\GRC\AppData\Local\nvim\md_keymaps.vim
+endif
+" auto spell
+autocmd BufRead,BufNewFile *.md setlocal spell 
+
+
+
+" NERDTree
 " 进入工作目录
 if has('win32') || has('win64')
     autocmd VimEnter * NERDTree D:\mozli\Documents\github\
@@ -39,13 +407,14 @@ let NERDTreeShowHidden=1
 wincmd w
 autocmd VimEnter * wincmd w
 " " 只有 NERDTree 窗口时退出
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " " 关闭NERDTree快捷键
 map <F8> :NERDTreeToggle<cr>
 
 " change the working directory and print out after changing
 nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
-
+" Auto change directory to current dir
+autocmd BufEnter * silent! lcd %:p:h
 " change the dir of nerdtree and move back the cursor
 " autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
 
@@ -111,15 +480,15 @@ if has('win32') || has('win64')
     cnoremap 'ld1 LeaderfFile D:\mozli\Documents\GitHub
 endif
 
+cnoremap 'f LeaderfFile 
 map <leader>h :LeaderfHelp<cr>
 
 let g:Lf_ShortcutF = '<leader>ff'
-noremap <leader>b :LeaderfBuffer<CR>
-noremap <F3> :LeaderfMru<CR>
-noremap <F4> :LeaderfBufTag<CR>
-noremap <leader>l :LeaderfLine<CR>
-
-
+noremap <leader>b  :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR> 
+noremap <leader>m  :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR> 
+noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR> 
+noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+ 
 let g:Lf_NormalMap = {
                      \ "File": [["u", 'exec :LeaderfFile .. <cr>']]
 \}
@@ -403,97 +772,200 @@ let g:repl_position = 0                        " 0表示出现在下方，1表�
 let g:repl_stayatrepl_when_open = 0            " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
 
 
-""" General Settings
-
-set clipboard+=unnamed
-set ignorecase
-set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936
-set encoding=utf-8
-set termencoding=utf-8
-set langmenu=zh_CN
-let $LANG = 'en_US.UTF-8'
-set ts=4  " tab = 4 spaces
-set expandtab
-set noswapfile  " don't use swap file
-set number
-
-
-" Or if you have Neovim >= 0.1.5
-if (has("termguicolors"))
- set termguicolors
-endif
-
-" Theme
-syntax enable
-" colorscheme OceanicNext
-" colorscheme onedark
-colorscheme dracula
-
-
-let mapleader=","
-
-
 if has('win32') || has('win64')
 " nmap <leader>s :source D:\Program Files\Neovim\share\nvim\sysinit.vim<cr>
 " nmap <leader>e :e D:\Program Files\Neovim\share\nvim\sysinit.vim<cr>
-    nmap <leader>s :source C:\Users\GRC\AppData\Local\nvim\init.vim<cr>
-    nmap <leader>e :e C:\Users\GRC\AppData\Local\nvim\init.vim<cr>
+  nmap <leader>s :source D:\mozli\Documents\GitHub\mydotfiles\neovim\win_neo_init.vim<cr>
+  nmap <leader>e :e D:\mozli\Documents\GitHub\mydotfiles\neovim\win_neo_init.vim<cr>
 endif
 
 
-" 分割窗口
-map <Bar> <C-W>v<C-W><Right>
-map -     <C-W>s<C-W><Down>
 
-" 在分割窗口之间移动
-nmap <A-h> <C-w>h
-nmap <A-j> <C-w>j
-nmap <A-k> <C-w>k
-nmap <A-l> <C-w>l
+" ===
+" === MarkdownPreview
+" ===
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_command_for_global = 0
+let g:mkdp_open_to_the_world = 0
+let g:mkdp_open_ip = ''
+let g:mkdp_echo_preview_url = 0
+let g:mkdp_browserfunc = ''
+let g:mkdp_preview_options = {
+			\ 'mkit': {},
+			\ 'katex': {},
+			\ 'uml': {},
+			\ 'maid': {},
+			\ 'disable_sync_scroll': 0,
+			\ 'sync_scroll_type': 'middle',
+			\ 'hide_yaml_meta': 1
+			\ }
+let g:mkdp_markdown_css = ''
+let g:mkdp_highlight_css = ''
+let g:mkdp_port = ''
+let g:mkdp_page_title = '「${name}」'
 
-tnoremap <Esc> <C-\><C-n>
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
-inoremap <A-h> <C-\><C-N><C-w>h
-inoremap <A-j> <C-\><C-N><C-w>j
-inoremap <A-k> <C-\><C-N><C-w>k
-inoremap <A-l> <C-\><C-N><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
 
-" always split windows vertically
-set splitright
-set diffopt+=vertical
-silent! set splitvertical
-if v:errmsg != ''
-  cabbrev split vert split
-  cabbrev hsplit split
-  cabbrev help vert help
-  noremap <C-w>] :vert botright wincmd ]<CR>
-  noremap <C-w><C-]> :vert botright wincmd ]<CR>
-else
-  cabbrev hsplit hor split
-endif
+" ===
+" === vim-table-mode
+" ===
+noremap <LEADER>tm :TableModeToggle<CR>
+"let g:table_mode_disable_mappings = 1
+let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
-" terminal
-map <leader>tt :vnew term://bash<cr>
 
-nnoremap <F2> :setlocal relativenumber!<cr>
-nnoremap <leader>w :set wrap!<cr>
-nnoremap <space> za
 
-" copy and paste
-inoremap <C-d> <Esc>:call moz#Duplicate_line()<cr>a
-imap <C-v>  <C-R>+ 
-vmap <C-c>  "+y
-imap <silent> <S-Insert> <Esc>"+pa
-cmap <C-V>     <C-R>+
-cmap <S-Insert>     <C-R>+
-vnoremap <BS> d
-vnoremap <C-C> "+y
-vnoremap <C-Insert> "+y
-" let g:gutentags_define_advanced_commands = 1
+" ===
+" === vim-bookmarks
+" ===
+let g:bookmark_no_default_key_mappings = 1
+nmap mt <Plug>BookmarkToggle
+nmap ma <Plug>BookmarkAnnotate
+nmap ml <Plug>BookmarkShowAll
+nmap mi <Plug>BookmarkNext
+nmap mn <Plug>BookmarkPrev
+nmap mC <Plug>BookmarkClear
+nmap mX <Plug>BookmarkClearAll
+nmap mu <Plug>BookmarkMoveUp
+nmap me <Plug>BookmarkMoveDown
+nmap <Leader>g <Plug>BookmarkMoveToLine
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_auto_save = 1
+let g:bookmark_highlight_lines = 1
+let g:bookmark_manage_per_buffer = 1
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_center = 1
+let g:bookmark_auto_close = 1
+let g:bookmark_location_list = 1
+
+
+" ==
+" == vim-multiple-cursor
+" ==
+"let g:multi_cursor_use_default_mapping = 0
+"let g:multi_cursor_start_word_key = '<c-k>'
+"let g:multi_cursor_select_all_word_key = '<a-k>'
+"let g:multi_cursor_start_key = 'g<c-k>'
+"let g:multi_cursor_select_all_key = 'g<a-k>'
+"let g:multi_cursor_next_key = '<c-k>'
+"let g:multi_cursor_prev_key = '<c-p>'
+"let g:multi_cursor_skip_key = '<C-s>'
+"let g:multi_cursor_quit_key = '<Esc>'
+
+
+" ===
+" === vim-visual-multi
+" ===
+"let g:VM_theme             = 'iceblue'
+"let g:VM_default_mappings = 0
+let g:VM_leader = {'default': ',', 'visual': ',', 'buffer': ','}
+let g:VM_maps = {}
+let g:VM_custom_motions  = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
+let g:VM_maps['i']         = 'k'
+let g:VM_maps['I']         = 'K'
+let g:VM_maps['Find Under']         = '<C-k>'
+let g:VM_maps['Find Subword Under'] = '<C-k>'
+let g:VM_maps['Find Next']         = ''
+let g:VM_maps['Find Prev']         = ''
+let g:VM_maps['Remove Region'] = 'q'
+let g:VM_maps['Skip Region'] = ''
+let g:VM_maps["Undo"]      = 'l'
+let g:VM_maps["Redo"]      = '<C-r>'
+
+
+" ===
+" === Far.vim
+" ===
+noremap \f :F  **/*<left><left><left><left><left>
+let g:far#mapping = {
+		\ "replace_undo" : ["l"],
+		\ }
+
+
+" ===
+" === Bullets.vim
+" ===
+"let g:bullets_set_mappings = 0
+let g:bullets_enabled_file_types = [
+			\ 'markdown',
+			\ 'text',
+			\ 'gitcommit',
+			\ 'scratch'
+			\]
+
+
+
+" ===
+" === vim-easymotion
+" ===
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_do_shade = 0
+let g:EasyMotion_smartcase = 1
+map ' <Plug>(easymotion-bd-f)
+nmap ' <Plug>(easymotion-bd-f)
+"map E <Plug>(easymotion-j)
+"map U <Plug>(easymotion-k)
+"nmap f <Plug>(easymotion-overwin-f)
+"map \; <Plug>(easymotion-prefix)
+"nmap ' <Plug>(easymotion-overwin-f2)
+"map 'l <Plug>(easymotion-bd-jk)
+"nmap 'l <Plug>(easymotion-overwin-line)
+"map  'w <Plug>(easymotion-bd-w)
+"nmap 'w <Plug>(easymotion-overwin-w)
+
+
+" ===
+" === goyo
+" ===
+map <LEADER>gy :Goyo<CR>
+
+
+" ===
+" === fastfold
+" ===
+nmap zuz <Plug>(FastFoldUpdate)
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'ze', 'zu']
+let g:markdown_folding = 1
+let g:tex_fold_enabled = 1
+let g:vimsyn_folding = 'af'
+let g:xml_syntax_folding = 1
+let g:javaScript_fold = 1
+let g:sh_fold_enabled= 7
+let g:ruby_fold = 1
+let g:perl_fold = 1
+let g:perl_fold_blocks = 1
+let g:r_syntax_folding = 1
+let g:rust_fold = 1
+let g:php_folding = 1
+
+
+" ===
+" === vim-easy-align
+" ===
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+
+" ===
+" === vim-after-object
+" ===
+autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
+
+
+" ===
+" === vim-markdown-toc
+" ===
+"let g:vmt_auto_update_on_save = 0
+"let g:vmt_dont_insert_fence = 1
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_text = 'TOC'
+let g:vmt_fence_closing_text = '/TOC'
+
+" ===
+" === vim-subversive
+" ===
+nmap s <plug>(SubversiveSubstitute)
+nmap ss <plug>(SubversiveSubstituteLine)
