@@ -24,8 +24,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'joshdick/onedark.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
+"Plug 'ludovicchabant/vim-gutentags'
+"Plug 'skywind3000/gutentags_plus'
 Plug 'skywind3000/vim-preview'
 Plug 'skywind3000/vim-quickui'
 Plug 'airblade/vim-gitgutter'
@@ -35,7 +35,7 @@ Plug 'machakann/vim-highlightedyank'
 " Plug 'sillybun/vim-repl'
 Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
+"Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
 Plug 'tweekmonster/braceless.vim'
 
 " Markdown
@@ -68,7 +68,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 
 " Find & Replace
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
-Plug 'osyo-manga/vim-anzu'
+" Plug 'osyo-manga/vim-anzu'
 
 " Documentation
 "Plug 'KabbAmine/zeavim.vim' " <LEADER>z to find doc
@@ -83,19 +83,21 @@ Plug 'osyo-manga/vim-anzu'
 Plug 'itchyny/calendar.vim'
 
 " Other visual enhancement
-Plug 'ryanoasis/vim-devicons'
-Plug 'luochen1990/rainbow'
-Plug 'mg979/vim-xtabline'
-Plug 'wincent/terminus'
+" Plug 'ryanoasis/vim-devicons'
+" Plug 'luochen1990/rainbow'
+" Plug 'mg979/vim-xtabline'
+" Plug 'wincent/terminus'
 
 " Other useful utilities
-Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
-Plug 'makerj/vim-pdf'
+" Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
+" Plug 'makerj/vim-pdf'
 "Plug 'xolox/vim-session'
 "Plug 'xolox/vim-misc' " vim-session dep
 
+" quick align
+"Plug 'godlygeek/tabular'
 " Dependencies
-Plug 'MarcWeber/vim-addon-mw-utils'
+" Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'kana/vim-textobj-user'
 Plug 'roxma/nvim-yarp'
 
@@ -161,18 +163,18 @@ let mapleader=","
 inoremap <Capslock> <Esc>
 
 " Save & Quit
-noremap Q :q<cr>
-noremap <C-q> :qa<cr>
-noremap S :w<cr>
+nnoremap Q :q<cr>
+nnoremap <C-q> :qa<cr>
+nnoremap S :w<cr>
 
 " copy to end of line
-noremap Y y$
+nnoremap Y y$
 " copy to system clipboard
 vnoremap Y "+y
 
 " indent
-noremap < <<
-noremap > >>
+nnoremap < <<
+nnoremap > >>
 
 " disable current highlight
 noremap <leader><cr> :nohlsearch<cr>
@@ -181,15 +183,15 @@ noremap <leader><cr> :nohlsearch<cr>
 noremap <leader>dw /\(\<\w\+\>\)\_s*\1
 
 " movement
-noremap <silent> U 5k
-noremap <silent> E 5j
-noremap <silent> W 5w
-noremap <silent> B 5b
+nnoremap <silent> U 5k
+nnoremap <silent> E 5j
+nnoremap <silent> W 5w
+nnoremap <silent> B 5b
 
 " N: goto the start of this line
-noremap <silent> H 0
+nnoremap <silent> H 0
 " I: goto the end of this line
-noremap <silent> L $
+nnoremap <silent> L $
 
 " move the screen without move the cursor
 noremap <C-U> 5<C-y>
@@ -219,10 +221,10 @@ noremap sh :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
 noremap sl :set splitright<CR>:vsplit<CR> 
 
 " Resize splits with arrow keys
-noremap <up> :res +5<CR>
-noremap <down> :res -5<CR>
-noremap <left> :vertical resize-5<CR>
-noremap <right> :vertical resize+5<CR>
+nnoremap <up> :res +5<CR>
+nnoremap <down> :res -5<CR>
+nnoremap <left> :vertical resize-5<CR>
+nnoremap <right> :vertical resize+5<CR>
 
 " Place the two screens up and down
 noremap su <C-w>t<C-w>K
@@ -235,7 +237,7 @@ noremap srv <C-w>b<C-w>H
 
 " Press <leader> + q to close the window below the current window or any
 " window
-noremap <LEADER>q <C-w>j:q<CR> 
+noremap <leader>q <C-w>j:q<CR> 
 
 " ===
 " === Tab management
@@ -257,7 +259,7 @@ nnoremap M :setlocal relativenumber!<cr>
 nnoremap <leader>w :set wrap!<cr>
 
 " Folding
-nnoremap <leader>o za
+" nnoremap <leader>o za
 
 " Open up lazygit
 noremap \g :term lazygit<CR>
@@ -269,6 +271,8 @@ noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
 "
 " copy and paste
 inoremap <C-d> <Esc>:call moz#Duplicate_line()<cr>a
+" copy current file's whole path
+nnoremap <leader>pt :let @+ = expand("%:p")<cr>
 imap <C-v>  <C-R>+ 
 vmap <C-c>  "+y
 imap <silent> <S-Insert> <Esc>"+pa
@@ -388,6 +392,7 @@ endfunc
 " Snippets
 if has('win32') || has('win64')
   source C:\Users\GRC\AppData\Local\nvim\md_keymaps.vim
+  "let g:python3_host_prog = 'D:\Anaconda\envs\new3\python'
 endif
 " auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell 
@@ -563,6 +568,7 @@ noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 
 """ CoC Settings
+let g:coc_global_extensions = ['coc-pairs','coc-python','coc-snippets']
 " TextEdit might fail if hidden is not set.
 set hidden
 
@@ -859,7 +865,7 @@ let g:bookmark_location_list = 1
 " ===
 "let g:VM_theme             = 'iceblue'
 "let g:VM_default_mappings = 0
-let g:VM_leader = {'default': ',', 'visual': ',', 'buffer': ','}
+let g:VM_leader = {'default': '`', 'visual': '`', 'buffer': '`'}
 let g:VM_maps = {}
 let g:VM_custom_motions  = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
 let g:VM_maps['i']         = 'k'
@@ -878,6 +884,7 @@ let g:VM_maps["Redo"]      = '<C-r>'
 " === Far.vim
 " ===
 noremap \f :F  **/*<left><left><left><left><left>
+let g:far#enable_undo = 1
 let g:far#mapping = {
 		\ "replace_undo" : ["l"],
 		\ }
@@ -969,3 +976,34 @@ let g:vmt_fence_closing_text = '/TOC'
 " ===
 nmap s <plug>(SubversiveSubstitute)
 nmap ss <plug>(SubversiveSubstituteLine)
+
+
+
+" ===
+" === vim-calendar
+" ===
+noremap \c :Calendar -position=here<CR>
+noremap \\ :Calendar -view=clock -position=here<CR>
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+let g:calendar_debug = 1
+let g:calendar_cache_directory = 'C:\Users\GRC\.cache\calendar.vim'
+augroup calendar-mappings
+	autocmd!
+	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_up)
+	autocmd FileType calendar nmap <buffer> h <Plug>(calendar_left)
+	autocmd FileType calendar nmap <buffer> j <Plug>(calendar_down)
+	autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
+	autocmd FileType calendar nmap <buffer> <c-k> <Plug>(calendar_move_up)
+	autocmd FileType calendar nmap <buffer> <c-h> <Plug>(calendar_move_left)
+	autocmd FileType calendar nmap <buffer> <c-j> <Plug>(calendar_move_down)
+	autocmd FileType calendar nmap <buffer> <c-l> <Plug>(calendar_move_right)
+	autocmd FileType calendar nmap <buffer> e <Plug>(calendar_start_insert)
+	autocmd FileType calendar nmap <buffer> E <Plug>(calendar_start_insert_head)
+	" unmap <C-n>, <C-p> for other plugins
+	autocmd FileType calendar nunmap <buffer> <C-n>
+	autocmd FileType calendar nunmap <buffer> <C-p>
+augroup END
+
+" credentials
+source C:\Users\Grc\.cache\calendar.vim\credentials.vim
