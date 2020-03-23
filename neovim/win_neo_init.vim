@@ -8,27 +8,32 @@
 
 " Author: @moz
 
+" platform settings				
+if has('win32') || has('win64') || has('win16') || has('win95')
+	let g:iswindows = 1
+	let g:islinux = 0
+	let g:nvim_config_basedir = $USERPROFILE . '/.config/nvim'
+    " set $MYVIMRC
+    " set python3
+elseif
+	let g:islinux = 1
+	let g:iswindows = 0
+    let g:nvim_config_basedir = '~/.config/nvim'
+    " export $MYVIMRC
+    " set python3
+endif
 
 " ===
 " === Auto load for first time uses
 " ===
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
+if empty(glob(nvim_config_basedir . '/autoload/plug.vim'))
     	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
 	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-				
-if has('win32') || has('win64') || has('win16') || has('win95')
-	let g:iswindows = 1
-	let g:islinux = 0
-	set rtp+=C:\Users\GRC\.vim
-elseif
-	let g:islinux = 1
-	let g:iswindows = 0
-	set rtp+=~/.local/share/nvim/site/autoload
-endif
 
-call plug#begin('~/.config/nvim/plugged')
+
+call plug#begin(nvim_config_basedir . '/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'kien/ctrlp.vim', {'on': []}
 Plug 'lervag/vimtex'
@@ -459,7 +464,7 @@ noremap <M-o> :call moz#Change_nerdtree_dir()<cr>
 
 
 """  UltiSnips """""""""""""""""""""""""
-" let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsUsePythonVersion = 2
 " let g:UltiSnipsExpandTrigger = '<tab>'
 " let g:UltiSnipsJumpForwardTrigger = '<tab>'
 " let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
