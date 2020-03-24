@@ -8,37 +8,63 @@
 
 " Author: @moz
 
+""" need todo
+" python3 path: $MOZ_PYTHON3 D:/Anaconda/envs/new3/python ~/Anaconda/envs/new3/python
+" vimrc path: $MOZ_VIMRC /AppData/Local/nvim/init.vim ~/.config/nvim/init.vim
+" github_dir: $MOZ_GITHUB D:/mozli/Documents/GitHub ~/GitHub
+" config dir: $MOZ_CONFIG %USERPROFILE/.config/nvim ~/.config/nvim
+" backup dir: /AppData/Local/nvim/backup ~/.config/nvim/backup
+" temp dir: /AppData/Local/nvim/tmp ~/.config/nvim/tmp
+" plug.vim: nutstore | github
+
+" md_keymaps
+
+
 " platform settings				
 if has('win32') || has('win64') || has('win16') || has('win95')
 	let g:iswindows = 1
 	let g:islinux = 0
-	let g:nvim_config_basedir = $USERPROFILE . '/.config/nvim'
-    " set $MYVIMRC
-    " set python3
+	let g:nvim_config_basedir = $USERPROFILE . '\.config\nvim'
+    let g:nvim_plug = g:nvim_config_basedir . '\autoload\plug.vim'
+    let g:plugged_folder = g:nvim_config_basedir . '\plugged'
+    let g:python3_host_prog= 'D:\Anaconda\envs\new3\python.exe'
+
+    """ need to do 
+    " set location of init.vim $VIMRC_MOZ
+    " set $MYVIMRC (optional)
+    " set python3: let g:python3_host_prog= 
+    " set calendar.vim/credentials.vim
 elseif
 	let g:islinux = 1
 	let g:iswindows = 0
     let g:nvim_config_basedir = '~/.config/nvim'
+    let g:nvim_plug = '~/.config/nvim/autoload/plug.vim'
+    let g:plugged_folder = '~/.config/nvim/plugged'
+
+    """ need to do 
+    " set location of init.vim $VIMRC_MOZ
     " export $MYVIMRC
-    " set python3
+    " set python3: let g:python3_host_prog= 
+    " set calendar.vim/credentials.vim
 endif
-
-
-" set location of init.vim
-let g:initvim_location = nvim_config_basedir . '/init.vim'
 
 
 " ===
 " === Auto load for first time uses
 " ===
-if empty(glob(nvim_config_basedir . '/autoload/plug.vim'))
-    	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+if empty(glob(g:nvim_plug))
+    !curl -Lo g:nvim_plug --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    if g:iswindows
+        mklink %USERPROFILE . 'AppData\Local\nvim\init.vim' $VIMRC_MOZ
+        https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC
+    elseif g:islinux
+        ln $VIMRC_MOZ '/usr/share/nvim/sysinit.vim'
+    endif
+    autocmd VimEnter * PlugInstall --sync | source $VIMRC_MOZ
 endif
 
 
-call plug#begin(nvim_config_basedir . '/plugged')
+call plug#begin(plugged_folder)
 Plug 'scrooloose/nerdtree'
 Plug 'kien/ctrlp.vim', {'on': []}
 Plug 'lervag/vimtex'
@@ -419,7 +445,7 @@ endfunc
 " ===
 " Snippets
 if g:iswindows
-  source C:\Users\GRC\AppData\Local\nvim\md_keymaps.vim
+  execute "source " . fnameescape(g:nvim_config_basedir) . '\md_keymaps.vim'
   "let g:python3_host_prog = 'D:\Anaconda\envs\new3\python'
 endif
 " auto spell
@@ -473,12 +499,13 @@ if !has('python3')
     let g:UltiSnipsUsePythonVersion = 2
 else
     let g:UltiSnipsUsePythonVersion = 3
+endif
 
 " let g:UltiSnipsExpandTrigger = '<tab>'
 " let g:UltiSnipsJumpForwardTrigger = '<tab>'
 " let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 let g:UltiSnipsListSnippets = '<C-Tab>'
-let g:UltiSnipsSnippetDirectories = [nvim_config_basedir . '\UltiSnips','UltiSnips']
+let g:UltiSnipsSnippetDirectories = [string(g:nvim_config_basedir.'\UltiSnips'),'UltiSnips']
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
@@ -810,8 +837,8 @@ let g:repl_position = 0                        " 0表示出现在下方，1表�
 let g:repl_stayatrepl_when_open = 0            " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
 
 
-nmap <leader>s :source initvim_location<cr>
-nmap <leader>e :e initvim_location<cr>
+nmap <leader>s :source $VIMRC_MOZ<cr>
+nmap <leader>e :e $VIMRC_MOZ<cr>
 
 
 " ===
@@ -1016,7 +1043,7 @@ let g:calendar_google_task = 1
 let g:calendar_debug = 1
 
 if g:iswindows
-	let g:calendar_cache_directory = 'C:\Users\GRC\.cache\calendar.vim'
+	let g:calendar_cache_directory = %USERPROFILE% . '\.cache\calendar.vim'
 endif
 
 augroup calendar-mappings
@@ -1038,5 +1065,5 @@ augroup END
 
 " credentials
 if g:iswindows
-	source C:\Users\Grc\.cache\calendar.vim\credentials.vim
+	execute "source " . fnameescape(g:calendar_cache_directory) . '\credentials.vim'
 endif 
