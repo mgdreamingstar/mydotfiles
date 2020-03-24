@@ -575,8 +575,13 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_cmd = 'CtrlPMRU'
 
 """ LeaderF Settings
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
+" before nvim-0.4.2, leaderF dont support popupmenu.
+if has("nvim-0.4.2")
+    let g:Lf_PreviewInPopup = 1
+    let g:Lf_WindowPosition = 'popup'
+    let g:Lf_PreviewPopupWidth = 300
+endif
+
 let g:Lf_PreviewHorizontalPosition = 'right'
 let g:Lf_StlSeparator = { 'left': '►', 'right': '◄', 'font': '' }
  
@@ -588,7 +593,6 @@ let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_HideHelp = 1
 " let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'File': 1, 'Buffer': 1, 'Mru':1, 'Colorscheme':1, 'Function':1, 'BufTag':1, 'Gtags':1}
-let g:Lf_PreviewPopupWidth = 300
 
 
 if s:iswindows
