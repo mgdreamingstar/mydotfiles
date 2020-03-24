@@ -1,16 +1,17 @@
 " 
-"                            _                    
+"			     _			  
 "  _ __ ___   ___ ______   _(_)_ __ ___  _ __ ___ 
 " | '_ ` _ \ / _ \_  /\ \ / / | '_ ` _ \| '__/ __|
 " | | | | | | (_) / /  \ V /| | | | | | | | | (__ 
-" |_| |_| |_|\___/___|  \_/ |_|_| |_| |_|_|  \___|
-"                                                 
+" |_| |_| |_|\___/___|	\_/ |_|_| |_| |_|_|  \___|
+"						  
 
 " Author: @moz
 
 """ FIRST of ALL
-    " set $MYVIMRC and $MOZ_VIMRC
-    " run nvim with: `nvim --cmd "source $MOZ_VIMRC"`
+    " set $MOZ_CONFIG $MOZ_VIMRC and $MYVIMRC
+    " run nvim with: `nvim --cmd \"source $MOZ_VIMRC\"` 
+	" vimrc comment escaped \", in shell don't escape \"
 
     " (optional) manualy make symlinks
     " symlink $MOZ_VIMRC to $VIM/sysinit.vim
@@ -19,8 +20,8 @@
 """ need todo
 
     " set location of init.vim $MOZ_VIMRC and set $MYVIMRC
-        " $MYVIMRC should be '~/.config/init.vim'
-        " $MOZ_VIMRC ~= GitHub/docfiles/win_neo_init.vim
+	" $MYVIMRC should be '~/.config/init.vim'
+	" $MOZ_VIMRC ~= GitHub/docfiles/win_neo_init.vim
 
     " set location of .config/nvim
     " set location of plug.vim (curl or set)
@@ -44,8 +45,8 @@
 " platform settings				
 if has('win32') || has('win64') || has('win16') || has('win95')
 
-	let s:iswindows = 1
-	let s:islinux = 0
+    let s:iswindows = 1
+    let s:islinux = 0
     let s:plug_vim = fnameescape($MOZ_CONFIG . '\autoload\plug.vim')
     let s:plugged_folder = fnameescape($MOZ_CONFIG . '\plugged')
     let s:backup = fnameescape($MOZ_CONFIG . '\moz_tmp\backup')
@@ -53,8 +54,8 @@ if has('win32') || has('win64') || has('win16') || has('win95')
 
 elseif
 
-	let s:islinux = 1
-	let s:iswindows = 0
+    let s:islinux = 1
+    let s:iswindows = 0
     let s:plug_vim = fnameescape($MOZ_CONFIG . '/autoload/plug.vim')
     let s:plugged_folder = fnameescape($MOZ_CONFIG . '/plugged')
     let s:backup = fnameescape($MOZ_CONFIG . '/moz_tmp/backup')
@@ -81,16 +82,16 @@ if empty(glob(expand(s:plug_vim)))
     echom 'plug_vim:'.s:plug_vim
     
     try
-        
-        echom 'not found plug.vim, curling form github'
-        " if download speed < 1 Bytes/s for 5s, then close connection
-        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-limit 5 --speed-limit 1'
+	
+	echom 'not found plug.vim, curling form github'
+	" if download speed < 1 Bytes/s for 5s, then close connection
+	exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-limit 5 --speed-limit 1'
 
     catch 
-        
-        echom 'not found plug.vim, curling from nutstore'
-        " if download speed < 1 Bytes/s for 5s, then close connection
-        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC --speed-limit 5 --speed-limit 1'
+	
+	echom 'not found plug.vim, curling from nutstore'
+	" if download speed < 1 Bytes/s for 5s, then close connection
+	exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC --speed-limit 5 --speed-limit 1'
     
     endtry
 
@@ -98,17 +99,17 @@ if empty(glob(expand(s:plug_vim)))
       " windows
       if s:iswindows
       
-        echom 'make symlink from $MOZ_VIMRC to default init.vim'
-        exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
+	echom 'make symlink from $MOZ_VIMRC to default init.vim'
+	exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
       
       endif
       
       " linux
       if s:islinux
       
-        echom 'make symlink from $MOZ_VIMRC to default init.vim'
-        exec '!ln $MOZ_VIMRC ' . $VIM . ' /sysinit.vim'
-        exec '!ln ' . $MOZ_VIMRC . ' ' . $MYVIMRC
+	echom 'make symlink from $MOZ_VIMRC to default init.vim'
+	exec '!ln $MOZ_VIMRC ' . $VIM . ' /sysinit.vim'
+	exec '!ln ' . $MOZ_VIMRC . ' ' . $MYVIMRC
       endif
 
     autocmd VimEnter * PlugInstall --sync | source $MOZ_VIMRC
@@ -222,7 +223,7 @@ set ts=4  " tab = 4 spaces
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-set noswapfile  " don't use swap file
+set noswapfile	" don't use swap file
 set number
 set autochdir
 set autoindent
@@ -244,7 +245,7 @@ set smartcase
 set inccommand=split
 set completeopt=longest,noinsert,menuone,noselect,preview
 set ttyfast  " make scroll faster
-set lazyredraw  " faster redraw
+set lazyredraw	" faster redraw
 set visualbell
 set colorcolumn=80
 set virtualedit=block
@@ -456,36 +457,36 @@ noremap \r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
     exec "w"
     if &filetype == 'c'
-        exec "!g++ % -o %<"
-        exec "!time ./%<"
+	exec "!g++ % -o %<"
+	exec "!time ./%<"
     elseif &filetype == 'cpp'
-        set splitbelow
-        exec "!g++ -std=c++11 % -Wall -o %<"
-        :sp
-        :res -15
-        :term ./%<
+	set splitbelow
+	exec "!g++ -std=c++11 % -Wall -o %<"
+	:sp
+	:res -15
+	:term ./%<
     elseif &filetype == 'java'
-        exec "!javac %"
-        exec "!time java %<"
+	exec "!javac %"
+	exec "!time java %<"
     elseif &filetype == 'sh'
-        :!time bash %
+	:!time bash %
     elseif &filetype == 'python'
-        set splitbelow
-        :sp
-        :term python3 %
+	set splitbelow
+	:sp
+	:term python3 %
     elseif &filetype == 'html'
-        silent! exec "!".g:mkdp_browser." % &"
+	silent! exec "!".g:mkdp_browser." % &"
     elseif &filetype == 'markdown'
-        exec "MarkdownPreview"
+	exec "MarkdownPreview"
     elseif &filetype == 'tex'
-        silent! exec "VimtexStop"
-        silent! exec "VimtexCompile"
+	silent! exec "VimtexStop"
+	silent! exec "VimtexCompile"
     elseif &filetype == 'dart'
-        CocCommand flutter.run
+	CocCommand flutter.run
     elseif &filetype == 'go'
-        set splitbelow
-        :sp
-        :term go run .
+	set splitbelow
+	:sp
+	:term go run .
     endif
 endfunc
 
@@ -530,7 +531,7 @@ autocmd BufEnter * silent! lcd %:p:h
 
 noremap <M-o> :call moz#Change_nerdtree_dir()<cr>
 " returns true iff is NERDTree open/active
-" function! IsNTOpen()        
+" function! IsNTOpen()	      
 "   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 " endfunction
 " 
@@ -605,7 +606,7 @@ noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
  
 let g:Lf_NormalMap = {
-                     \ "File": [["u", 'exec :LeaderfFile .. <cr>']]
+		     \ "File": [["u", 'exec :LeaderfFile .. <cr>']]
 \}
 
 " let g:Lf_CommandMap = {'<C-]>':['<CR>']}
@@ -711,7 +712,7 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+  return !col || getline('.')[col - 1]	=~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
@@ -768,8 +769,8 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <leader>a	<Plug>(coc-codeaction-selected)
+nmap <leader>a	<Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current line.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -793,10 +794,10 @@ xmap <silent> <TAB> <Plug>(coc-range-select)
 command! -nargs=0 Format :call CocAction('format')
 
 " Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call	 CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR   :call	 CocAction('runCommand', 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
@@ -845,7 +846,7 @@ inoremap <silent><expr> <TAB>
 
 function! s:check_back_space() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+  return !col || getline('.')[col - 1]	=~# '\s'
 endfunction
 
 let g:coc_snippet_next = '<tab>'
@@ -864,15 +865,15 @@ nmap <leader>hv <Plug>(GitGutterPreviewHunk)
 
 """ vim-repl
 let g:repl_program = {
-            \   'python': 'ipython',
-            \   'default': 'zsh',
-            \   'r': 'R',
-            \   'lua': 'lua',
-            \   }
+	    \	'python': 'ipython',
+	    \	'default': 'zsh',
+	    \	'r': 'R',
+	    \	'lua': 'lua',
+	    \	}
 let g:repl_predefine_python = {
-            \   'numpy': 'import numpy as np',
-            \   'matplotlib': 'from matplotlib import pyplot as plt'
-            \   }
+	    \	'numpy': 'import numpy as np',
+	    \	'matplotlib': 'from matplotlib import pyplot as plt'
+	    \	}
 let g:repl_cursor_down = 1
 let g:repl_python_automerge = 1
 let g:repl_ipython_version = '7'
@@ -881,11 +882,11 @@ autocmd Filetype python nnoremap <F12> <Esc>:REPLDebugStopAtCurrentLine<Cr>
 autocmd Filetype python nnoremap <F10> <Esc>:REPLPDBN<Cr>
 autocmd Filetype python nnoremap <F11> <Esc>:REPLPDBS<Cr>
 let g:repl_position = 3
-" let g:repl_width = None                        " 窗口宽度
-" let g:repl_height = None                       " 窗口高度
+" let g:repl_width = None			 " 窗口宽度
+" let g:repl_height = None			 " 窗口高度
 let g:sendtorepl_invoke_key = "<leader>w"      " 传送代码快捷键，默认为<leader>w
-let g:repl_position = 0                        " 0表示出现在下方，1表示出现在上方，2在左边，3在右边
-let g:repl_stayatrepl_when_open = 0            " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
+let g:repl_position = 0			       " 0表示出现在下方，1表示出现在上方，2在左边，3在右边
+let g:repl_stayatrepl_when_open = 0	       " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
 
 
 nmap <leader>s :source $MOZ_VIMRC<cr>
@@ -968,21 +969,21 @@ let g:bookmark_location_list = 1
 " ===
 " === vim-visual-multi
 " ===
-"let g:VM_theme             = 'iceblue'
+"let g:VM_theme		    = 'iceblue'
 "let g:VM_default_mappings = 0
 let g:VM_leader = {'default': '`', 'visual': '`', 'buffer': '`'}
 let g:VM_maps = {}
 let g:VM_custom_motions  = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
-let g:VM_maps['i']         = 'k'
-let g:VM_maps['I']         = 'K'
-let g:VM_maps['Find Under']         = '<C-k>'
+let g:VM_maps['i']	   = 'k'
+let g:VM_maps['I']	   = 'K'
+let g:VM_maps['Find Under']	    = '<C-k>'
 let g:VM_maps['Find Subword Under'] = '<C-k>'
-let g:VM_maps['Find Next']         = ''
-let g:VM_maps['Find Prev']         = ''
+let g:VM_maps['Find Next']	   = ''
+let g:VM_maps['Find Prev']	   = ''
 let g:VM_maps['Remove Region'] = 'q'
 let g:VM_maps['Skip Region'] = ''
-let g:VM_maps["Undo"]      = 'l'
-let g:VM_maps["Redo"]      = '<C-r>'
+let g:VM_maps["Undo"]	   = 'l'
+let g:VM_maps["Redo"]	   = '<C-r>'
 
 
 " ===
@@ -1038,7 +1039,7 @@ map <LEADER>gy :Goyo<CR>
 " ===
 nmap zuz <Plug>(FastFoldUpdate)
 let g:fastfold_savehook = 1
-let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_command_suffixes =	['x','X','a','A','o','O','c','C']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'ze', 'zu']
 let g:markdown_folding = 1
 let g:tex_fold_enabled = 1
