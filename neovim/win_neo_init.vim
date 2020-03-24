@@ -8,63 +8,106 @@
 
 " Author: @moz
 
+""" FIRST of ALL
+    " symlink vimrc to $VIM/init.vim
+
 """ need todo
-" python3 path: $MOZ_PYTHON3 D:/Anaconda/envs/new3/python ~/Anaconda/envs/new3/python
+
+    " set location of init.vim $MOZ_VIMRC or set $MYVIMRC (optional)
+    " set location of .config/nvim
+    " set location of plug.vim (curl or set)
+    " set location of plugged
+    " set python3: let g:python3_host_prog
+    " set backupdir
+    " set directory (tmp folder)
+    " set calendar.vim/credentials.vim
+
 " vimrc path: $MOZ_VIMRC /AppData/Local/nvim/init.vim ~/.config/nvim/init.vim
-" github_dir: $MOZ_GITHUB D:/mozli/Documents/GitHub ~/GitHub
 " config dir: $MOZ_CONFIG %USERPROFILE/.config/nvim ~/.config/nvim
+" python3 path: $MOZ_PYTHON3 D:/Anaconda/envs/new3/python ~/Anaconda/envs/new3/python
+" github_dir: $MOZ_GITHUB D:/mozli/Documents/GitHub ~/GitHub
 " backup dir: /AppData/Local/nvim/backup ~/.config/nvim/backup
 " temp dir: /AppData/Local/nvim/tmp ~/.config/nvim/tmp
-" plug.vim: nutstore | github
-
+" plug.vim: Curl: nutstore | github ---> Set 
+" plugged
 " md_keymaps
 
 
 " platform settings				
 if has('win32') || has('win64') || has('win16') || has('win95')
-	let g:iswindows = 1
-	let g:islinux = 0
-	let g:nvim_config_basedir = $USERPROFILE . '\.config\nvim'
-    let g:nvim_plug = g:nvim_config_basedir . '\autoload\plug.vim'
-    let g:plugged_folder = g:nvim_config_basedir . '\plugged'
-    let g:python3_host_prog= 'D:\Anaconda\envs\new3\python.exe'
 
-    """ need to do 
-    " set location of init.vim $VIMRC_MOZ
-    " set $MYVIMRC (optional)
-    " set python3: let g:python3_host_prog= 
-    " set calendar.vim/credentials.vim
+	let s:iswindows = 1
+	let s:islinux = 0
+    let s:plug_vim = fnameescape($MOZ_CONFIG . '\autoload\plug.vim')
+    let s:plugged_folder = fnameescape($MOZ_CONFIG . '\plugged')
+    let s:backup = fnameescape($MOZ_CONFIG . '\moz_tmp\backup')
+    let s:tmp = fnameescape($MOZ_CONFIG . '\moz_tmp\tmp')
+
 elseif
-	let g:islinux = 1
-	let g:iswindows = 0
-    let g:nvim_config_basedir = '~/.config/nvim'
-    let g:nvim_plug = '~/.config/nvim/autoload/plug.vim'
-    let g:plugged_folder = '~/.config/nvim/plugged'
 
-    """ need to do 
-    " set location of init.vim $VIMRC_MOZ
-    " export $MYVIMRC
-    " set python3: let g:python3_host_prog= 
-    " set calendar.vim/credentials.vim
+	let s:islinux = 1
+	let s:iswindows = 0
+    let s:plug_vim = fnameescape($MOZ_CONFIG . '/autoload/plug.vim')
+    let s:plugged_folder = fnameescape($MOZ_CONFIG . '/plugged')
+    let s:backup = fnameescape($MOZ_CONFIG . '/moz_tmp/backup')
+    let s:tmp = fnameescape($MOZ_CONFIG . '/moz_tmp/tmp')
+
 endif
 
 
 " ===
-" === Auto load for first time uses
+" === Auto load for first time users
 " ===
-if empty(glob(g:nvim_plug))
-    !curl -Lo g:nvim_plug --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    if g:iswindows
-        mklink %USERPROFILE . 'AppData\Local\nvim\init.vim' $VIMRC_MOZ
-        https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC
-    elseif g:islinux
-        ln $VIMRC_MOZ '/usr/share/nvim/sysinit.vim'
-    endif
-    autocmd VimEnter * PlugInstall --sync | source $VIMRC_MOZ
+
+if exists('debug')
+
+  " echom will send info to message-history
+  echom 'expand(s:plug_vim):'.expand(s:plug_vim)
+  echom 'glob(expand(s:plug_vim)):'.string(glob(expand(s:plug_vim)))
+  echom 'empty(glob(expand(s:plug_vim))):'.string(empty(glob(expand(s:plug_vim))))
+
+endif
+
+if empty(glob(expand(s:plug_vim)))
+    
+    echom 'plug_vim:'.s:plug_vim
+    
+    try
+        
+        echom 'not found plug.vim, curling form github'
+        " if download speed < 1 Bytes/s for 5s, then close connection
+        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-limit 5 --speed-limit 1'
+
+    catch 
+        
+        echom 'not found plug.vim, curling from nutstore'
+        " if download speed < 1 Bytes/s for 5s, then close connection
+        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC --speed-limit 5 --speed-limit 1'
+    
+    endtry
+
+    " todo 
+      " windows
+      if s:iswindows
+      
+        echom 'make symlink from $MOZ_VIMRC to default init.vim'
+        exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
+      
+      endif
+      
+      " linux
+      if s:islinux
+      
+        echom 'make symlink from $MOZ_VIMRC to default init.vim'
+        exec "!ln $MOZ_VIMRC /usr/share/nvim/sysinit.vim"
+      
+      endif
+
+    autocmd VimEnter * PlugInstall --sync | source $MOZ_VIMRC
 endif
 
 
-call plug#begin(plugged_folder)
+call plug#begin(s:plugged_folder)
 Plug 'scrooloose/nerdtree'
 Plug 'kien/ctrlp.vim', {'on': []}
 Plug 'lervag/vimtex'
@@ -444,8 +487,8 @@ endfunc
 " === Markdown Settings
 " ===
 " Snippets
-if g:iswindows
-  execute "source " . fnameescape(g:nvim_config_basedir) . '\md_keymaps.vim'
+if s:iswindows
+  execute "source " . $MOZ_CONFIG . '\md_keymaps.vim'
   "let g:python3_host_prog = 'D:\Anaconda\envs\new3\python'
 endif
 " auto spell
@@ -455,7 +498,7 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 
 " NERDTree
 " 进入工作目录
-if g:iswindows
+if s:iswindows
     autocmd VimEnter * NERDTree D:\mozli\Documents\github\
 endif
 
@@ -505,7 +548,7 @@ endif
 " let g:UltiSnipsJumpForwardTrigger = '<tab>'
 " let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 let g:UltiSnipsListSnippets = '<C-Tab>'
-let g:UltiSnipsSnippetDirectories = [string(g:nvim_config_basedir.'\UltiSnips'),'UltiSnips']
+let g:UltiSnipsSnippetDirectories = [$MOZ_CONFIG.'\UltiSnips','UltiSnips']
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
@@ -539,7 +582,7 @@ let g:Lf_PreviewResult = {'File': 1, 'Buffer': 1, 'Mru':1, 'Colorscheme':1, 'Fun
 let g:Lf_PreviewPopupWidth = 300
 
 
-if g:iswindows
+if s:iswindows
     " autocomplete in command 
     cnoremap 'ld1 LeaderfFile D:\mozli\Documents\GitHub
 endif
@@ -582,7 +625,7 @@ noremap go :<C-U>Leaderf! rg --recall<CR>
 """ Gtag Settings
 let $GTAGSLABEL = 'native-pygments'
 
-if g:iswindows
+if s:iswindows
     let $GTAGSCONF = 'D:\Program Files\gtags663\share\gtags\gtags.conf'
 endif
 
@@ -837,8 +880,8 @@ let g:repl_position = 0                        " 0表示出现在下方，1表�
 let g:repl_stayatrepl_when_open = 0            " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
 
 
-nmap <leader>s :source $VIMRC_MOZ<cr>
-nmap <leader>e :e $VIMRC_MOZ<cr>
+nmap <leader>s :source $MOZ_VIMRC<cr>
+nmap <leader>e :e $MOZ_VIMRC<cr>
 
 
 " ===
@@ -1042,8 +1085,8 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 let g:calendar_debug = 1
 
-if g:iswindows
-	let g:calendar_cache_directory = %USERPROFILE% . '\.cache\calendar.vim'
+if s:iswindows
+	let s:calendar_cache_directory = $USERPROFILE . '\.cache\calendar.vim'
 endif
 
 augroup calendar-mappings
@@ -1064,6 +1107,6 @@ augroup calendar-mappings
 augroup END
 
 " credentials
-if g:iswindows
-	execute "source " . fnameescape(g:calendar_cache_directory) . '\credentials.vim'
+if s:iswindows
+	execute "source " . fnameescape(s:calendar_cache_directory) . '\credentials.vim'
 endif 
