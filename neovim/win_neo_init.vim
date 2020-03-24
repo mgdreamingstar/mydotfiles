@@ -9,11 +9,19 @@
 " Author: @moz
 
 """ FIRST of ALL
-    " symlink vimrc to $VIM/init.vim
+    " set $MYVIMRC and $MOZ_VIMRC
+    " run nvim with: `nvim --cmd "source $MOZ_VIMRC"`
+
+    " (optional) manualy make symlinks
+    " symlink $MOZ_VIMRC to $VIM/sysinit.vim
+    " symlink $MOZ_VIMRC to $MYVIMRC, ie `ln $MOZ_VIMRC $MYVIMRC`
 
 """ need todo
 
-    " set location of init.vim $MOZ_VIMRC or set $MYVIMRC (optional)
+    " set location of init.vim $MOZ_VIMRC and set $MYVIMRC
+        " $MYVIMRC should be '~/.config/init.vim'
+        " $MOZ_VIMRC ~= GitHub/docfiles/win_neo_init.vim
+
     " set location of .config/nvim
     " set location of plug.vim (curl or set)
     " set location of plugged
@@ -99,8 +107,8 @@ if empty(glob(expand(s:plug_vim)))
       if s:islinux
       
         echom 'make symlink from $MOZ_VIMRC to default init.vim'
-        exec "!ln $MOZ_VIMRC /usr/share/nvim/sysinit.vim"
-      
+        exec '!ln $MOZ_VIMRC ' . $VIM . ' /sysinit.vim'
+        exec '!ln ' . $MOZ_VIMRC . ' ' . $MYVIMRC
       endif
 
     autocmd VimEnter * PlugInstall --sync | source $MOZ_VIMRC
