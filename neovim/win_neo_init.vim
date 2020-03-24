@@ -52,7 +52,7 @@ if has('win32') || has('win64') || has('win16') || has('win95')
     let s:backup = fnameescape($MOZ_CONFIG . '\moz_tmp\backup')
     let s:tmp = fnameescape($MOZ_CONFIG . '\moz_tmp\tmp')
 
-elseif
+else
 
     let s:islinux = 1
     let s:iswindows = 0
