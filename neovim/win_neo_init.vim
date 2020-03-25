@@ -410,6 +410,8 @@ noremap <c-k> :tabe<CR>:-tabmove<CR>:term lazygit<CR>
 
 " Open up pudb
 noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
+" Run script with Python
+nnoremap <M-r> :call moz#RunPython()<cr>
 "noremap <f5> :tab sp<CR>:term python3 -m pudb %<CR>
 "
 " copy and paste
