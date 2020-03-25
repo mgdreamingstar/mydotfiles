@@ -7,8 +7,9 @@ export APT_CONFIG=~/apt_proxy.conf  # apt-get proxy
 export MOZ_VIMRC=/root/GitHub/mydotfiles/neovim/win_neo_init.vim
 export MOZ_CONFIG=~/.config/nvim
 export MOZ_GITHUB=/root/GitHub
-export MOZ_PYTHON3=~/anaconda/envs/new3/python
+export MOZ_PYTHON3=~/anaconda3/envs/new3/bin/python
 
+setopt no_nomatch
 
 [[ -s /root/.autojump/etc/profile.d/autojump.sh ]] && source /root/.autojump/etc/profile.d/autojump.sh
 autoload -U compinit && compinit -u
