@@ -96,7 +96,7 @@ if exists('setup') && empty(glob(expand(s:plug_vim)))
     
         echom 'not found plug.vim, curling form github'
         " if download speed < 1 Bytes/s for 5s, then close connection
-        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-limit 5 --speed-limit 1'
+        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-time 3 --speed-limit 1000'
 
     catch 
 
