@@ -8,35 +8,52 @@
 
 " Author: @moz
 
-""" FIRST of ALL
-    " set $MOZ_CONFIG $MOZ_VIMRC and $MYVIMRC
+" FIRST_of_ALL:
+    " set $MOZ_CONFIG $MOZ_VIMRC 
         " run nvim with: `nvim --cmd \"source $MOZ_VIMRC\"` 
-        " vimrc comment escaped \", in shell don't escape \"
+        " As vimrc comment, escaped \"; in shell don't escape \"
 
     " (optional) manualy make symlinks
     " symlink $MOZ_VIMRC to $VIM/sysinit.vim
-    " symlink $MOZ_VIMRC to $MYVIMRC, ie `ln $MOZ_VIMRC $MYVIMRC`
+    " symlink $MOZ_VIMRC to $USERPROFILE\AppData\Local\nvim\init.vim
 
-""" need todo
+" Need_Todo:
 
-    " set location of init.vim $MOZ_VIMRC and set $MYVIMRC
-        " $MYVIMRC should be '~/.config/init.vim'
+    " set location of init.vim $MOZ_VIMRC 
         " $MOZ_VIMRC ~= GitHub/docfiles/win_neo_init.vim
-
     " $MOZ_CONFIG: set location of .config/nvim
-    " $MOZ_VIMRC: set location of plug.vim (curl or set)
+    " $MOZ_GITHUB
+    " plug.vim: set location of plug.vim (curl or set)
     " $MOZ_PYTHON3: set python3: let g:python3_host_prog
-    " curl autoload files: GitHub/dotfiles/moz.vim
+    " cp files: UltiSnips \ GitHub/dotfiles/moz.vim \ md_keymaps.vim
     " set backupdir
     " set directory (tmp folder)
     " set calendar.vim/credentials.vim
 
-" vimrc path: $MOZ_VIMRC /AppData/Local/nvim/init.vim ~/.config/nvim/init.vim
-" config dir: $MOZ_CONFIG %USERPROFILE/.config/nvim ~/.config/nvim
-" python3 path: $MOZ_PYTHON3 D:/Anaconda/envs/new3/python ~/Anaconda/envs/new3/python
-" github_dir: $MOZ_GITHUB D:/mozli/Documents/GitHub ~/GitHub
-" backup dir: /AppData/Local/nvim/backup ~/.config/nvim/backup
-" temp dir: /AppData/Local/nvim/tmp ~/.config/nvim/tmp
+" Vimrc_path: $MOZ_VIMRC 
+"   - /AppData/Local/nvim/init.vim 
+"   - $VIM/sysinit.vim
+"
+" Config_dir: $MOZ_CONFIG 
+"   - %USERPROFILE/.config/nvim 
+"   - ~/.config/nvim
+"
+" GitHub_dir: $MOZ_GITHUB 
+"   - D:/mozli/Documents/GitHub 
+"   - ~/GitHub
+"
+" Python3_path: $MOZ_PYTHON3 
+"   - D:/Anaconda/envs/new3/python 
+"   - ~/Anaconda/envs/new3/python
+"
+" Backup_dir: 
+"   - /AppData/Local/nvim/backup 
+"   - ~/.config/nvim/backup
+"
+" Temp_dir:
+"   - /AppData/Local/nvim/tmp 
+"   - ~/.config/nvim/tmp
+"
 " plug.vim: Curl: nutstore | github ---> Set 
 " plugged
 " md_keymaps
@@ -83,34 +100,37 @@ if empty(glob(expand(s:plug_vim)))
     
     try
     
-    echom 'not found plug.vim, curling form github'
-    " if download speed < 1 Bytes/s for 5s, then close connection
-    exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-limit 5 --speed-limit 1'
+        echom 'not found plug.vim, curling form github'
+        " if download speed < 1 Bytes/s for 5s, then close connection
+        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-limit 5 --speed-limit 1'
 
     catch 
     
-    echom 'not found plug.vim, curling from nutstore'
-    " if download speed < 1 Bytes/s for 5s, then close connection
-    exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC --speed-limit 5 --speed-limit 1'
+        echom 'not found plug.vim, curling from nutstore'
+        " if download speed < 1 Bytes/s for 5s, then close connection
+        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC --speed-limit 5 --speed-limit 1'
     
     endtry
 
     " todo 
-      " windows
-      if s:iswindows
+    " windows
+    if s:iswindows
       
-    echom 'make symlink from $MOZ_VIMRC to default init.vim'
-    exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
+        echom 'make symlink from $MOZ_VIMRC to default init.vim'
+        exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
+
+        if empty(glob(expand($MOZ_CONFIG.'\autoload\moz.vim')))
+        exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_GITHUB . '\mydotfiles\neovim\'
       
-      endif
+    endif
       
-      " linux
-      if s:islinux
+    " linux
+    if s:islinux
       
-    echom 'make symlink from $MOZ_VIMRC to default init.vim'
-    exec '!ln $MOZ_VIMRC ' . $VIM . ' /sysinit.vim'
-    exec '!ln ' . $MOZ_VIMRC . ' ' . $MYVIMRC
-      endif
+        echom 'make symlink from $MOZ_VIMRC to default init.vim'
+        exec '!ln ' . $MOZ_VIMRC . ' ' . $VIM . ' /sysinit.vim'
+
+    endif
 
     autocmd VimEnter * PlugInstall --sync | source $MOZ_VIMRC
 endif
@@ -306,7 +326,9 @@ noremap <C-U> 5<C-y>
 noremap <C-E> 5<C-e>
 
 " insert mode: move to end
-inoremap <C-e> <Esc>A
+inoremap <C-l> <Esc>A
+" insert mode: move to start
+inoremap <C-h> <Esc>I
 
 " command mode: move cursor 
 cnoremap <C-a> <Home>
@@ -418,7 +440,7 @@ endif
 
 " terminal
 tnoremap <Esc> <C-\><C-n>
-tnoremap <C-O> <C-\><C-n><C-O>
+tnoremap <C-o> <C-\><C-n><C-O>
 tnoremap <M-h> <C-\><C-N><C-w>h
 tnoremap <M-j> <C-\><C-N><C-w>j
 tnoremap <M-k> <C-\><C-N><C-w>k
@@ -515,6 +537,7 @@ endif
 " " 当打开 NERDTree 窗口时，自动显示 Bookmarks
 let NERDTreeShowBookmarks=1
 let NERDTreeShowHidden=1
+let G
 " " 打开编辑器时，光标在右侧窗口
 wincmd w
 autocmd VimEnter * wincmd w
