@@ -3,9 +3,9 @@
     "globals" : 
     {
         "alwaysShowTabs" : true,
-        "defaultProfile" : "{2c4de342-38b7-51cf-b940-2309a097f518}",
-        "initialCols" : 150,
-        "initialRows" : 40,
+        "defaultProfile" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+        "initialCols" : 180,
+        "initialRows" : 45,
         "keybindings" : 
         [
             {
@@ -33,7 +33,7 @@
                 "command" : "closeTab",
                 "keys" : 
                 [
-                    "ctrl+w"
+                    "ctrl+shift+w"
                 ]
             },
             {
