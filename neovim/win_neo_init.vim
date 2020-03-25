@@ -9,27 +9,22 @@
 " Author: @moz
 
 " FIRST_of_ALL:
-    " set $MOZ_CONFIG $MOZ_VIMRC 
-        " run nvim with: `nvim --cmd \"source $MOZ_VIMRC\"` 
-        " As vimrc comment, escaped \"; in shell don't escape \"
-
-    " (optional) manualy make symlinks
-    " symlink $MOZ_VIMRC to $VIM/sysinit.vim
-    " symlink $MOZ_VIMRC to $USERPROFILE\AppData\Local\nvim\init.vim
+"
+    " 1. set $MOZ_CONFIG $MOZ_VIMRC 
+        " $MOZ_CONFIG = .config/nvim
+        " $MOZ_VIMRC ~= GitHub/docfiles/win_neo_init.vim
+        "
+    " 2. run nvim with: `nvim --cmd \"source $MOZ_VIMRC\"` 
+            " As vimrc comment, escaped \"; in shell don't escape \"
 
 " Need_Todo:
-
-    " set location of init.vim $MOZ_VIMRC 
-        " $MOZ_VIMRC ~= GitHub/docfiles/win_neo_init.vim
-    " $MOZ_CONFIG: set location of .config/nvim
-    " $MOZ_GITHUB
-    " plug.vim: set location of plug.vim (curl or set)
-    " $MOZ_PYTHON3: set python3: let g:python3_host_prog
-    " cp files: UltiSnips \ GitHub/dotfiles/moz.vim \ md_keymaps.vim
+"
+    " set $MOZ_GITHUB \ $MOZ_PYTHON3
     " set backupdir
     " set directory (tmp folder)
     " set calendar.vim/credentials.vim
 
+" Info:
 " Vimrc_path: $MOZ_VIMRC 
 "   - /AppData/Local/nvim/init.vim 
 "   - $VIM/sysinit.vim
@@ -66,6 +61,7 @@ if has('win32') || has('win64') || has('win16') || has('win95')
     let s:islinux = 0
     let s:plug_vim = fnameescape($MOZ_CONFIG . '\autoload\plug.vim')
     let s:plugged_folder = fnameescape($MOZ_CONFIG . '\plugged')
+    let s:mydotfiles = fnameescape($MOZ_GITHUB . '\mydotfiles\neovim')
     let s:backup = fnameescape($MOZ_CONFIG . '\moz_tmp\backup')
     let s:tmp = fnameescape($MOZ_CONFIG . '\moz_tmp\tmp')
 
@@ -75,6 +71,7 @@ else
     let s:iswindows = 0
     let s:plug_vim = fnameescape($MOZ_CONFIG . '/autoload/plug.vim')
     let s:plugged_folder = fnameescape($MOZ_CONFIG . '/plugged')
+    let s:mydotfiles = fnameescape($MOZ_GITHUB . '/mydotfiles/neovim')
     let s:backup = fnameescape($MOZ_CONFIG . '/moz_tmp/backup')
     let s:tmp = fnameescape($MOZ_CONFIG . '/moz_tmp/tmp')
 
@@ -96,7 +93,7 @@ endif
 
 if empty(glob(expand(s:plug_vim)))
     
-    echom 'plug_vim:'.s:plug_vim
+    echom 'there is no plug_vim:'.s:plug_vim
     
     try
     
@@ -105,10 +102,30 @@ if empty(glob(expand(s:plug_vim)))
         exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-limit 5 --speed-limit 1'
 
     catch 
-    
-        echom 'not found plug.vim, curling from nutstore'
-        " if download speed < 1 Bytes/s for 5s, then close connection
-        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC --speed-limit 5 --speed-limit 1'
+
+        echom 'download failed, copying from GitHub/mydotfiles'
+
+        if s:iswindows
+
+            exec '!copy ' . expand(s:mydotfiles) . '\win_neo_autoload\plug.vim ' . expand(s:plug_vim)
+            exec '!copy ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
+            exec '!copy ' . expand(s:mydotfiles) . '\md_keymaps.vim ' . $MOZ_CONFIG . '\md_keymaps.vim'
+            exec '!xcopy /E /I ' . expand(s:mydotfiles) . '\UltiSnips ' . $MOZ_CONFIG . '\UltiSnips'
+
+        endif
+
+        if s:islinux
+
+            exec '!cp ' . expand(s:mydotfiles) . '\win_neo_autoload\plug.vim ' . expand(s:plug_vim)
+            exec '!cp ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
+            exec '!cp ' . expand(s:mydotfiles) . '\md_keymaps.vim ' . $MOZ_CONFIG . '\md_keymaps.vim'
+            exec '!cp ' . expand(s:mydotfiles) . '\UltiSnips ' . $MOZ_CONFIG . '\UltiSnips'
+
+        endif
+
+        "echom 'not found plug.vim, curling from nutstore'
+        "" if download speed < 1 Bytes/s for 5s, then close connection
+        "exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC --speed-limit 5 --speed-limit 1'
     
     endtry
 
@@ -119,9 +136,6 @@ if empty(glob(expand(s:plug_vim)))
         echom 'make symlink from $MOZ_VIMRC to default init.vim'
         exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
 
-        if empty(glob(expand($MOZ_CONFIG.'\autoload\moz.vim')))
-        exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_GITHUB . '\mydotfiles\neovim\'
-      
     endif
       
     " linux
@@ -537,7 +551,6 @@ endif
 " " 当打开 NERDTree 窗口时，自动显示 Bookmarks
 let NERDTreeShowBookmarks=1
 let NERDTreeShowHidden=1
-let G
 " " 打开编辑器时，光标在右侧窗口
 wincmd w
 autocmd VimEnter * wincmd w
