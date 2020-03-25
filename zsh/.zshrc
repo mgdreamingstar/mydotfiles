@@ -3,8 +3,13 @@
 # Path to your oh-my-zsh installation.
 export PATH="/mnt/d/Program Files/gifsicle-1.89.win64:$PATH"
 export ZSH=$HOME/.oh-my-zsh
-export http_proxy=http://127.0.0.1:7890
-export https_proxy=http://127.0.0.1:7891
+export APT_CONFIG=~/apt_proxy.conf  # apt-get proxy
+export MYVIMRC=~/.config/init.vim
+export MOZ_VIMRC=/root/GitHub/mydotfiles/neovim/win_neo_init.vim
+export MOZ_CONFIG=~/.config/nvim
+export MOZ_GITHUB=/root/GitHub
+export MOZ_PYTHON3=~/anaconda/envs/new3/python
+
 
 [[ -s /root/.autojump/etc/profile.d/autojump.sh ]] && source /root/.autojump/etc/profile.d/autojump.sh
 autoload -U compinit && compinit -u
@@ -118,9 +123,9 @@ alias ju="jupyter notebook --allow-root"
 alias ip="ipython"
 
 proxyon() {
-	export https_proxy=http://127.0.0.1:7890
-	export http_proxy=http://127.0.0.1:7890
-	export all_proxy=socks5://127.0.0.1:7891
+	export https_proxy=http://192.168.50.188:6152
+	export http_proxy=http://192.168.50.188:6153
+	export all_proxy=socks5://192.168.50.188:6153
         echo "HTTP/HTTPS Proxy on"
 }
 
