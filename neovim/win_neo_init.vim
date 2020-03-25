@@ -250,6 +250,8 @@ set visualbell
 set colorcolumn=80
 set virtualedit=block
 
+"let g:python_host_prog = 'D:\Anaconda\python'
+let g:python3_host_prog = $MOZ_PYTHON3
 
 
 " Or if you have Neovim >= 0.1.5
@@ -390,15 +392,15 @@ vnoremap <C-Insert> "+y
 
 
 " 在分割窗口之间移动
-nmap <A-h> <C-w>h
-nmap <A-j> <C-w>j
-nmap <A-k> <C-w>k
-nmap <A-l> <C-w>l
+nmap <M-h> <C-w>h
+nmap <M-j> <C-w>j
+nmap <M-k> <C-w>k
+nmap <M-l> <C-w>l
 
-inoremap <A-h> <C-\><C-N><C-w>h
-inoremap <A-j> <C-\><C-N><C-w>j
-inoremap <A-k> <C-\><C-N><C-w>k
-inoremap <A-l> <C-\><C-N><C-w>l
+inoremap <M-h> <C-\><C-N><C-w>h
+inoremap <M-j> <C-\><C-N><C-w>j
+inoremap <M-k> <C-\><C-N><C-w>k
+inoremap <M-l> <C-\><C-N><C-w>l
 
 " always split windows vertically
 set splitright
@@ -417,10 +419,10 @@ endif
 " terminal
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-O> <C-\><C-n><C-O>
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
+tnoremap <M-h> <C-\><C-N><C-w>h
+tnoremap <M-j> <C-\><C-N><C-w>j
+tnoremap <M-k> <C-\><C-N><C-w>k
+tnoremap <M-l> <C-\><C-N><C-w>l
 map <leader>tt :vnew term://bash<cr>
 au TermOpen * startinsert
 " nnoremap \t :tabe<cr>:-tabmove<cr>:term sh -c 'st'<cr><C-\><C-N>:q<cr>
@@ -498,7 +500,6 @@ endfunc
 " Snippets
 if s:iswindows
   execute "source " . $MOZ_CONFIG . '\md_keymaps.vim'
-  "let g:python3_host_prog = 'D:\Anaconda\envs\new3\python'
 endif
 " auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell 
@@ -524,8 +525,10 @@ map <F8> :NERDTreeToggle<cr>
 
 " change the working directory and print out after changing
 nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
+
 " Auto change directory to current dir
-autocmd BufEnter * silent! lcd %:p:h
+"autocmd BufEnter * silent! lcd %:p:h
+"
 " change the dir of nerdtree and move back the cursor
 " autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
 
@@ -553,10 +556,11 @@ else
     let g:UltiSnipsUsePythonVersion = 3
 endif
 
-" let g:UltiSnipsExpandTrigger = '<tab>'
-" let g:UltiSnipsJumpForwardTrigger = '<tab>'
+" should set ExpandTrigger: coc will use <tab>
+let g:UltiSnipsExpandTrigger = '<M-m>'
+let g:UltiSnipsJumpForwardTrigger = '<M-m>'
 " let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:UltiSnipsListSnippets = '<C-Tab>'
+let g:UltiSnipsListSnippets = '<M-n>'
 let g:UltiSnipsSnippetDirectories = [$MOZ_CONFIG.'\UltiSnips','UltiSnips']
 
 """ airline
@@ -827,20 +831,20 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " coc-snippets settings
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
+" " Use <C-l> for trigger snippet expand.
+" imap <C-l> <Plug>(coc-snippets-expand)
+" 
+" " Use <C-j> for select text for visual placeholder of snippet.
+" vmap <C-j> <Plug>(coc-snippets-select)
+" 
+" " Use <C-j> for jump to next placeholder, it's default of coc.nvim
+" let g:coc_snippet_next = '<c-j>'
+" 
+" " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+" let g:coc_snippet_prev = '<c-k>'
+" 
+" " Use <C-j> for both expand and jump (make expand higher priority.)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
@@ -1123,3 +1127,33 @@ augroup END
 if s:iswindows
     execute "source " . fnameescape(s:calendar_cache_directory) . '\credentials.vim'
 endif 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" THIS IS SOME CODE BACKUP
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" this one fix the runtime error R6034 error. ref:
+" https://stackoverflow.com/questions/14552348/runtime-error-r6034-in-embedded-python-application/34989113#34989113
+" 
+" how: fix $PATH, find which path has 'msvcr\d\d.dll', 
+" and then remove the path.
+"python << EOF
+"import os, re
+"path = os.environ['PATH'].split(';')
+
+"def is_problem(folder):
+    "try:
+        "for item in os.listdir(folder):
+            "if re.match(r'msvcr\d\d\.dll', item):
+                "return True
+    "except:
+        "pass
+    "return False
+
+"path = [folder for folder in path if not is_problem(folder)]
+"os.environ['PATH'] = ';'.join(path)
+"with open('D:\Downloads\Temp\path.txt', 'w') as f:
+    "f.write(path)
+"EOF
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
