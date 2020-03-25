@@ -11,7 +11,7 @@
 " FIRST_of_ALL:
 "
     " 1. set $MOZ_CONFIG $MOZ_VIMRC 
-    " 2. run nvim with: `nvim --cmd \"source $MOZ_VIMRC\"` 
+    " 2. run nvim with: `nvim --cmd \"let setup=1 source $MOZ_VIMRC\"` 
             " As vimrc comment, escaped \"; in shell don't escape \"
 
 " Need_Todo:
@@ -138,10 +138,10 @@ endif
 if exists('setup') && s:islinux
       
     echom 'make symlink from $MOZ_VIMRC to default init.vim'
-    exec '!ln ' . $MOZ_VIMRC . ' ' . $VIM . ' /sysinit.vim'
-    exec '!cp ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
-    exec '!cp ' . expand(s:mydotfiles) . '\md_keymaps.vim ' . $MOZ_CONFIG . '\md_keymaps.vim'
-    exec '!cp ' . expand(s:mydotfiles) . '\UltiSnips ' . $MOZ_CONFIG . '\UltiSnips'
+    exec '!ln ' . $MOZ_VIMRC . ' ' . $VIM . '/sysinit.vim'
+    exec '!cp ' . expand(s:mydotfiles) . '/win_neo_autoload/moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
+    exec '!cp ' . expand(s:mydotfiles) . '/md_keymaps.vim ' . $MOZ_CONFIG . '/md_keymaps.vim'
+    exec '!cp ' . expand(s:mydotfiles) . '/UltiSnips ' . $MOZ_CONFIG . '/UltiSnips'
 
 endif
 
