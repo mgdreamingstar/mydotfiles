@@ -92,13 +92,12 @@ if exists('setup') && empty(glob(expand(s:plug_vim)))
     
     echom 'there is no plug_vim:'.s:plug_vim
     
-    try
+    echom 'not found plug.vim, curling form github'
+    " if download speed < 1k Bytes/s for 3s, then close connection
+    "exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-time 3 --speed-limit 1000'
+    exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --max-time 10'
     
-        echom 'not found plug.vim, curling form github'
-        " if download speed < 1 Bytes/s for 5s, then close connection
-        exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-time 3 --speed-limit 1000'
-
-    catch 
+    if v:shell_error
 
         echom 'download failed, copying from GitHub/mydotfiles'
 
@@ -110,7 +109,7 @@ if exists('setup') && empty(glob(expand(s:plug_vim)))
 
         if s:islinux
 
-            exec '!cp ' . expand(s:mydotfiles) . '\win_neo_autoload\plug.vim ' . expand(s:plug_vim)
+            exec '!cp ' . expand(s:mydotfiles) . '/win_neo_autoload/plug.vim ' . expand(s:plug_vim)
 
         endif
 
@@ -118,7 +117,7 @@ if exists('setup') && empty(glob(expand(s:plug_vim)))
         "" if download speed < 1 Bytes/s for 5s, then close connection
         "exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC --speed-limit 5 --speed-limit 1'
     
-    endtry
+    endif
 
 endif
 
@@ -138,15 +137,15 @@ endif
 if exists('setup') && s:islinux
       
     echom 'make symlink from $MOZ_VIMRC to default init.vim'
-    exec '!ln ' . $MOZ_VIMRC . ' ' . $VIM . '/sysinit.vim'
-    exec '!cp ' . expand(s:mydotfiles) . '/win_neo_autoload/moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
+    exec '!ln -s ' . $MOZ_VIMRC . ' ' . $VIM . '/sysinit.vim'
+    exec '!cp ' . expand(s:mydotfiles) . '/win_neo_autoload/moz.vim ' . $MOZ_CONFIG . '/autoload/moz.vim' 
     exec '!cp ' . expand(s:mydotfiles) . '/md_keymaps.vim ' . $MOZ_CONFIG . '/md_keymaps.vim'
-    exec '!cp ' . expand(s:mydotfiles) . '/UltiSnips ' . $MOZ_CONFIG . '/UltiSnips'
+    exec '!cp -vR ' . expand(s:mydotfiles) . '/UltiSnips/. ' . $MOZ_CONFIG . '/UltiSnips/'
 
 endif
 
 if exists('setup')
-    autocmd VimEnter * PlugInstall --sync | source $MOZ_VIMRC
+    autocmd VimEnter * PlugInstall --sync
 endif
 
 
