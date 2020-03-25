@@ -11,9 +11,6 @@
 " FIRST_of_ALL:
 "
     " 1. set $MOZ_CONFIG $MOZ_VIMRC 
-        " $MOZ_CONFIG = .config/nvim
-        " $MOZ_VIMRC ~= GitHub/docfiles/win_neo_init.vim
-        "
     " 2. run nvim with: `nvim --cmd \"source $MOZ_VIMRC\"` 
             " As vimrc comment, escaped \"; in shell don't escape \"
 
@@ -24,7 +21,7 @@
     " set directory (tmp folder)
     " set calendar.vim/credentials.vim
 
-" Info:
+" Info: (win * linux)
 " Vimrc_path: $MOZ_VIMRC 
 "   - /AppData/Local/nvim/init.vim 
 "   - $VIM/sysinit.vim
