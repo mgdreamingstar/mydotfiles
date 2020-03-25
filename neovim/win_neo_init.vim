@@ -48,7 +48,6 @@
 "
 " plug.vim: Curl: nutstore | github ---> Set 
 " plugged
-" md_keymaps
 
 
 " platform settings             
@@ -88,7 +87,8 @@ if exists('debug')
 
 endif
 
-if empty(glob(expand(s:plug_vim)))
+" download plug.vim
+if exists('setup') && empty(glob(expand(s:plug_vim)))
     
     echom 'there is no plug_vim:'.s:plug_vim
     
@@ -105,18 +105,12 @@ if empty(glob(expand(s:plug_vim)))
         if s:iswindows
 
             exec '!copy ' . expand(s:mydotfiles) . '\win_neo_autoload\plug.vim ' . expand(s:plug_vim)
-            exec '!copy ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
-            exec '!copy ' . expand(s:mydotfiles) . '\md_keymaps.vim ' . $MOZ_CONFIG . '\md_keymaps.vim'
-            exec '!xcopy /E /I ' . expand(s:mydotfiles) . '\UltiSnips ' . $MOZ_CONFIG . '\UltiSnips'
 
         endif
 
         if s:islinux
 
             exec '!cp ' . expand(s:mydotfiles) . '\win_neo_autoload\plug.vim ' . expand(s:plug_vim)
-            exec '!cp ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
-            exec '!cp ' . expand(s:mydotfiles) . '\md_keymaps.vim ' . $MOZ_CONFIG . '\md_keymaps.vim'
-            exec '!cp ' . expand(s:mydotfiles) . '\UltiSnips ' . $MOZ_CONFIG . '\UltiSnips'
 
         endif
 
@@ -126,23 +120,32 @@ if empty(glob(expand(s:plug_vim)))
     
     endtry
 
-    " todo 
-    " windows
-    if s:iswindows
-      
-        echom 'make symlink from $MOZ_VIMRC to default init.vim'
-        exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
+endif
 
-    endif
+" setup files and folders
+" windows
+if exists('setup') && s:iswindows
       
-    " linux
-    if s:islinux
+    echom 'make symlink from $MOZ_VIMRC to default init.vim'
+    exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
+    exec '!copy ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
+    exec '!copy ' . expand(s:mydotfiles) . '\md_keymaps.vim ' . $MOZ_CONFIG . '\md_keymaps.vim'
+    exec '!xcopy /E /I ' . expand(s:mydotfiles) . '\UltiSnips ' . $MOZ_CONFIG . '\UltiSnips'
+
+endif
       
-        echom 'make symlink from $MOZ_VIMRC to default init.vim'
-        exec '!ln ' . $MOZ_VIMRC . ' ' . $VIM . ' /sysinit.vim'
+" linux
+if exists('setup') && s:islinux
+      
+    echom 'make symlink from $MOZ_VIMRC to default init.vim'
+    exec '!ln ' . $MOZ_VIMRC . ' ' . $VIM . ' /sysinit.vim'
+    exec '!cp ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
+    exec '!cp ' . expand(s:mydotfiles) . '\md_keymaps.vim ' . $MOZ_CONFIG . '\md_keymaps.vim'
+    exec '!cp ' . expand(s:mydotfiles) . '\UltiSnips ' . $MOZ_CONFIG . '\UltiSnips'
 
-    endif
+endif
 
+if exists('setup')
     autocmd VimEnter * PlugInstall --sync | source $MOZ_VIMRC
 endif
 
