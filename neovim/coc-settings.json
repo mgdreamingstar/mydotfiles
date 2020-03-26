@@ -1,20 +1,31 @@
 {
     "list.nextKeymap": "<C-n>",
-    "list.previousKeymap": "<C-p>",
-    "coc.preferences.diagnostic.warningSign": "!",
-    "coc.preferences.diagnostic.errorSign": "x",
+    "list.previousKeymap": "<C-p>",  
+    "list.normalMappings": {
+        "<C-c>": "do:exit"
+    },
+    "list.insertMappings": {
+        "<C-c>": "do:exit"
+    },
+    "diagnostic.warningSign": "!",
+    "diagnostic.errorSign": "x",
+    "http.proxy": "127.0.0.1:7890",
+    "http.proxyStrictSSL": true,
     "coc.preferences.formatOnSaveFiletypes": [
         "javascript",
         "html",
         "css",
-        "python"
+        "python",
+        "markdown",
+        "json"
     ],
-	"python.jediEnabled": false,
+    "python.jediEnabled": false,
     "python.formatting.provider": "black",
     "python.linting.flake8CategorySeverity.E": "Warning",
     "python.linting.flake8Args": [
         "--ignore=E501,W292,W291,E266,E401,F403,F405,F401",
         "--max-line-length=100"
     ],
-    "python.autoComplete.addBrackets": true
+    "python.autoComplete.addBrackets": true,
+    "pairs.enableCharacters": ["(", "[", "{", "'", "\"", "`"]
 }
