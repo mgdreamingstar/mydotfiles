@@ -17,8 +17,8 @@
 " Need_Todo:
 "
     " set $MOZ_GITHUB \ $MOZ_PYTHON3
-    " set backupdir
-    " set directory (tmp folder)
+    " set ~/.cache
+    " ln -s coc-settings
     " set calendar.vim/credentials.vim
 
 " Info: (win * linux)
@@ -43,8 +43,8 @@
 "   - ~/.config/nvim/backup
 "
 " Temp_dir:
-"   - /AppData/Local/nvim/tmp 
-"   - ~/.config/nvim/tmp
+"   - /AppData/Local/nvim/moz_tmp 
+"   - ~/.config/nvim/moz_tmp
 "
 " plug.vim: Curl: nutstore | github ---> Set 
 " plugged
@@ -60,6 +60,7 @@ if has('win32') || has('win64') || has('win16') || has('win95')
     let s:mydotfiles = fnameescape($MOZ_GITHUB . '\mydotfiles\neovim')
     let s:backup = fnameescape($MOZ_CONFIG . '\moz_tmp\backup')
     let s:tmp = fnameescape($MOZ_CONFIG . '\moz_tmp\tmp')
+    let s:undo = fnameescape($MOZ_CONFIG . '\moz_tmp\tmp\undo')
 
 else
 
@@ -70,6 +71,7 @@ else
     let s:mydotfiles = fnameescape($MOZ_GITHUB . '/mydotfiles/neovim')
     let s:backup = fnameescape($MOZ_CONFIG . '/moz_tmp/backup')
     let s:tmp = fnameescape($MOZ_CONFIG . '/moz_tmp/tmp')
+    let s:undo = fnameescape($MOZ_CONFIG . '/moz_tmp/tmp/undo')
 
 endif
 
@@ -127,7 +129,8 @@ if exists('setup') && s:iswindows
       
     echom 'make symlink from $MOZ_VIMRC to default init.vim'
     exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
-    exec '!copy ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim ' . $MOZ_CONFIG . '\autoload\moz.vim' 
+    exec '!mklink ' . $MOZ_CONFIG . '\autoload\moz.vim ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim'
+    exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\coc-settings.json ' . expand(s:mydotfiles) . '\coc-settings.json'
     exec '!copy ' . expand(s:mydotfiles) . '\md_keymaps.vim ' . $MOZ_CONFIG . '\md_keymaps.vim'
     exec '!xcopy /E /I ' . expand(s:mydotfiles) . '\UltiSnips ' . $MOZ_CONFIG . '\UltiSnips'
 
@@ -138,7 +141,8 @@ if exists('setup') && s:islinux
       
     echom 'make symlink from $MOZ_VIMRC to default init.vim'
     exec '!ln -s ' . $MOZ_VIMRC . ' ' . $VIM . '/sysinit.vim'
-    exec '!cp ' . expand(s:mydotfiles) . '/win_neo_autoload/moz.vim ' . $MOZ_CONFIG . '/autoload/moz.vim' 
+    exec '!ln -s' . expand(s:mydotfiles) . '/win_neo_autoload/moz.vim ' . $MOZ_CONFIG . '/autoload/moz.vim' 
+    exec '!ln -s' . expand(s:mydotfiles) . '/coc-settings.json ' . $MOZ_CONFIG . '/coc-settings.json' 
     exec '!cp ' . expand(s:mydotfiles) . '/md_keymaps.vim ' . $MOZ_CONFIG . '/md_keymaps.vim'
     exec '!cp -vR ' . expand(s:mydotfiles) . '/UltiSnips/. ' . $MOZ_CONFIG . '/UltiSnips/'
 
@@ -157,7 +161,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'altercation/vim-colors-solarized'
 Plug 'mhartington/oceanic-next'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -170,11 +174,11 @@ Plug 'skywind3000/vim-quickui'
 Plug 'airblade/vim-gitgutter'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'mg979/vim-visual-multi'
-Plug 'machakann/vim-highlightedyank'
+"Plug 'machakann/vim-highlightedyank'
 " Plug 'sillybun/vim-repl'
 Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
-"Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
 Plug 'tweekmonster/braceless.vim'
 
 " Markdown
@@ -182,6 +186,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'f
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
 Plug 'theniceboy/bullets.vim'
+
+" Undo Tree
+Plug 'mbbill/undotree'
 
 " Editor Enhancement
 "Plug 'Raimondi/delimitMate'
@@ -216,7 +223,7 @@ Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
 "Plug 'voldikss/vim-floaterm'
 "Plug 'liuchengxu/vim-clap'
 "Plug 'jceb/vim-orgmode'
-"Plug 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify'
 
 " Vim Applications
 Plug 'itchyny/calendar.vim'
@@ -263,7 +270,7 @@ set autoindent
 set list  " show tab and other special chars
 set listchars=tab:>-,trail:▫ 
 set scrolloff=4
-set viewoptions=cursor,folds
+set viewoptions=cursor,folds,unix,slash
 set indentexpr=
 set foldmethod=indent
 set foldlevel=99
@@ -286,6 +293,16 @@ set virtualedit=block
 "let g:python_host_prog = 'D:\Anaconda\python'
 let g:python3_host_prog = $MOZ_PYTHON3
 
+" UndoTree and swap file
+silent !mkdir -p expand(s:backup)
+silent !mkdir -p expand(s:undo)
+"silent !mkdir -p ~/.config/nvim/tmp/sessions
+set backupdir=expand(s:backup),.
+set directory=expand(s:backup),.
+if has('persistent_undo')
+	set undofile
+	set undodir=expand(s:undo),.
+endif
 
 " Or if you have Neovim >= 0.1.5
 if (has("termguicolors"))
@@ -301,7 +318,15 @@ colorscheme dracula
 
 let mapleader=","
 " noremap ; :
-inoremap <Capslock> <Esc>
+
+" Make basic movements work better with wrapped lines
+nnoremap j gj
+nnoremap gj j
+nnoremap k gk
+nnoremap gk k
+
+
+inoremap ek <Esc>
 
 " Save & Quit
 nnoremap Q :q<cr>
@@ -317,6 +342,11 @@ vnoremap Y "+y
 nnoremap < <<
 nnoremap > >>
 
+" Select entire line (minus EOL) with 'vv', entire file (characterwise) with 'VV'
+xnoremap <expr> V mode() ==# "V" ? "gg0voG$h" : "V"
+" ! select this line from cursor
+xnoremap <expr> v mode() ==# "v" ? "$h" : "v"
+
 " disable current highlight
 noremap <leader><cr> :nohlsearch<cr>
 
@@ -329,9 +359,9 @@ nnoremap <silent> E 5j
 nnoremap <silent> W 5w
 nnoremap <silent> B 5b
 
-" N: goto the start of this line
+" H: goto the start of this line
 nnoremap <silent> H 0
-" I: goto the end of this line
+" L: goto the end of this line
 nnoremap <silent> L $
 
 " move the screen without move the cursor
@@ -339,9 +369,9 @@ noremap <C-U> 5<C-y>
 noremap <C-E> 5<C-e>
 
 " insert mode: move to end
-inoremap <C-l> <Esc>A
+"inoremap <C-l> <Esc>A
 " insert mode: move to start
-inoremap <C-h> <Esc>I
+"inoremap <C-h> <Esc>I
 
 " command mode: move cursor 
 cnoremap <C-a> <Home>
@@ -388,13 +418,13 @@ noremap <leader>q <C-w>j:q<CR>
 " Create a new tab with tu
 noremap tu :tabe<CR>
 
-" Move around tabs with tn and ti
+" Move around tabs with th and tl
 " left
 noremap th :-tabnext<CR> 
 " right
 noremap tl :+tabnext<CR>
 
-" Move the tabs with tmn and tmi
+" Move the tabs with tmh and tml
 noremap tmh :-tabmove<CR>
 noremap tml :+tabmove<CR>
 
@@ -413,11 +443,16 @@ noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
 " Run script with Python
 nnoremap <M-r> :call moz#RunPython()<cr>
 "noremap <f5> :tab sp<CR>:term python3 -m pudb %<CR>
-"
+
 " copy and paste
 inoremap <C-d> <Esc>:call moz#Duplicate_line()<cr>a
+" "_ register: black hole register
+nnoremap <M-d> "_d
+xnoremap <M-d> "_d
+
 " copy current file's whole path
-nnoremap <leader>pt :let @+ = expand("%:p")<cr>
+nnoremap <leader>yp :let @+ = expand("%:p")<cr>
+
 imap <C-v>  <C-R>+ 
 vmap <C-c>  "+y
 imap <silent> <S-Insert> <Esc>"+pa
@@ -427,6 +462,13 @@ vnoremap <BS> d
 vnoremap <C-C> "+y
 vnoremap <C-Insert> "+y
 
+" open in explorer
+if s:iswindows
+    " 打开当前目录 windows
+    map <leader>ex :!start explorer %:p:h<CR>
+    "" 打开当前目录CMD
+    "map \d :!start<cr>
+endif
 
 " 在分割窗口之间移动
 nmap <M-h> <C-w>h
@@ -460,7 +502,8 @@ tnoremap <M-h> <C-\><C-N><C-w>h
 tnoremap <M-j> <C-\><C-N><C-w>j
 tnoremap <M-k> <C-\><C-N><C-w>k
 tnoremap <M-l> <C-\><C-N><C-w>l
-map <leader>tt :vnew term://bash<cr>
+map <leader>tt :call moz#Term()<cr>
+noremap <c-k> :tabe<CR>:-tabmove<CR>:term lazygit<CR>
 au TermOpen * startinsert
 " nnoremap \t :tabe<cr>:-tabmove<cr>:term sh -c 'st'<cr><C-\><C-N>:q<cr>
 
@@ -473,7 +516,7 @@ au TermOpen * startinsert
 " Opening a terminal window
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
 
-" Press space twice to jump to the next '<++>' and edit it
+" Press <leader> twice to jump to the next '<++>' and edit it
 noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " Spelling Check with <space>sc
@@ -549,6 +592,14 @@ if s:iswindows
     autocmd VimEnter * NERDTree D:\mozli\Documents\github\
 endif
 
+" Did we open an empty vim? If so, change our working directory to 'HOME'
+function! ChangeDirGitHub()
+  if eval("@%") == ""
+    cd $MOZ_GITHUB
+  endif
+endfunction
+autocmd VimEnter * call ChangeDirGithub()
+
 " " 当打开 NERDTree 窗口时，自动显示 Bookmarks
 let NERDTreeShowBookmarks=1
 let NERDTreeShowHidden=1
@@ -604,7 +655,7 @@ let g:UltiSnipsSnippetDirectories = [$MOZ_CONFIG.'\UltiSnips','UltiSnips']
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#tabline#fnametruncate = 16
 let g:airline#extensions#tabline#fnamecollapse = 2
@@ -724,7 +775,7 @@ noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 
 """ CoC Settings
-let g:coc_global_extensions = ['coc-pairs','coc-python','coc-snippets']
+let g:coc_global_extensions = ['coc-pairs','coc-python','coc-snippets','coc-yank','coc-json','coc-tsserver']
 " TextEdit might fail if hidden is not set.
 set hidden
 
@@ -866,22 +917,24 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" CocList Yank
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 " coc-snippets settings
-" " Use <C-l> for trigger snippet expand.
-" imap <C-l> <Plug>(coc-snippets-expand)
-" 
-" " Use <C-j> for select text for visual placeholder of snippet.
-" vmap <C-j> <Plug>(coc-snippets-select)
-" 
-" " Use <C-j> for jump to next placeholder, it's default of coc.nvim
-" let g:coc_snippet_next = '<c-j>'
-" 
-" " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-" let g:coc_snippet_prev = '<c-k>'
-" 
-" " Use <C-j> for both expand and jump (make expand higher priority.)
-" imap <C-j> <Plug>(coc-snippets-expand-jump)
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-n> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-n>'
+
+" Use <C-p> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-p>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
@@ -895,6 +948,16 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
+
+nnoremap <C-c> :CocCommand<cr>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Coc Settings End
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """ GitGutter Settings
 map <leader>ggt :GitGutterToggle " 切换是否开启 vim-gitgutter
@@ -934,7 +997,7 @@ let g:repl_position = 0                " 0表示出现在下方，1表示出现�
 let g:repl_stayatrepl_when_open = 0        " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
 
 
-nmap <leader>s :source $MOZ_VIMRC<cr>
+nmap <leader>s :call moz#Source()<cr>
 nmap <leader>e :e $MOZ_VIMRC<cr>
 
 
@@ -971,7 +1034,22 @@ noremap <LEADER>tm :TableModeToggle<CR>
 "let g:table_mode_disable_mappings = 1
 let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
-
+" ===
+" === Undotree
+" ===
+noremap <M-u> :UndotreeToggle<CR>
+let g:undotree_DiffAutoOpen = 1
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_ShortIndicators = 1
+let g:undotree_WindowLayout = 2
+let g:undotree_DiffpanelHeight = 8
+let g:undotree_SplitWidth = 24
+function g:Undotree_CustomMap()
+	nmap <buffer> u <plug>UndotreeNextState
+	nmap <buffer> e <plug>UndotreePreviousState
+	nmap <buffer> U 5<plug>UndotreeNextState
+	nmap <buffer> E 5<plug>UndotreePreviousState
+endfunc
 
 " ===
 " === vim-bookmarks
@@ -980,8 +1058,8 @@ let g:bookmark_no_default_key_mappings = 1
 nmap mt <Plug>BookmarkToggle
 nmap ma <Plug>BookmarkAnnotate
 nmap ml <Plug>BookmarkShowAll
-nmap mi <Plug>BookmarkNext
-nmap mn <Plug>BookmarkPrev
+nmap mn <Plug>BookmarkNext
+nmap mp <Plug>BookmarkPrev
 nmap mC <Plug>BookmarkClear
 nmap mX <Plug>BookmarkClearAll
 nmap mu <Plug>BookmarkMoveUp
@@ -1021,8 +1099,8 @@ let g:VM_maps = {}
 let g:VM_custom_motions  = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
 let g:VM_maps['i']     = 'k'
 let g:VM_maps['I']     = 'K'
-let g:VM_maps['Find Under']     = '<C-k>'
-let g:VM_maps['Find Subword Under'] = '<C-k>'
+let g:VM_maps['Find Under']     = '<C-d>'
+let g:VM_maps['Find Subword Under'] = '<C-d>'
 let g:VM_maps['Find Next']     = ''
 let g:VM_maps['Find Prev']     = ''
 let g:VM_maps['Remove Region'] = 'q'
@@ -1149,9 +1227,9 @@ augroup calendar-mappings
     autocmd FileType calendar nmap <buffer> h <Plug>(calendar_left)
     autocmd FileType calendar nmap <buffer> j <Plug>(calendar_down)
     autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
-    autocmd FileType calendar nmap <buffer> <c-k> <Plug>(calendar_move_up)
+    autocmd FileType calendar nmap <buffer> <c-p> <Plug>(calendar_move_up)
     autocmd FileType calendar nmap <buffer> <c-h> <Plug>(calendar_move_left)
-    autocmd FileType calendar nmap <buffer> <c-j> <Plug>(calendar_move_down)
+    autocmd FileType calendar nmap <buffer> <c-n> <Plug>(calendar_move_down)
     autocmd FileType calendar nmap <buffer> <c-l> <Plug>(calendar_move_right)
     autocmd FileType calendar nmap <buffer> e <Plug>(calendar_start_insert)
     autocmd FileType calendar nmap <buffer> E <Plug>(calendar_start_insert_head)
