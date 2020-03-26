@@ -28,3 +28,16 @@ function! moz#RunPython()
     let &makeprg = mp
     let &errorformat = ef
 endfunction
+
+" Source init.vim
+function! moz#Source()
+    source $MOZ_VIMRC
+    wincmd p
+endfunction
+
+" Open a bash term in a new tab
+function! moz#Term()
+    tabe
+    -tabmove
+    term bash
+endfunction
