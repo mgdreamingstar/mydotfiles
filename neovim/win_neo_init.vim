@@ -660,6 +660,10 @@ let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#tabline#fnametruncate = 16
 let g:airline#extensions#tabline#fnamecollapse = 2
 let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#coc#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_section_b = '%-0.30{getcwd()}'
+let g:airline_section_c = '%t'
 
 """ ctrlp Settings
 let g:ctrlp_map = '<C-P>'
