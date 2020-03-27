@@ -300,8 +300,8 @@ silent !mkdir -p expand(s:undo)
 set backupdir=expand(s:backup),.
 set directory=expand(s:backup),.
 if has('persistent_undo')
+	set undodir=expand(s:undo)
 	set undofile
-	set undodir=expand(s:undo),.
 endif
 
 " Or if you have Neovim >= 0.1.5
@@ -592,13 +592,7 @@ if s:iswindows
     autocmd VimEnter * NERDTree D:\mozli\Documents\github\
 endif
 
-" Did we open an empty vim? If so, change our working directory to 'HOME'
-function! ChangeDirGitHub()
-  if eval("@%") == ""
-    cd $MOZ_GITHUB
-  endif
-endfunction
-autocmd VimEnter * call ChangeDirGithub()
+"autocmd VimEnter * call moz#ChangeDirGithub()
 
 " " 当打开 NERDTree 窗口时，自动显示 Bookmarks
 let NERDTreeShowBookmarks=1

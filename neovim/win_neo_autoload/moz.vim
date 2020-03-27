@@ -41,3 +41,10 @@ function! moz#Term()
     -tabmove
     term bash
 endfunction
+
+" Did we open an empty vim? If so, change our working directory to 'HOME'
+function! moz#ChangeDirGitHub()
+  if eval("@%") == ""
+    cd $MOZ_GITHUB
+  endif
+endfunction
