@@ -195,6 +195,8 @@ Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
 "Plug 'theniceboy/bullets.vim'
 "Plug 'gabrielelana/vim-markdown'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc'
+
 "Plug '907th/vim-auto-save'
 Plug 'vimwiki/vimwiki'
 
@@ -212,6 +214,10 @@ Plug 'junegunn/vim-easy-align' " gaip= to align the = in paragraph,
 Plug 'tpope/vim-capslock' " Ctrl+Gc (insert) or gC (normal) to toggle capslock
 Plug 'easymotion/vim-easymotion'
 Plug 'Konfekt/FastFold'
+
+" 输入法
+"Plug 'lotabout/ywvim'
+
 "Plug 'junegunn/vim-peekaboo'
 "Plug 'wellle/context.vim'
 Plug 'svermeulen/vim-subversive'  " use siw to replace <cword> with clipboard
@@ -300,6 +306,7 @@ set lazyredraw  " faster redraw
 set visualbell
 set colorcolumn=80
 set virtualedit=block
+set relativenumber
 
 let g:python3_host_prog = $MOZ_PYTHON3
 if s:iswindows
@@ -338,28 +345,6 @@ colorscheme dracula
 let mapleader=","
 " noremap ; :
 
-augroup Neovide
-    "友好的中文输入法
-    autocmd! InsertLeave *
-                \ if &number|
-                \     set relativenumber|
-                \ endif
-                "\ call moz#SmartIME()
-
-    autocmd! FocusGained *
-                \ if mode(1)!='i' && mode(1)!='Rv' && mode(1)!=#'R'|
-                "\     call moz#SmartIME()|
-                \     if &number|
-                \         set relativenumber|
-                \     endif|
-                \ else|
-                \     if &number|
-                \         set norelativenumber|
-                \     endif|
-                \ endif
-
-    autocmd! FocusLost,InsertEnter * set norelativenumber
-augroup End
 
 " Make basic movements work better with wrapped lines
 nnoremap j gj
