@@ -5,7 +5,7 @@
 " | | | | | | (_) / /  \ V /| | | | | | | | | (__ 
 " |_| |_| |_|\___/___|  \_/ |_|_| |_| |_|_|  \___|
 "
-
+"
 " Author: @moz
 
 " FIRST_of_ALL:
@@ -48,7 +48,7 @@
 "
 " plug.vim: Curl: nutstore | github ---> Set 
 " plugged
-
+"
 
 " platform settings             
 if has('win32') || has('win64') || has('win16') || has('win95')
@@ -165,12 +165,19 @@ Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" themes
 Plug 'joshdick/onedark.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
+"Plug 'altercation/vim-colors-solarized'
+Plug 'ajmwagar/vim-deus'
+
+
+Plug 'liuchengxu/vista.vim' 
 "Plug 'ludovicchabant/vim-gutentags'
 "Plug 'skywind3000/gutentags_plus'
-Plug 'skywind3000/vim-preview'
-Plug 'skywind3000/vim-quickui'
+"Plug 'skywind3000/vim-preview'
+"Plug 'skywind3000/vim-quickui'
 Plug 'airblade/vim-gitgutter'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'mg979/vim-visual-multi'
@@ -185,7 +192,11 @@ Plug 'tweekmonster/braceless.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
-Plug 'theniceboy/bullets.vim'
+"Plug 'theniceboy/bullets.vim'
+"Plug 'gabrielelana/vim-markdown'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+"Plug '907th/vim-auto-save'
+Plug 'vimwiki/vimwiki'
 
 " Undo Tree
 Plug 'mbbill/undotree'
@@ -194,16 +205,16 @@ Plug 'mbbill/undotree'
 "Plug 'Raimondi/delimitMate'
 Plug 'scrooloose/nerdcommenter' " in <leader>cn to comment a line
 Plug 'AndrewRadev/switch.vim' " gs to switch
-Plug 'tpope/vim-surround' " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
-Plug 'gcmt/wildfire.vim' " in Visual mode, type k' to select all text in '', or type k) k] k} kp
+Plug 'tpope/vim-surround' " type ysiw' to wrap the word with '' or type cs'` to change 'word' to `word`
+Plug 'gcmt/wildfire.vim' " in Visual mode, type i' to select all text in '', or type i) i] i} ip
 Plug 'junegunn/vim-after-object' " da= to delete what's after =
 Plug 'junegunn/vim-easy-align' " gaip= to align the = in paragraph, 
-Plug 'tpope/vim-capslock' " Ctrl+L (insert) to toggle capslock
+Plug 'tpope/vim-capslock' " Ctrl+Gc (insert) or gC (normal) to toggle capslock
 Plug 'easymotion/vim-easymotion'
 Plug 'Konfekt/FastFold'
 "Plug 'junegunn/vim-peekaboo'
 "Plug 'wellle/context.vim'
-Plug 'svermeulen/vim-subversive' 
+Plug 'svermeulen/vim-subversive'  " use siw to replace <cword> with clipboard
 
 " For general writing
 Plug 'junegunn/goyo.vim'
@@ -227,6 +238,7 @@ Plug 'mhinz/vim-startify'
 
 " Vim Applications
 Plug 'itchyny/calendar.vim'
+"Plug 'mattn/calendar-vim'
 
 " Other visual enhancement
 " Plug 'ryanoasis/vim-devicons'
@@ -245,7 +257,6 @@ Plug 'itchyny/calendar.vim'
 " Dependencies
 " Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'kana/vim-textobj-user'
-Plug 'roxma/nvim-yarp'
 
 call plug#end()
 
@@ -290,18 +301,25 @@ set visualbell
 set colorcolumn=80
 set virtualedit=block
 
-"let g:python_host_prog = 'D:\Anaconda\python'
 let g:python3_host_prog = $MOZ_PYTHON3
+if s:iswindows
+    let g:python_host_prog = 'D:\Anaconda\python.exe'
+endif
+
+set tags=./.tags;,.tags
 
 " UndoTree and swap file
-silent !mkdir -p expand(s:backup)
-silent !mkdir -p expand(s:undo)
-"silent !mkdir -p ~/.config/nvim/tmp/sessions
-set backupdir=expand(s:backup),.
-set directory=expand(s:backup),.
+if exists("setup")
+    silent! mkdir(s:backup, 'p')
+    silent! mkdir(s:undo, 'p')
+endif
+
+silent !mkdir -p ~/.config/nvim/tmp/sessions
+set backupdir=C:\\Users\\GRC\\.config\\nvim\\moz_tmp\\backup
+set directory=C:\\Users\\GRC\\.config\\nvim\\moz_tmp\\backup
 if has('persistent_undo')
-	set undodir=expand(s:undo)
-	set undofile
+    set undodir=C:\\Users\\GRC\\.config\\nvim\\moz_tmp\\tmp\\undo
+    set undofile
 endif
 
 " Or if you have Neovim >= 0.1.5
@@ -314,6 +332,7 @@ syntax enable
 " colorscheme OceanicNext
 " colorscheme onedark
 colorscheme dracula
+"colorscheme deus
 
 
 let mapleader=","
@@ -325,8 +344,7 @@ nnoremap gj j
 nnoremap k gk
 nnoremap gk k
 
-
-inoremap ek <Esc>
+"inoremap ek <Esc>
 
 " Save & Quit
 nnoremap Q :q<cr>
@@ -341,6 +359,9 @@ vnoremap Y "+y
 " indent
 nnoremap < <<
 nnoremap > >>
+
+" buffer
+nnoremap <space><space> :b 
 
 " Select entire line (minus EOL) with 'vv', entire file (characterwise) with 'VV'
 xnoremap <expr> V mode() ==# "V" ? "gg0voG$h" : "V"
@@ -441,7 +462,7 @@ noremap <c-k> :tabe<CR>:-tabmove<CR>:term lazygit<CR>
 " Open up pudb
 noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
 " Run script with Python
-nnoremap <M-r> :call moz#RunPython()<cr>
+nnoremap <M-r> :call moz#Run_Python_Simple()<cr>
 "noremap <f5> :tab sp<CR>:term python3 -m pudb %<CR>
 
 " copy and paste
@@ -465,7 +486,7 @@ vnoremap <C-Insert> "+y
 " open in explorer
 if s:iswindows
     " 打开当前目录 windows
-    map <leader>ex :!start explorer %:p:h<CR>
+    map <leader>xx :!start explorer %:p:h<CR>
     "" 打开当前目录CMD
     "map \d :!start<cr>
 endif
@@ -486,13 +507,7 @@ set splitright
 set diffopt+=vertical
 silent! set splitvertical
 if v:errmsg != ''
-  cabbrev split vert split
-  cabbrev hsplit split
   cabbrev help vert help
-  noremap <C-w>] :vert botright wincmd ]<CR>
-  noremap <C-w><C-]> :vert botright wincmd ]<CR>
-else
-  cabbrev hsplit hor split
 endif
 
 " terminal
@@ -520,7 +535,7 @@ noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
 noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " Spelling Check with <space>sc
-noremap <LEADER>sc :set spell!<CR>
+"noremap <LEADER>sc :set spell!<CR>
 
 " Call figlet
 if !has('win32') && !has('win64')
@@ -578,11 +593,60 @@ endfunc
 " === Markdown Settings
 " ===
 " Snippets
-if s:iswindows
-  execute "source " . $MOZ_CONFIG . '\md_keymaps.vim'
-endif
+"if s:iswindows
+    execute "source " . $MOZ_CONFIG . '\md_keymaps.vim'
+"endif
 " auto spell
-autocmd BufRead,BufNewFile *.md setlocal spell 
+"autocmd BufRead,BufNewFile *.md setlocal spell 
+if s:iswindows
+    noremap \m :!"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" "%:p"
+endif
+
+
+" vimtex 设置
+let g:tex_flavor                          = 'latex'
+let g:tex_indent_brace = 0
+let g:tex_indent_items = 0
+let g:tex_indent_and = 0
+let g:vimtex_indent_enabled = 0
+let g:vimtex_indent_on_ampersands = 0
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : [
+    \   '-xelatex',
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \ ],
+    \}
+let g:vimtex_quickfix_mode             = 2
+let g:vimtex_quickfix_autoclose_after_keystrokes = 1
+let g:vimtex_quickfix_open_on_warning  = 0
+let g:vimtex_fold_manual               = 1
+let g:vimtex_view_general_viewer          = 'SumatraPDF'
+let g:vimtex_view_general_options         = '-reuse-instance -inverse-search "\"' . $VIMRUNTIME . '\gvim.exe\" -n --remote-silent +\%l \"\%f\"" -forward-search @tex @line @pdf'
+let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+
+nmap <leader>l :VimtexView<cr>
+"
+
+" ===
+" === Vista.vim
+" ===
+noremap <silent> T :Vista!!<CR>
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_default_executive = 'ctags'
+let g:vista_fzf_preview = ['right:50%']
+let g:vista#renderer#enable_icon = 1
+let g:vista#renderer#icons = {
+\   "function": "\uf794",
+\   "variable": "\uf71b",
+\  }
+function! NearestMethodOrFunction() abort
+	return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+set statusline+=%{NearestMethodOrFunction()}
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 
 
@@ -597,6 +661,7 @@ endif
 " " 当打开 NERDTree 窗口时，自动显示 Bookmarks
 let NERDTreeShowBookmarks=1
 let NERDTreeShowHidden=1
+let NERDTreeQuitOnOpen=1
 " " 打开编辑器时，光标在右侧窗口
 wincmd w
 autocmd VimEnter * wincmd w
@@ -642,15 +707,17 @@ endif
 let g:UltiSnipsExpandTrigger = '<M-m>'
 let g:UltiSnipsJumpForwardTrigger = '<M-m>'
 " let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:UltiSnipsListSnippets = '<M-n>'
+let g:UltiSnipsListSnippets = '<M-s>'
+let g:UltisnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetDirectories = [$MOZ_CONFIG.'\UltiSnips','UltiSnips']
+nnoremap <leader>ss :UltiSnipsEdit!<cr>
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#buffer_nr_show = 0
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#fnametruncate = 16
 let g:airline#extensions#tabline#fnamecollapse = 2
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -660,18 +727,19 @@ let g:airline_section_b = '%-0.30{getcwd()}'
 let g:airline_section_c = '%t'
 
 """ ctrlp Settings
-let g:ctrlp_map = '<C-P>'
+"let g:ctrlp_map = '<C-P>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_cmd = 'CtrlPMRU'
 
 """ LeaderF Settings
 " before nvim-0.4.2, leaderF dont support popupmenu.
-if has("nvim-0.4.2")
-    let g:Lf_PreviewInPopup = 1
-    let g:Lf_WindowPosition = 'popup'
-    let g:Lf_PreviewPopupWidth = 300
-endif
+"if has("nvim-0.4.2")
+    "let g:Lf_PreviewInPopup = 1
+    "let g:Lf_WindowPosition = 'popup'
+    "let g:Lf_PreviewPopupWidth = 300
+"endif
 
+let g:Lf_ReverseOrder = 1
 let g:Lf_PreviewHorizontalPosition = 'right'
 let g:Lf_StlSeparator = { 'left': '►', 'right': '◄', 'font': '' }
  
@@ -682,22 +750,22 @@ let g:Lf_CacheDirectory = expand('~/.vim/cache')
 " let g:Lf_ShowRelativePath = 0
 let g:Lf_HideHelp = 1
 " let g:Lf_StlColorscheme = 'powerline'
-let g:Lf_PreviewResult = {'File': 1, 'Buffer': 1, 'Mru':1, 'Colorscheme':1, 'Function':1, 'BufTag':1, 'Gtags':1}
+"let g:Lf_PreviewResult = {'File': 1, 'Buffer': 1, 'Mru':1, 'Colorscheme':1, 'Function':1, 'BufTag':1, 'Gtags':1}
 
 
 if s:iswindows
     " autocomplete in command 
-    cnoremap 'ld1 LeaderfFile D:\mozli\Documents\GitHub
+    cnoremap 'd LeaderfFile D:\mozli\Documents\GitHub
 endif
 
 cnoremap 'f LeaderfFile 
 map <leader>h :LeaderfHelp<cr>
 
-let g:Lf_ShortcutF = '<leader>ff'
-noremap <leader>b  :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR> 
-noremap <leader>m  :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR> 
-noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR> 
-noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+let g:Lf_ShortcutF = '<C-P>'
+noremap <leader>b  :LeaderfBuffer<cr>
+noremap <leader>m  :LeaderfMru<cr> 
+noremap <leader>f  :LeaderfFunction!<cr>
+noremap <leader>n  :LeaderfBufTag<cr>
  
 let g:Lf_NormalMap = {
              \ "File": [["u", 'exec :LeaderfFile .. <cr>']]
@@ -715,62 +783,65 @@ noremap <C-G> :<C-U><C-R>=printf("Leaderf! rg --append -e %s ", expand("<cword>"
 " search word under cursor literally only in current buffer
 noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg -F --current-buffer -e %s ", expand("<cword>"))<CR>
 
-" search word under cursor literally in all listed buffers
-noremap <C-D> :<C-U><C-R>=printf("Leaderf! rg -F --all-buffers -e %s ", expand("<cword>"))<CR>
-
 " search visually selected text literally, don't quit LeaderF after accepting an entry
-xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen -e %s ", leaderf#Rg#visual())<CR>
+"xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen -e %s ", leaderf#Rg#visual())<CR>
 
 " recall last search. If the result window is closed, reopen it.
 noremap go :<C-U>Leaderf! rg --recall<CR>
 
 " should use `Leaderf gtags --update` first
-""" Gtag Settings
-let $GTAGSLABEL = 'native-pygments'
-
-if s:iswindows
-    let $GTAGSCONF = 'D:\Program Files\gtags663\share\gtags\gtags.conf'
-endif
-
-let g:Lf_GtagsAutoGenerate = 1
-let g:Lf_Gtagslabel = 'native-pygments'
-
-" gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-
-" 所生成的数据文件的名称
-let g:gutentags_ctags_tagfile = '.tags'
-
-" 同时开启 ctags 和 gtags 支持：
-let g:gutentags_modules = []
-if executable('ctags')
-    let g:gutentags_modules += ['ctags']
-endif
-if executable('gtags-cscope') && executable('gtags')
-    let g:gutentags_modules += ['gtags_cscope']
-endif
-
-" 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-
-" 配置 ctags 的参数，老的 Exuberant-ctags 不能有 --extra=+q，注意
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-
-" 如果使用 universal ctags 需要增加下面一行，老的 Exuberant-ctags 不能加下一行
-let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
-
-" 禁用 gutentags 自动加载 gtags 数据库的行为
-let g:gutentags_auto_add_gtags_cscope = 0
-
+"let g:Lf_GtagsAutoGenerate = 1
+"let g:Lf_Gtagslabel = 'native-pygments'
 
 " keybindings
-noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
-noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
-noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
-noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
-noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+"noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+"noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" Gtags Settings
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let $GTAGSLABEL = 'native-pygments'
+
+"if s:iswindows
+    "let $GTAGSCONF = 'D:\Program Files\gtags663\share\gtags\gtags.conf'
+"endif
+
+"" gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
+"let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+"" 所生成的数据文件的名称
+"let g:gutentags_ctags_tagfile = '.tags'
+
+"" 同时开启 ctags 和 gtags 支持：
+"let g:gutentags_modules = []
+"if executable('ctags')
+    "let g:gutentags_modules += ['ctags']
+"endif
+"if executable('gtags-cscope') && executable('gtags')
+    "let g:gutentags_modules += ['gtags_cscope']
+"endif
+
+"" 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+"let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+"" 配置 ctags 的参数，老的 Exuberant-ctags 不能有 --extra=+q，注意
+"let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+"" 如果使用 universal ctags 需要增加下面一行，老的 Exuberant-ctags 不能加下一行
+"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+
+"" 禁用 gutentags 自动加载 gtags 数据库的行为
+"let g:gutentags_auto_add_gtags_cscope = 0
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """ CoC Settings
 let g:coc_global_extensions = ['coc-pairs','coc-python','coc-snippets','coc-yank','coc-json','coc-tsserver']
@@ -964,9 +1035,9 @@ set updatetime=100
 let g:gitgutter_max_signs = 800
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
-nmap <leader>ha <Plug>(GitGutterStageHunk)
-nmap <leader>hr <Plug>(GitGutterUndoHunk)
-nmap <leader>hv <Plug>(GitGutterPreviewHunk)
+"nmap <leader>ha <Plug>(GitGutterStageHunk)
+"nmap <leader>hr <Plug>(GitGutterUndoHunk)
+"nmap <leader>hv <Plug>(GitGutterPreviewHunk)
 
 
 """ vim-repl
@@ -995,7 +1066,7 @@ let g:repl_position = 0                " 0表示出现在下方，1表示出现�
 let g:repl_stayatrepl_when_open = 0        " 打开REPL时是回到原文件（1）还是停留在REPL窗口中（0）
 
 
-nmap <leader>s :call moz#Source()<cr>
+nmap <leader>v :call moz#Source()<cr>
 nmap <leader>e :e $MOZ_VIMRC<cr>
 
 
@@ -1025,12 +1096,20 @@ let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
 
 
+" markdown-pandoc-syntax
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+augroup END 
+
+" vim-auto-save
+"let g:auto_save = 0
+
 " ===
 " === vim-table-mode
 " ===
 noremap <LEADER>tm :TableModeToggle<CR>
 "let g:table_mode_disable_mappings = 1
-let g:table_mode_cell_text_object_i_map = 'k<Bar>'
+let g:table_mode_cell_text_object_i_map = 'i<Bar>'
 
 " ===
 " === Undotree
@@ -1043,10 +1122,10 @@ let g:undotree_WindowLayout = 2
 let g:undotree_DiffpanelHeight = 8
 let g:undotree_SplitWidth = 24
 function g:Undotree_CustomMap()
-	nmap <buffer> u <plug>UndotreeNextState
-	nmap <buffer> e <plug>UndotreePreviousState
-	nmap <buffer> U 5<plug>UndotreeNextState
-	nmap <buffer> E 5<plug>UndotreePreviousState
+    nmap <buffer> u <plug>UndotreeNextState
+    nmap <buffer> e <plug>UndotreePreviousState
+    nmap <buffer> U 5<plug>UndotreeNextState
+    nmap <buffer> E 5<plug>UndotreePreviousState
 endfunc
 
 " ===
@@ -1110,7 +1189,7 @@ let g:VM_maps["Redo"]      = '<C-r>'
 " ===
 " === Far.vim
 " ===
-noremap \f :F  **/*<left><left><left><left><left>
+noremap <space>f :F 
 let g:far#enable_undo = 1
 let g:far#mapping = {
         \ "replace_undo" : ["l"],
@@ -1205,18 +1284,29 @@ nmap s <plug>(SubversiveSubstitute)
 nmap ss <plug>(SubversiveSubstituteLine)
 
 
+" vim-wiki
+let g:vimwiki_list = [{'path': 'C:\Users\GRC\iCloudDrive\27N4MQEA55~pro~writer\Notes_PC\',
+\                      'diary_rel_path': 'Diary\', 'syntax': 'markdown', 'ext': '.md'},
+\                    ]
+"let g:vimwiki_diary_rel_path = {'type': type(''), 'default': '\Diary\', 'min_length': 1}
+let g:vimwiki_use_calendar = 1
+"autocmd FileType vimwiki map \c :call ToggleCalendar()<cr>
+
+
 
 " ===
 " === vim-calendar
 " ===
-noremap \c :Calendar -position=here<CR>
-noremap \\ :Calendar -view=clock -position=here<CR>
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-let g:calendar_debug = 1
+noremap \c :Calendar -view=year -position=right -width=27 -split=vertical<CR>
+noremap \\ :Calendar -view=day -position=right -width=50 -split=vertical<CR>
+let g:calendar_first_day = "monday"
+let g:calendar_views = ['day_3','week','month','year','clock','day']
+let g:calendar_cyclic_view = 1
+"let g:calendar_google_calendar = 1
+"let g:calendar_google_task = 1
 
 if s:iswindows
-    let s:calendar_cache_directory = $USERPROFILE . '\.cache\calendar.vim'
+    let s:calendar_cache_directory = substitute($USERPROFILE . '\.cache\calendar.vim','\\','\\\\','g')
 endif
 
 augroup calendar-mappings
@@ -1225,22 +1315,43 @@ augroup calendar-mappings
     autocmd FileType calendar nmap <buffer> h <Plug>(calendar_left)
     autocmd FileType calendar nmap <buffer> j <Plug>(calendar_down)
     autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
-    autocmd FileType calendar nmap <buffer> <c-p> <Plug>(calendar_move_up)
-    autocmd FileType calendar nmap <buffer> <c-h> <Plug>(calendar_move_left)
-    autocmd FileType calendar nmap <buffer> <c-n> <Plug>(calendar_move_down)
-    autocmd FileType calendar nmap <buffer> <c-l> <Plug>(calendar_move_right)
-    autocmd FileType calendar nmap <buffer> e <Plug>(calendar_start_insert)
-    autocmd FileType calendar nmap <buffer> E <Plug>(calendar_start_insert_head)
+    autocmd FileType calendar nmap <buffer> t <Plug>(calendar_today)
+
+    autocmd FileType calendar nmap <buffer> i <Plug>(calendar_start_insert)
+    autocmd FileType calendar nmap <buffer> E <Plug>(calendar_event)
+    autocmd FileType calendar nmap <buffer> L <Plug>(calendar_clear)
+
     " unmap <C-n>, <C-p> for other plugins
     autocmd FileType calendar nunmap <buffer> <C-n>
     autocmd FileType calendar nunmap <buffer> <C-p>
+    autocmd FileType calendar nmap <buffer> <CR> :<C-u>call vimwiki#diary#calendar_action(b:calendar.day().get_day(), b:calendar.day().get_month(), b:calendar.day().get_year(), b:calendar.day().week(), "V")<CR>
 augroup END
 
 " credentials
 if s:iswindows
-    execute "source " . fnameescape(s:calendar_cache_directory) . '\credentials.vim'
+    execute 'source C:\Users\GRC\.cache\calendar.vim\credentials.vim'
 endif 
 
+
+" vim-textobj-user
+" define TEX \left( \right) object
+call textobj#user#plugin('tex', {
+\   'paren-math': {
+\     'pattern': ['\\left(', '\\right)'],
+\     'select-a': [],
+\     'select-i': [],
+\   },
+\ })
+
+augroup tex_textobjs
+  autocmd!
+  autocmd FileType tex call textobj#user#map('tex', {
+  \   'paren-math': {
+  \     'select-a': '<buffer> a(',
+  \     'select-i': '<buffer> i(',
+  \   },
+  \ })
+augroup END 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " THIS IS SOME CODE BACKUP
@@ -1270,3 +1381,4 @@ endif
     "f.write(path)
 "EOF
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:gutentags_define_advanced_commands = 1

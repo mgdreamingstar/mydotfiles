@@ -1,4 +1,3 @@
-" Change Nerdtree's dir to current file's dir
 function! moz#Change_nerdtree_dir() 
     cd %:p:h  " change working dir 
     NERDTreeCWD  " change nerdtree's working dir 
@@ -16,7 +15,8 @@ function! moz#Duplicate_line()
 endfunction
 
 " Run Python code
-function! moz#RunPython()
+function! moz#Run_Python_Complicate()
+    w
     let mp = &makeprg " save setting
     let ef = &errorformat " save setting
     let exefile = expand('%:t') " current file
@@ -27,6 +27,13 @@ function! moz#RunPython()
     copen " open quickfix window
     let &makeprg = mp
     let &errorformat = ef
+endfunction
+
+function! moz#Run_Python_Simple()
+    w
+    if &filetype == 'python'
+        exec "!python %"
+    endif
 endfunction
 
 " Source init.vim
@@ -43,7 +50,7 @@ function! moz#Term()
 endfunction
 
 " Did we open an empty vim? If so, change our working directory to 'HOME'
-function! moz#ChangeDirGitHub()
+function! moz#Change_Dir_GitHub()
   if eval("@%") == ""
     cd $MOZ_GITHUB
   endif

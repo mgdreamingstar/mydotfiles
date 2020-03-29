@@ -9,7 +9,7 @@
     },
     "diagnostic.warningSign": "!",
     "diagnostic.errorSign": "x",
-    "http.proxy": "127.0.0.1:7890",
+    "http.proxy": "127.0.0.1:7891",
     "http.proxyStrictSSL": true,
     "coc.preferences.formatOnSaveFiletypes": [
         "javascript",
@@ -21,6 +21,7 @@
     ],
     "python.jediEnabled": false,
     "python.formatting.provider": "black",
+    "python.linting.pylintEnabled": false,
     "python.linting.flake8CategorySeverity.E": "Warning",
     "python.linting.flake8Args": [
         "--ignore=E501,W292,W291,E266,E401,F403,F405,F401",
