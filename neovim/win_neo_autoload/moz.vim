@@ -55,3 +55,12 @@ function! moz#Change_Dir_GitHub()
     cd $MOZ_GITHUB
   endif
 endfunction
+
+" change IME
+function! moz#SmartIME(...) abort
+    let IMEcode = exists('a:1') ? a:1 : '000008040' "默认切换到英语美式键盘
+    if (has('win64') || has('win32') || has('win16'))
+        let code = libcallnr('vimtweak.dll', 'SetIME', IMEcode)
+        return code
+    endif
+endfunction

@@ -1,8 +1,8 @@
 "
 "                            _
-"  _ __ ___   ___ ______   _(_)_ __ ___  _ __ ___ 
+"  _ __ ___   ___ ______   _(_)_ __ ___  _ __ ___
 " | '_ ` _ \ / _ \_  /\ \ / / | '_ ` _ \| '__/ __|
-" | | | | | | (_) / /  \ V /| | | | | | | | | (__ 
+" | | | | | | (_) / /  \ V /| | | | | | | | | (__
 " |_| |_| |_|\___/___|  \_/ |_|_| |_| |_|_|  \___|
 "
 "
@@ -10,8 +10,8 @@
 
 " FIRST_of_ALL:
 "
-    " 1. set $MOZ_CONFIG $MOZ_VIMRC 
-    " 2. run nvim with: `nvim --cmd \"let setup=1 source $MOZ_VIMRC\"` 
+    " 1. set $MOZ_CONFIG $MOZ_VIMRC
+    " 2. run nvim with: `nvim --cmd \"let setup=1 source $MOZ_VIMRC\"`
             " As vimrc comment, escaped \"; in shell don't escape \"
 
 " Need_Todo:
@@ -22,35 +22,35 @@
     " set calendar.vim/credentials.vim
 
 " Info: (win * linux)
-" Vimrc_path: $MOZ_VIMRC 
-"   - /AppData/Local/nvim/init.vim 
+" Vimrc_path: $MOZ_VIMRC
+"   - /AppData/Local/nvim/init.vim
 "   - $VIM/sysinit.vim
 "
-" Config_dir: $MOZ_CONFIG 
-"   - %USERPROFILE/.config/nvim 
+" Config_dir: $MOZ_CONFIG
+"   - %USERPROFILE/.config/nvim
 "   - ~/.config/nvim
 "
-" GitHub_dir: $MOZ_GITHUB 
-"   - D:/mozli/Documents/GitHub 
+" GitHub_dir: $MOZ_GITHUB
+"   - D:/mozli/Documents/GitHub
 "   - ~/GitHub
 "
-" Python3_path: $MOZ_PYTHON3 
-"   - D:/Anaconda/envs/new3/python 
+" Python3_path: $MOZ_PYTHON3
+"   - D:/Anaconda/envs/new3/python
 "   - ~/Anaconda/envs/new3/python
 "
-" Backup_dir: 
-"   - /AppData/Local/nvim/backup 
+" Backup_dir:
+"   - /AppData/Local/nvim/backup
 "   - ~/.config/nvim/backup
 "
 " Temp_dir:
-"   - /AppData/Local/nvim/moz_tmp 
+"   - /AppData/Local/nvim/moz_tmp
 "   - ~/.config/nvim/moz_tmp
 "
-" plug.vim: Curl: nutstore | github ---> Set 
+" plug.vim: Curl: nutstore | github ---> Set
 " plugged
 "
 
-" platform settings             
+" platform settings            
 if has('win32') || has('win64') || has('win16') || has('win95')
 
     let s:iswindows = 1
@@ -91,14 +91,14 @@ endif
 
 " download plug.vim
 if exists('setup') && empty(glob(expand(s:plug_vim)))
-    
+   
     echom 'there is no plug_vim:'.s:plug_vim
-    
+   
     echom 'not found plug.vim, curling form github'
     " if download speed < 1k Bytes/s for 3s, then close connection
     "exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --speed-time 3 --speed-limit 1000'
     exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --max-time 10'
-    
+   
     if v:shell_error
 
         echom 'download failed, copying from GitHub/mydotfiles'
@@ -118,7 +118,7 @@ if exists('setup') && empty(glob(expand(s:plug_vim)))
         "echom 'not found plug.vim, curling from nutstore'
         "" if download speed < 1 Bytes/s for 5s, then close connection
         "exec '!curl -Lo ' . expand(s:plug_vim) . ' --create-dirs https://www.jianguoyun.com/p/DWplQswQq8qeCBil5vwC --speed-limit 5 --speed-limit 1'
-    
+   
     endif
 
 endif
@@ -126,7 +126,7 @@ endif
 " setup files and folders
 " windows
 if exists('setup') && s:iswindows
-      
+     
     echom 'make symlink from $MOZ_VIMRC to default init.vim'
     exec '!mklink ' . $USERPROFILE . ' AppData\Local\nvim\init.vim ' . $MOZ_VIMRC
     exec '!mklink ' . $MOZ_CONFIG . '\autoload\moz.vim ' . expand(s:mydotfiles) . '\win_neo_autoload\moz.vim'
@@ -135,14 +135,14 @@ if exists('setup') && s:iswindows
     exec '!xcopy /E /I ' . expand(s:mydotfiles) . '\UltiSnips ' . $MOZ_CONFIG . '\UltiSnips'
 
 endif
-      
+     
 " linux
 if exists('setup') && s:islinux
-      
+     
     echom 'make symlink from $MOZ_VIMRC to default init.vim'
     exec '!ln -s ' . $MOZ_VIMRC . ' ' . $VIM . '/sysinit.vim'
-    exec '!ln -s' . expand(s:mydotfiles) . '/win_neo_autoload/moz.vim ' . $MOZ_CONFIG . '/autoload/moz.vim' 
-    exec '!ln -s' . expand(s:mydotfiles) . '/coc-settings.json ' . $MOZ_CONFIG . '/coc-settings.json' 
+    exec '!ln -s' . expand(s:mydotfiles) . '/win_neo_autoload/moz.vim ' . $MOZ_CONFIG . '/autoload/moz.vim'
+    exec '!ln -s' . expand(s:mydotfiles) . '/coc-settings.json ' . $MOZ_CONFIG . '/coc-settings.json'
     exec '!cp ' . expand(s:mydotfiles) . '/md_keymaps.vim ' . $MOZ_CONFIG . '/md_keymaps.vim'
     exec '!cp -vR ' . expand(s:mydotfiles) . '/UltiSnips/. ' . $MOZ_CONFIG . '/UltiSnips/'
 
@@ -173,7 +173,7 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'ajmwagar/vim-deus'
 
 
-Plug 'liuchengxu/vista.vim' 
+Plug 'liuchengxu/vista.vim'
 "Plug 'ludovicchabant/vim-gutentags'
 "Plug 'skywind3000/gutentags_plus'
 "Plug 'skywind3000/vim-preview'
@@ -208,7 +208,7 @@ Plug 'AndrewRadev/switch.vim' " gs to switch
 Plug 'tpope/vim-surround' " type ysiw' to wrap the word with '' or type cs'` to change 'word' to `word`
 Plug 'gcmt/wildfire.vim' " in Visual mode, type i' to select all text in '', or type i) i] i} ip
 Plug 'junegunn/vim-after-object' " da= to delete what's after =
-Plug 'junegunn/vim-easy-align' " gaip= to align the = in paragraph, 
+Plug 'junegunn/vim-easy-align' " gaip= to align the = in paragraph,
 Plug 'tpope/vim-capslock' " Ctrl+Gc (insert) or gC (normal) to toggle capslock
 Plug 'easymotion/vim-easymotion'
 Plug 'Konfekt/FastFold'
@@ -279,7 +279,7 @@ set number
 set autochdir
 set autoindent
 set list  " show tab and other special chars
-set listchars=tab:>-,trail:▫ 
+set listchars=tab:>-,trail:▫
 set scrolloff=4
 set viewoptions=cursor,folds,unix,slash
 set indentexpr=
@@ -338,6 +338,29 @@ colorscheme dracula
 let mapleader=","
 " noremap ; :
 
+augroup Neovide
+    "友好的中文输入法
+    autocmd! InsertLeave *
+                \ if &number|
+                \     set relativenumber|
+                \ endif
+                "\ call moz#SmartIME()
+
+    autocmd! FocusGained *
+                \ if mode(1)!='i' && mode(1)!='Rv' && mode(1)!=#'R'|
+                "\     call moz#SmartIME()|
+                \     if &number|
+                \         set relativenumber|
+                \     endif|
+                \ else|
+                \     if &number|
+                \         set norelativenumber|
+                \     endif|
+                \ endif
+
+    autocmd! FocusLost,InsertEnter * set norelativenumber
+augroup End
+
 " Make basic movements work better with wrapped lines
 nnoremap j gj
 nnoremap gj j
@@ -361,7 +384,7 @@ nnoremap < <<
 nnoremap > >>
 
 " buffer
-nnoremap <space><space> :b 
+nnoremap <space><space> :b
 
 " Select entire line (minus EOL) with 'vv', entire file (characterwise) with 'VV'
 xnoremap <expr> V mode() ==# "V" ? "gg0voG$h" : "V"
@@ -394,7 +417,7 @@ noremap <C-E> 5<C-e>
 " insert mode: move to start
 "inoremap <C-h> <Esc>I
 
-" command mode: move cursor 
+" command mode: move cursor
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-p> <Up>
@@ -402,7 +425,7 @@ cnoremap <C-n> <Down>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <M-b> <S-Left>
-cnoremap <M-f> <S-Right> 
+cnoremap <M-f> <S-Right>
 
 " split screen
 " Disable the default s key
@@ -412,7 +435,7 @@ noremap s <nop>
 noremap sk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
 noremap sj :set splitbelow<CR>:split<CR>
 noremap sh :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
-noremap sl :set splitright<CR>:vsplit<CR> 
+noremap sl :set splitright<CR>:vsplit<CR>
 
 " Resize splits with arrow keys
 nnoremap <up> :res +5<CR>
@@ -423,7 +446,7 @@ nnoremap <right> :vertical resize+5<CR>
 " Place the two screens up and down
 noremap su <C-w>t<C-w>K
 " Place the two screens side by side
-noremap sv <C-w>t<C-w>H 
+noremap sv <C-w>t<C-w>H
 
 " Rotate screens
 noremap srh <C-w>b<C-w>K
@@ -431,7 +454,7 @@ noremap srv <C-w>b<C-w>H
 
 " Press <leader> + q to close the window below the current window or any
 " window
-noremap <leader>q <C-w>j:q<CR> 
+noremap <leader>q <C-w>j:q<CR>
 
 " ===
 " === Tab management
@@ -441,7 +464,7 @@ noremap tu :tabe<CR>
 
 " Move around tabs with th and tl
 " left
-noremap th :-tabnext<CR> 
+noremap th :-tabnext<CR>
 " right
 noremap tl :+tabnext<CR>
 
@@ -474,7 +497,7 @@ xnoremap <M-d> "_d
 " copy current file's whole path
 nnoremap <leader>yp :let @+ = expand("%:p")<cr>
 
-imap <C-v>  <C-R>+ 
+imap <C-v>  <C-R>+
 vmap <C-c>  "+y
 imap <silent> <S-Insert> <Esc>"+pa
 cmap <C-V>     <C-R>+
@@ -597,7 +620,7 @@ endfunc
     execute "source " . $MOZ_CONFIG . '\md_keymaps.vim'
 "endif
 " auto spell
-"autocmd BufRead,BufNewFile *.md setlocal spell 
+"autocmd BufRead,BufNewFile *.md setlocal spell
 if s:iswindows
     noremap \m :!"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" "%:p"
 endif
@@ -652,9 +675,9 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " NERDTree
 " 进入工作目录
-if s:iswindows
-    autocmd VimEnter * NERDTree D:\mozli\Documents\github\
-endif
+"if s:iswindows
+    "autocmd VimEnter * NERDTree D:\mozli\Documents\github\
+"endif
 
 "autocmd VimEnter * call moz#ChangeDirGithub()
 
@@ -681,10 +704,10 @@ nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 noremap <M-o> :call moz#Change_nerdtree_dir()<cr>
 " returns true iff is NERDTree open/active
-" function! IsNTOpen()        
+" function! IsNTOpen()       
 "   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 " endfunction
-" 
+"
 " " calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
 " function! SyncTree()
 "   if &modifiable && rc:IsNTOpen() && strlen(expand('%')) > 0 && !&diff
@@ -692,7 +715,7 @@ noremap <M-o> :call moz#Change_nerdtree_dir()<cr>
 "     wincmd p
 "   endif
 " endfunction
-" 
+"
 " autocmd BufEnter * call SyncTree()
 
 
@@ -742,7 +765,7 @@ let g:ctrlp_cmd = 'CtrlPMRU'
 let g:Lf_ReverseOrder = 1
 let g:Lf_PreviewHorizontalPosition = 'right'
 let g:Lf_StlSeparator = { 'left': '►', 'right': '◄', 'font': '' }
- 
+
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
 let g:Lf_WorkingDirectoryMode = 'AFc'
 let g:Lf_WindowHeight = 0.30
@@ -754,19 +777,19 @@ let g:Lf_HideHelp = 1
 
 
 if s:iswindows
-    " autocomplete in command 
+    " autocomplete in command
     cnoremap 'd LeaderfFile D:\mozli\Documents\GitHub
 endif
 
-cnoremap 'f LeaderfFile 
+cnoremap 'f LeaderfFile
 map <leader>h :LeaderfHelp<cr>
 
 let g:Lf_ShortcutF = '<C-P>'
 noremap <leader>b  :LeaderfBuffer<cr>
-noremap <leader>m  :LeaderfMru<cr> 
+noremap <leader>m  :LeaderfMru<cr>
 noremap <leader>f  :LeaderfFunction!<cr>
 noremap <leader>n  :LeaderfBufTag<cr>
- 
+
 let g:Lf_NormalMap = {
              \ "File": [["u", 'exec :LeaderfFile .. <cr>']]
 \}
@@ -1099,7 +1122,7 @@ let g:mkdp_page_title = '「${name}」'
 " markdown-pandoc-syntax
 augroup pandoc_syntax
     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-augroup END 
+augroup END
 
 " vim-auto-save
 "let g:auto_save = 0
@@ -1189,7 +1212,7 @@ let g:VM_maps["Redo"]      = '<C-r>'
 " ===
 " === Far.vim
 " ===
-noremap <space>f :F 
+noremap <space>f :F
 let g:far#enable_undo = 1
 let g:far#mapping = {
         \ "replace_undo" : ["l"],
@@ -1330,7 +1353,7 @@ augroup END
 " credentials
 if s:iswindows
     execute 'source C:\Users\GRC\.cache\calendar.vim\credentials.vim'
-endif 
+endif
 
 
 " vim-textobj-user
@@ -1351,7 +1374,7 @@ augroup tex_textobjs
   \     'select-i': '<buffer> i(',
   \   },
   \ })
-augroup END 
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " THIS IS SOME CODE BACKUP
@@ -1359,8 +1382,8 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " this one fix the runtime error R6034 error. ref:
 " https://stackoverflow.com/questions/14552348/runtime-error-r6034-in-embedded-python-application/34989113#34989113
-" 
-" how: fix $PATH, find which path has 'msvcr\d\d.dll', 
+"
+" how: fix $PATH, find which path has 'msvcr\d\d.dll',
 " and then remove the path.
 "python << EOF
 "import os, re
