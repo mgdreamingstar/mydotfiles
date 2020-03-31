@@ -1,4 +1,5 @@
 "
+"
 "                            _
 "  _ __ ___   ___ ______   _(_)_ __ ___  _ __ ___
 " | '_ ` _ \ / _ \_  /\ \ / / | '_ ` _ \| '__/ __|
@@ -194,8 +195,8 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
 "Plug 'theniceboy/bullets.vim'
 "Plug 'gabrielelana/vim-markdown'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-pandoc/vim-pandoc'
+"Plug 'vim-pandoc/vim-pandoc-syntax'
+"Plug 'vim-pandoc/vim-pandoc'
 
 "Plug '907th/vim-auto-save'
 Plug 'vimwiki/vimwiki'
@@ -267,7 +268,11 @@ Plug 'kana/vim-textobj-user'
 call plug#end()
 
 
-""" General Settings
+"--------------------------------------------------
+"--------------------------------------------------
+"  General Settings
+"--------------------------------------------------
+"--------------------------------------------------
 
 set clipboard+=unnamed
 set ignorecase
@@ -306,7 +311,7 @@ set lazyredraw  " faster redraw
 set visualbell
 set colorcolumn=80
 set virtualedit=block
-set relativenumber
+"set relativenumber
 
 let g:python3_host_prog = $MOZ_PYTHON3
 if s:iswindows
@@ -334,14 +339,18 @@ if (has("termguicolors"))
  set termguicolors
 endif
 
+"--------------------------------------------------
 " Theme
+"--------------------------------------------------
 syntax enable
 " colorscheme OceanicNext
 " colorscheme onedark
 colorscheme dracula
 "colorscheme deus
 
-
+"--------------------------------------------------
+" Keymaps
+"--------------------------------------------------
 let mapleader=","
 " noremap ; :
 
@@ -441,9 +450,30 @@ noremap srv <C-w>b<C-w>H
 " window
 noremap <leader>q <C-w>j:q<CR>
 
-" ===
-" === Tab management
-" ===
+"switch IME(输入法)
+"友好的中文输入法
+augroup SmartIME
+autocmd! InsertLeave *
+    \ silent call moz#SmartIME('0x0409')|
+    \ set relativenumber
+
+"autocmd! FocusGained *
+    "\ if mode(1)!='i' && mode(1)!='Rv' && mode(1)!=#'R'|
+    "\    echom mode(1)|
+    "\    silent call moz#SmartIME('0x0804')|
+    "\ endif|
+    "\ set norelativenumber
+augroup END
+
+noremap c <nop>
+nnoremap ci :silent call moz#SmartIME('0x0804')<cr>i
+nnoremap co :silent call moz#SmartIME('0x0804')<cr>o
+nnoremap <silent> <leader>ie :silent call moz#SmartIME('0x0409')<cr>
+nnoremap <silent> <leader>ic :silent call moz#SmartIME('0x0804')<cr>
+
+"-------------------------------------------------- 
+"  Tab management
+"-------------------------------------------------- 
 " Create a new tab with tu
 noremap tu :tabe<CR>
 
@@ -596,22 +626,29 @@ func! CompileRunGcc()
 endfunc
 
 
+"--------------------------------------------------
+"--------------------------------------------------
+"  Markdown Settings
+"--------------------------------------------------
+"--------------------------------------------------
 
-" ===
-" === Markdown Settings
-" ===
-" Snippets
-"if s:iswindows
+if s:iswindows
     execute "source " . $MOZ_CONFIG . '\md_keymaps.vim'
-"endif
-" auto spell
+endif
+
+""auto spell
 "autocmd BufRead,BufNewFile *.md setlocal spell
 if s:iswindows
     noremap \m :!"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" "%:p"
 endif
 
 
-" vimtex 设置
+"--------------------------------------------------
+"--------------------------------------------------
+"  vimtex 设置
+"--------------------------------------------------
+"--------------------------------------------------
+
 let g:tex_flavor                          = 'latex'
 let g:tex_indent_brace = 0
 let g:tex_indent_items = 0
@@ -638,9 +675,12 @@ let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 nmap <leader>l :VimtexView<cr>
 "
 
-" ===
-" === Vista.vim
-" ===
+"--------------------------------------------------
+"--------------------------------------------------
+"  Vista.vim
+"--------------------------------------------------
+"--------------------------------------------------
+
 noremap <silent> T :Vista!!<CR>
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista_default_executive = 'ctags'
@@ -658,7 +698,12 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 
 
-" NERDTree
+"--------------------------------------------------
+"--------------------------------------------------
+"  NERDTree
+"--------------------------------------------------
+"--------------------------------------------------
+
 " 进入工作目录
 "if s:iswindows
     "autocmd VimEnter * NERDTree D:\mozli\Documents\github\
@@ -703,8 +748,11 @@ noremap <M-o> :call moz#Change_nerdtree_dir()<cr>
 "
 " autocmd BufEnter * call SyncTree()
 
-
-"""  UltiSnips """""""""""""""""""""""""
+"--------------------------------------------------
+"--------------------------------------------------
+"  UltiSnips
+"--------------------------------------------------
+"--------------------------------------------------
 if !has('python3')
     let g:UltiSnipsUsePythonVersion = 2
 else
@@ -712,13 +760,14 @@ else
 endif
 
 " should set ExpandTrigger: coc will use <tab>
-let g:UltiSnipsExpandTrigger = '<M-m>'
-let g:UltiSnipsJumpForwardTrigger = '<M-m>'
+let g:UltiSnipsExpandTrigger = '<M-i>'
+let g:UltiSnipsJumpForwardTrigger = '<M-i>'
 " let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:UltiSnipsListSnippets = '<M-s>'
+let g:UltiSnipsListSnippets = '<M-c>'
 let g:UltisnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetDirectories = [$MOZ_CONFIG.'\UltiSnips','UltiSnips']
 nnoremap <leader>ss :UltiSnipsEdit!<cr>
+nnoremap <leader>sr :call UltiSnips#RefreshSnippets()<CR>
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
@@ -734,12 +783,20 @@ let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%-0.30{getcwd()}'
 let g:airline_section_c = '%t'
 
-""" ctrlp Settings
+"--------------------------------------------------
+"--------------------------------------------------
+"  ctrlp Settings
+"--------------------------------------------------
+"--------------------------------------------------
 "let g:ctrlp_map = '<C-P>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_cmd = 'CtrlPMRU'
 
-""" LeaderF Settings
+"--------------------------------------------------
+"--------------------------------------------------
+"  LeaderF Settings
+"--------------------------------------------------
+"--------------------------------------------------
 " before nvim-0.4.2, leaderF dont support popupmenu.
 "if has("nvim-0.4.2")
     "let g:Lf_PreviewInPopup = 1
@@ -805,12 +862,11 @@ noremap go :<C-U>Leaderf! rg --recall<CR>
 "noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
 "noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" Gtags Settings
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"--------------------------------------------------
+"--------------------------------------------------
+"  Gtags Settings
+"--------------------------------------------------
+"--------------------------------------------------
 "let $GTAGSLABEL = 'native-pygments'
 
 "if s:iswindows
@@ -847,11 +903,12 @@ noremap go :<C-U>Leaderf! rg --recall<CR>
 "let g:gutentags_auto_add_gtags_cscope = 0
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""" CoC Settings
+"--------------------------------------------------
+"--------------------------------------------------
+"  CoC Settings
+"--------------------------------------------------
+"--------------------------------------------------
 let g:coc_global_extensions = ['coc-pairs','coc-python','coc-snippets','coc-yank','coc-json','coc-tsserver']
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -1029,14 +1086,12 @@ let g:coc_snippet_next = '<tab>'
 nnoremap <C-c> :CocCommand<cr>
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Coc Settings End
-"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"--------------------------------------------------
+"--------------------------------------------------
+"  GitGutter Settings
+"--------------------------------------------------
+"--------------------------------------------------
 
-""" GitGutter Settings
 map <leader>ggt :GitGutterToggle " 切换是否开启 vim-gitgutter
 " set the default value of updatetime to 100ms
 set updatetime=100
@@ -1048,7 +1103,11 @@ nmap [h <Plug>(GitGutterPrevHunk)
 "nmap <leader>hv <Plug>(GitGutterPreviewHunk)
 
 
-""" vim-repl
+"--------------------------------------------------
+"--------------------------------------------------
+"  vim-repl
+"--------------------------------------------------
+"--------------------------------------------------
 let g:repl_program = {
         \   'python': 'ipython',
         \   'default': 'zsh',
@@ -1078,9 +1137,11 @@ nmap <leader>v :call moz#Source()<cr>
 nmap <leader>e :e $MOZ_VIMRC<cr>
 
 
-" ===
-" === MarkdownPreview
-" ===
+"--------------------------------------------------
+"--------------------------------------------------
+"  MarkdownPreview
+"--------------------------------------------------
+"--------------------------------------------------
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
@@ -1104,24 +1165,34 @@ let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
 
 
-" markdown-pandoc-syntax
-augroup pandoc_syntax
-    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-augroup END
+"--------------------------------------------------
+"--------------------------------------------------
+"  markdown-pandoc-syntax
+"--------------------------------------------------
+"--------------------------------------------------
+"augroup pandoc_syntax
+    "au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+"augroup END
 
 " vim-auto-save
 "let g:auto_save = 0
 
-" ===
-" === vim-table-mode
-" ===
+
+"--------------------------------------------------
+"--------------------------------------------------
+"  vim-table-mode
+"--------------------------------------------------
+"--------------------------------------------------
 noremap <LEADER>tm :TableModeToggle<CR>
 "let g:table_mode_disable_mappings = 1
 let g:table_mode_cell_text_object_i_map = 'i<Bar>'
 
-" ===
-" === Undotree
-" ===
+
+"--------------------------------------------------
+"--------------------------------------------------
+"  Undotree
+"--------------------------------------------------
+"--------------------------------------------------
 noremap <M-u> :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 1
 let g:undotree_SetFocusWhenToggle = 1
@@ -1197,7 +1268,7 @@ let g:VM_maps["Redo"]      = '<C-r>'
 " ===
 " === Far.vim
 " ===
-noremap <space>f :F
+noremap <space>f :F 
 let g:far#enable_undo = 1
 let g:far#mapping = {
         \ "replace_undo" : ["l"],
@@ -1299,7 +1370,7 @@ let g:vimwiki_list = [{'path': 'C:\Users\GRC\iCloudDrive\27N4MQEA55~pro~writer\N
 "let g:vimwiki_diary_rel_path = {'type': type(''), 'default': '\Diary\', 'min_length': 1}
 let g:vimwiki_use_calendar = 1
 "autocmd FileType vimwiki map \c :call ToggleCalendar()<cr>
-
+"autocmd FileType vimwiki :set filetype=markdown.pandoc
 
 
 " ===

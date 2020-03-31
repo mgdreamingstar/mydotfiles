@@ -51,16 +51,30 @@ endfunction
 
 " Did we open an empty vim? If so, change our working directory to 'HOME'
 function! moz#Change_Dir_GitHub()
-  if eval("@%") == ""
-    cd $MOZ_GITHUB
-  endif
+    if eval("@%") == ""
+        cd $MOZ_GITHUB
+    endif
 endfunction
 
 " change IME
 function! moz#SmartIME(...) abort
-    let IMEcode = exists('a:1') ? a:1 : '000008040' "默认切换到英语美式键盘
-    if (has('win64') || has('win32') || has('win16'))
-        let code = libcallnr('vimtweak.dll', 'SetIME', IMEcode)
-        return code
-    endif
+" SwitchIME(0x0804) 中文 SwitchIME(0x0409) 英文
+" 注意：Python 代码不能有缩进，不然无法识别。
+let IMEcode = exists('a:1') ? a:1 : '0x0804'
+"if (has('win64') || has('win32') || has('win16'))
+    "let code = libcallnr('vimtweak.dll', 'SetIME', IMEcode)
+    "return code
+echom IMEcode
+python << EOF
+from win32con import WM_INPUTLANGCHANGEREQUEST
+import win32gui
+import win32api
+import vim
+
+IMEcode = vim.eval('IMEcode')
+
+hwnd = win32gui.GetForegroundWindow()
+
+result = win32api.SendMessage( hwnd, WM_INPUTLANGCHANGEREQUEST, 0, eval(IMEcode))
+EOF
 endfunction
