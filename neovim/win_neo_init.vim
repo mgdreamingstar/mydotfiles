@@ -725,6 +725,7 @@ map <F8> :NERDTreeToggle<cr>
 
 " change the working directory and print out after changing
 nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
+let NERDTreeMapOpenVSplit='v'
 
 " Auto change directory to current dir
 "autocmd BufEnter * silent! lcd %:p:h
