@@ -380,6 +380,7 @@ nnoremap > >>
 
 " buffer
 nnoremap <space><space> :b
+nnoremap <Bar> :bnext<cr>
 
 " Select entire line (minus EOL) with 'vv', entire file (characterwise) with 'VV'
 xnoremap <expr> V mode() ==# "V" ? "gg0voG$h" : "V"
@@ -422,6 +423,7 @@ cnoremap <C-f> <Right>
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
 
+"-------------------------------------------------- 
 " split screen
 " Disable the default s key
 noremap s <nop>
@@ -447,9 +449,14 @@ noremap sv <C-w>t<C-w>H
 noremap srh <C-w>b<C-w>K
 noremap srv <C-w>b<C-w>H
 
+" move other window
+nnoremap <M-n> <Esc><C-w>w5<C-e><C-w>w
+nnoremap <M-p> <Esc><C-w>w5<C-y><C-w>w 
+
+"-------------------------------------------------- 
 " Press <leader> + q to close the window below the current window or any
 " window
-noremap <leader>q <C-w>j:q<CR>
+"noremap <leader>q <C-w>j:q<CR>
 
 "switch IME(输入法)
 "友好的中文输入法
@@ -469,6 +476,9 @@ augroup END
 noremap c <nop>
 nnoremap ci :silent call moz#SmartIME('0x0804')<cr>i
 nnoremap co :silent call moz#SmartIME('0x0804')<cr>o
+
+"open help
+nnoremap <leader>ih :silent call moz#Help()<cr>
 
 "-------------------------------------------------- 
 "  Tab management
@@ -546,7 +556,7 @@ set splitright
 set diffopt+=vertical
 silent! set splitvertical
 if v:errmsg != ''
-  cabbrev help vert help
+  cabbrev hv vert help
 endif
 
 " terminal
@@ -761,10 +771,10 @@ else
 endif
 
 " should set ExpandTrigger: coc will use <tab>
-let g:UltiSnipsExpandTrigger = '<Ctrl>'
-let g:UltiSnipsJumpForwardTrigger = '<M-i>'
-let g:UltiSnipsJumpBackwardTrigger = '<M-o>'
-let g:UltiSnipsListSnippets = '<M-c>'
+let g:UltiSnipsExpandTrigger = '<cr>'
+"let g:UltiSnipsJumpForwardTrigger = '<M-i>'
+"let g:UltiSnipsJumpBackwardTrigger = '<M-o>'
+"let g:UltiSnipsListSnippets = '<M-c>'
 let g:UltisnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetDirectories = [$MOZ_CONFIG.'\UltiSnips','UltiSnips']
 nnoremap <leader>ss :UltiSnipsEdit!<cr>
@@ -1055,22 +1065,6 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " CocList Yank
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
-" coc-snippets settings
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-n> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-n>'
-
-" Use <C-p> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-p>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
@@ -1082,7 +1076,23 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-n>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-p>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
 nnoremap <C-c> :CocCommand<cr>
+
 
 
 "--------------------------------------------------
@@ -1420,8 +1430,20 @@ if s:iswindows
     execute 'source C:\Users\GRC\.cache\calendar.vim\credentials.vim'
 endif
 
+"--------------------------------------------------
+"--------------------------------------------------
+"  vim-capslock
+"--------------------------------------------------
+"--------------------------------------------------
 
-" vim-textobj-user
+imap <leader>ie <C-O><Plug>CapsLockToggle
+
+"--------------------------------------------------
+"--------------------------------------------------
+"  vim-textobj-user
+"--------------------------------------------------
+"--------------------------------------------------
+
 " define TEX \left( \right) object
 call textobj#user#plugin('tex', {
 \   'paren-math': {
@@ -1470,3 +1492,5 @@ augroup END
 "EOF
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "let g:gutentags_define_advanced_commands = 1
+
+
