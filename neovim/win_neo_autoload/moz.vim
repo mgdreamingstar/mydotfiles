@@ -78,3 +78,16 @@ hwnd = win32gui.GetForegroundWindow()
 result = win32api.SendMessage( hwnd, WM_INPUTLANGCHANGEREQUEST, 0, eval(IMEcode))
 EOF
 endfunction
+
+" open help
+function! moz#Help()
+    let topic = input('Enter topic: ')
+    let number_of_win = winnr('$')
+    if number_of_win == 1
+        exe "vert help " . topic
+    elseif number_of_win > 1
+        wincmd t
+        wincmd o
+        exe "vert help " . topic
+    endif
+endfunction
