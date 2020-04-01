@@ -195,6 +195,7 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
 "Plug 'theniceboy/bullets.vim'
 "Plug 'gabrielelana/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 "Plug 'vim-pandoc/vim-pandoc-syntax'
 "Plug 'vim-pandoc/vim-pandoc'
 
@@ -468,8 +469,6 @@ augroup END
 noremap c <nop>
 nnoremap ci :silent call moz#SmartIME('0x0804')<cr>i
 nnoremap co :silent call moz#SmartIME('0x0804')<cr>o
-nnoremap <silent> <leader>ie :silent call moz#SmartIME('0x0409')<cr>
-nnoremap <silent> <leader>ic :silent call moz#SmartIME('0x0804')<cr>
 
 "-------------------------------------------------- 
 "  Tab management
@@ -487,6 +486,8 @@ noremap tl :+tabnext<CR>
 noremap tmh :-tabmove<CR>
 noremap tml :+tabmove<CR>
 
+"-------------------------------------------------- 
+
 nnoremap M :setlocal relativenumber!<cr>
 nnoremap <leader>w :set wrap!<cr>
 
@@ -495,10 +496,10 @@ nnoremap <leader>w :set wrap!<cr>
 
 " Open up lazygit
 noremap \g :term lazygit<CR>
-noremap <c-k> :tabe<CR>:-tabmove<CR>:term lazygit<CR>
+noremap <leader>gi :tabe<CR>:-tabmove<CR>:term lazygit<CR>
 
 " Open up pudb
-noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
+"noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
 " Run script with Python
 nnoremap <M-r> :call moz#Run_Python_Simple()<cr>
 "noremap <f5> :tab sp<CR>:term python3 -m pudb %<CR>
@@ -513,13 +514,13 @@ xnoremap <M-d> "_d
 nnoremap <leader>yp :let @+ = expand("%:p")<cr>
 
 imap <C-v>  <C-R>+
+cmap <C-v>     <C-R>+
 vmap <C-c>  "+y
 imap <silent> <S-Insert> <Esc>"+pa
-cmap <C-V>     <C-R>+
 cmap <S-Insert>     <C-R>+
-vnoremap <BS> d
-vnoremap <C-C> "+y
 vnoremap <C-Insert> "+y
+
+vnoremap <BS> d
 
 " open in explorer
 if s:iswindows
@@ -556,7 +557,6 @@ tnoremap <M-j> <C-\><C-N><C-w>j
 tnoremap <M-k> <C-\><C-N><C-w>k
 tnoremap <M-l> <C-\><C-N><C-w>l
 map <leader>tt :call moz#Term()<cr>
-noremap <c-k> :tabe<CR>:-tabmove<CR>:term lazygit<CR>
 au TermOpen * startinsert
 " nnoremap \t :tabe<cr>:-tabmove<cr>:term sh -c 'st'<cr><C-\><C-N>:q<cr>
 
@@ -632,9 +632,9 @@ endfunc
 "--------------------------------------------------
 "--------------------------------------------------
 
-if s:iswindows
-    execute "source " . $MOZ_CONFIG . '\md_keymaps.vim'
-endif
+"if s:iswindows
+    "execute 'source ' . $MOZ_CONFIG . '\md_keymaps.vim'
+"endif
 
 ""auto spell
 "autocmd BufRead,BufNewFile *.md setlocal spell
@@ -761,9 +761,9 @@ else
 endif
 
 " should set ExpandTrigger: coc will use <tab>
-let g:UltiSnipsExpandTrigger = '<M-i>'
+let g:UltiSnipsExpandTrigger = '<Ctrl>'
 let g:UltiSnipsJumpForwardTrigger = '<M-i>'
-" let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<M-o>'
 let g:UltiSnipsListSnippets = '<M-c>'
 let g:UltisnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetDirectories = [$MOZ_CONFIG.'\UltiSnips','UltiSnips']
@@ -827,7 +827,7 @@ endif
 cnoremap 'f LeaderfFile
 map <leader>h :LeaderfHelp<cr>
 
-let g:Lf_ShortcutF = '<C-P>'
+let g:Lf_ShortcutF = '<C-k>'
 noremap <leader>b  :LeaderfBuffer<cr>
 noremap <leader>m  :LeaderfMru<cr>
 noremap <leader>f  :LeaderfFunction!<cr>
@@ -1033,7 +1033,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
 " Show all diagnostics.
@@ -1081,8 +1081,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-let g:coc_snippet_next = '<tab>'
 
 nnoremap <C-c> :CocCommand<cr>
 
@@ -1221,7 +1219,7 @@ nmap mC <Plug>BookmarkClear
 nmap mX <Plug>BookmarkClearAll
 nmap mu <Plug>BookmarkMoveUp
 nmap me <Plug>BookmarkMoveDown
-nmap <Leader>g <Plug>BookmarkMoveToLine
+"nmap <Leader>g <Plug>BookmarkMoveToLine
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
 let g:bookmark_highlight_lines = 1
@@ -1363,6 +1361,15 @@ let g:vmt_fence_closing_text = '/TOC'
 nmap s <plug>(SubversiveSubstitute)
 nmap ss <plug>(SubversiveSubstituteLine)
 
+"--------------------------------------------------
+"--------------------------------------------------
+"  vim-markdown
+"--------------------------------------------------
+"--------------------------------------------------
+let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_math = 1
+let g:vim_markdown_toml_frontmatter = 1
+
 
 " vim-wiki
 let g:vimwiki_list = [{'path': 'C:\Users\GRC\iCloudDrive\27N4MQEA55~pro~writer\Notes_PC\',
@@ -1370,6 +1377,7 @@ let g:vimwiki_list = [{'path': 'C:\Users\GRC\iCloudDrive\27N4MQEA55~pro~writer\N
 \                    ]
 "let g:vimwiki_diary_rel_path = {'type': type(''), 'default': '\Diary\', 'min_length': 1}
 let g:vimwiki_use_calendar = 1
+let g:vimwiki_global_ext = 0
 "autocmd FileType vimwiki map \c :call ToggleCalendar()<cr>
 "autocmd FileType vimwiki :set filetype=markdown.pandoc
 
