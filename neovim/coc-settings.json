@@ -9,7 +9,7 @@
     },
     "diagnostic.warningSign": "!",
     "diagnostic.errorSign": "x",
-    "http.proxy": "127.0.0.1:7891",
+    "http.proxy": "127.0.0.1:7890",
     "http.proxyStrictSSL": true,
     "coc.preferences.formatOnSaveFiletypes": [
         "javascript",
