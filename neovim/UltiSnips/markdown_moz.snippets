@@ -1,4 +1,16 @@
 priority 1
+
+#pre_expand "del snip.buffer[snip.line]; snip.cursor.set(snip.line, 0)"
+snippet '([#\s]*)(\d)ha' "header 1" r 
+`!p
+import vim, re
+line = vim.eval('getline(".")')
+no_h_line = re.match('([#\s]*)(.*)',line).group(2)
+if not snip.c:
+	snip.rv = "#"*int(match.group(2)) + ' ' + no_h_line	
+`
+endsnippet
+
 snippet lnk "Link to something"
 [${1:${VISUAL:Text}}](${3:http://${2:www.url.com}})$0
 endsnippet
