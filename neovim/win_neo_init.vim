@@ -172,7 +172,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 "Plug 'altercation/vim-colors-solarized'
 Plug 'ajmwagar/vim-deus'
-
+Plug 'mgdreamingstar/peaksea'
 
 Plug 'liuchengxu/vista.vim'
 "Plug 'ludovicchabant/vim-gutentags'
@@ -396,6 +396,9 @@ nnoremap - :bprev<cr>
 
 "close current buffer
 map <leader>bd :Bclose<cr>:tabclose<cr>gT
+"close all buffers
+map <leader>ba :bufdo bd<cr>
+
 " Specify the behavior when switching between buffers 
 try
   set switchbuf=useopen,usetab,newtab
@@ -1416,7 +1419,11 @@ nmap ' <Plug>(easymotion-bd-f)
 " === goyo
 " ===
 map <LEADER>gy :Goyo<CR>
+let g:goyo_width = 150
+autocmd! User GoyoEnter call zenroom2#Zenroom_goyo_before()
+autocmd! User GoyoLeave call zenroom2#Zenroom_goyo_after()
 
+"let g:goyo_callbacks = [ function('s:zenroom_goyo_before'), function('s:zenroom_goyo_after') ]
 
 " ===
 " === fastfold
