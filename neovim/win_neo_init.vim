@@ -200,7 +200,7 @@ Plug 'amix/vim-zenroom2'
 "Plug 'vim-pandoc/vim-pandoc-syntax'
 "Plug 'vim-pandoc/vim-pandoc'
 
-"Plug '907th/vim-auto-save'
+Plug '907th/vim-auto-save'
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 " Undo Tree
@@ -304,16 +304,20 @@ set splitright
 set splitbelow
 set noshowmode
 set showcmd
-set wildmenu
+set wildmenu " list completion at c mode 
 set smartcase
 set inccommand=split
 set completeopt=longest,noinsert,menuone,noselect,preview
 set ttyfast  " make scroll faster
 set lazyredraw  " faster redraw
 set visualbell
-set colorcolumn=80
+set colorcolumn=80 " highlight 80 column
 set virtualedit=block
-set conceallevel=0
+set conceallevel=0 " no conceal
+set linebreak " break line 
+set textwidth=80
+set fo+=tmB " break line at Unicode characters
+set cursorline " highlight the cursor line 
 "set relativenumber
 
 let g:python3_host_prog = $MOZ_PYTHON3
@@ -1219,7 +1223,7 @@ let g:mkdp_page_title = '「${name}」'
 "augroup END
 
 " vim-auto-save
-"let g:auto_save = 0
+let g:auto_save = 1
 
 
 "--------------------------------------------------
