@@ -196,7 +196,8 @@ Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
 "Plug 'theniceboy/bullets.vim'
 "Plug 'gabrielelana/vim-markdown'
 Plug 'plasticboy/vim-markdown'
-Plug 'amix/vim-zenroom2'
+"Plug 'amix/vim-zenroom2'
+Plug 'mgdreamingstar/vim-zenroom2'
 "Plug 'vim-pandoc/vim-pandoc-syntax'
 "Plug 'vim-pandoc/vim-pandoc'
 
@@ -292,7 +293,7 @@ set number
 set autochdir
 set autoindent
 set list  " show tab and other special chars
-set listchars=tab:>-,trail:▫
+set listchars=tab:>-,trail:+
 set scrolloff=4
 set viewoptions=cursor,folds,unix,slash
 set indentexpr=
@@ -315,7 +316,8 @@ set colorcolumn=80 " highlight 80 column
 set virtualedit=block
 set conceallevel=0 " no conceal
 set linebreak " break line 
-set textwidth=80
+"set textwidth=80
+set showbreak=->  
 set fo+=tmB " break line at Unicode characters
 set cursorline " highlight the cursor line 
 "set relativenumber
@@ -384,10 +386,47 @@ vnoremap Y "+y
 nnoremap < <<
 nnoremap > >>
 
+"-------------------------------------------------- 
 " buffer
+"-------------------------------------------------- 
+
 nnoremap <space><space> :b
 nnoremap = :bnext<cr>
 nnoremap - :bprev<cr>
+
+"close current buffer
+map <leader>bd :Bclose<cr>:tabclose<cr>gT
+" Specify the behavior when switching between buffers 
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
+
+    if buflisted(l:alternateBufNum)
+        buffer #
+    else
+        bnext
+    endif
+
+    if bufnr("%") == l:currentBufNum
+        new
+    endif
+
+    if buflisted(l:currentBufNum)
+        execute("bdelete! ".l:currentBufNum)
+    endif
+endfunction
+"-------------------------------------------------- 
+" Return to last edit position when opening files (You want this!)
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+"-------------------------------------------------- 
 
 " Select entire line (minus EOL) with 'vv', entire file (characterwise) with 'VV'
 xnoremap <expr> V mode() ==# "V" ? "gg0voG$h" : "V"
@@ -460,6 +499,11 @@ noremap srv <C-w>b<C-w>H
 nnoremap <M-n> <Esc><C-w>w5<C-e><C-w>w
 nnoremap <M-p> <Esc><C-w>w5<C-y><C-w>w 
 
+" Move a line of text using ALT+[jk] or Command+[jk] on mac
+nmap <M-=> mz:m+<cr>`z
+nmap <M--> mz:m-2<cr>`z
+vmap <M-=> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M--> :m'<-2<cr>`>my`<mzgv`yo`z
 "-------------------------------------------------- 
 "switch IME(输入法)
 "友好的中文输入法
@@ -487,8 +531,10 @@ inoremap <silent> <Esc> <Esc>:<C-u><C-r>=printf("silent call moz#SmartIME('0x040
 
 noremap c <nop>
 nnoremap ci :silent call moz#SmartIME('0x0804')<cr>i
+nnoremap cI :silent call moz#SmartIME('0x0804')<cr>I
 nnoremap co :silent call moz#SmartIME('0x0804')<cr>o
 nnoremap ca :silent call moz#SmartIME('0x0804')<cr>a
+nnoremap cA :silent call moz#SmartIME('0x0804')<cr>A
 
 "open help
 nnoremap <leader>ih :silent call moz#Help()<cr>
@@ -496,8 +542,13 @@ nnoremap <leader>ih :silent call moz#Help()<cr>
 "-------------------------------------------------- 
 "  Tab management
 "-------------------------------------------------- 
-" Create a new tab with tu
-noremap tu :tabe<CR>
+" Create a new tab with tn
+noremap tn :tabe<CR>
+noremap tc :tabclose<CR>
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+noremap te :tabedit <C-r>=expand("%:p:h")<cr>/
 
 " Move around tabs with th and tl
 " left
@@ -508,6 +559,11 @@ noremap tl :+tabnext<CR>
 " Move the tabs with tmh and tml
 noremap tmh :-tabmove<CR>
 noremap tml :+tabmove<CR>
+
+" Let 'tk' toggle between this and the last accessed tab
+let g:lasttab = 1
+nmap tk :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
 
 "-------------------------------------------------- 
 
@@ -745,6 +801,7 @@ autocmd VimEnter * wincmd w
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " " 关闭NERDTree快捷键
 map <F8> :NERDTreeToggle<cr>
+map <F7> :NERDTreeFromBookmark<space>
 
 " change the working directory and print out after changing
 nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
