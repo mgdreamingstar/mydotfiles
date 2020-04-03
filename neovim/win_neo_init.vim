@@ -201,7 +201,7 @@ Plug 'amix/vim-zenroom2'
 "Plug 'vim-pandoc/vim-pandoc'
 
 "Plug '907th/vim-auto-save'
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 " Undo Tree
 Plug 'mbbill/undotree'
@@ -382,7 +382,8 @@ nnoremap > >>
 
 " buffer
 nnoremap <space><space> :b
-nnoremap <Bar> :bnext<cr>
+nnoremap = :bnext<cr>
+nnoremap - :bprev<cr>
 
 " Select entire line (minus EOL) with 'vv', entire file (characterwise) with 'VV'
 xnoremap <expr> V mode() ==# "V" ? "gg0voG$h" : "V"
@@ -936,11 +937,17 @@ let g:vimwiki_use_calendar = 1
 let g:vimwiki_global_ext = 0
 "autocmd FileType vimwiki map \c :call ToggleCalendar()<cr>
 "autocmd FileType vimwiki :set filetype=markdown.pandoc
-augroup vimwiki
-    autocmd!
-    autocmd FileType vimwiki inoremap <expr> <M-e> vimwiki#tbl#kbd_tab()
-    "autocmd FileType vimwiki :set filetype=markdown
-augroup end
+"augroup vimwiki
+    "autocmd!
+    "autocmd FileType vimwiki inoremap <expr> <M-e> vimwiki#tbl#kbd_tab()
+    ""autocmd FileType vimwiki :set filetype=markdown
+"augroup end
+
+let g:vimwiki_key_mappings =
+    \ {
+    \ 'table_mappings': 0,
+    \ 'headers': 0
+    \ }
 
 "--------------------------------------------------
 "--------------------------------------------------
