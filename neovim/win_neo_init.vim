@@ -196,6 +196,7 @@ Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
 "Plug 'theniceboy/bullets.vim'
 "Plug 'gabrielelana/vim-markdown'
 Plug 'plasticboy/vim-markdown'
+Plug 'amix/vim-zenroom2'
 "Plug 'vim-pandoc/vim-pandoc-syntax'
 "Plug 'vim-pandoc/vim-pandoc'
 
@@ -286,7 +287,7 @@ set ts=4  " tab = 4 spaces
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-set noswapfile  " don't use swap file
+"set noswapfile  " don't use swap file
 set number
 set autochdir
 set autoindent
@@ -312,6 +313,7 @@ set lazyredraw  " faster redraw
 set visualbell
 set colorcolumn=80
 set virtualedit=block
+set conceallevel=0
 "set relativenumber
 
 let g:python3_host_prog = $MOZ_PYTHON3
@@ -454,16 +456,18 @@ nnoremap <M-n> <Esc><C-w>w5<C-e><C-w>w
 nnoremap <M-p> <Esc><C-w>w5<C-y><C-w>w 
 
 "-------------------------------------------------- 
+"switch IME(输入法)
+"友好的中文输入法
+"-------------------------------------------------- 
+
 " Press <leader> + q to close the window below the current window or any
 " window
 "noremap <leader>q <C-w>j:q<CR>
 
-"switch IME(输入法)
-"友好的中文输入法
-augroup SmartIME
-autocmd! InsertLeave *
-    \ silent call moz#SmartIME('0x0409')|
-    \ set relativenumber
+"augroup SmartIME
+"autocmd! InsertLeave *
+    "\ silent call moz#SmartIME('0x0409')|
+    "\ set relativenumber
 
 "autocmd! FocusGained *
     "\ if mode(1)!='i' && mode(1)!='Rv' && mode(1)!=#'R'|
@@ -471,11 +475,15 @@ autocmd! InsertLeave *
     "\    silent call moz#SmartIME('0x0804')|
     "\ endif|
     "\ set norelativenumber
-augroup END
+"augroup END
+
+" map <esc> to escape and change to english ime
+inoremap <silent> <Esc> <Esc>:<C-u><C-r>=printf("silent call moz#SmartIME('0x0409')")<cr><cr>
 
 noremap c <nop>
 nnoremap ci :silent call moz#SmartIME('0x0804')<cr>i
 nnoremap co :silent call moz#SmartIME('0x0804')<cr>o
+nnoremap ca :silent call moz#SmartIME('0x0804')<cr>a
 
 "open help
 nnoremap <leader>ih :silent call moz#Help()<cr>
@@ -530,7 +538,7 @@ imap <silent> <S-Insert> <Esc>"+pa
 cmap <S-Insert>     <C-R>+
 vnoremap <C-Insert> "+y
 
-vnoremap <BS> d
+"vnoremap <BS> d
 
 " open in explorer
 if s:iswindows
@@ -546,10 +554,10 @@ nmap <M-j> <C-w>j
 nmap <M-k> <C-w>k
 nmap <M-l> <C-w>l
 
-inoremap <M-h> <C-\><C-N><C-w>h
-inoremap <M-j> <C-\><C-N><C-w>j
-inoremap <M-k> <C-\><C-N><C-w>k
-inoremap <M-l> <C-\><C-N><C-w>l
+"inoremap <M-h> <C-\><C-N><C-w>h
+"inoremap <M-j> <C-\><C-N><C-w>j
+"inoremap <M-k> <C-\><C-N><C-w>k
+"inoremap <M-l> <C-\><C-N><C-w>l
 
 " always split windows vertically
 set splitright
@@ -771,7 +779,7 @@ else
 endif
 
 " should set ExpandTrigger: coc will use <tab>
-let g:UltiSnipsExpandTrigger = '<cr>'
+let g:UltiSnipsExpandTrigger = '<M-i>'
 "let g:UltiSnipsJumpForwardTrigger = '<M-i>'
 "let g:UltiSnipsJumpBackwardTrigger = '<M-o>'
 "let g:UltiSnipsListSnippets = '<M-c>'
@@ -914,13 +922,32 @@ noremap go :<C-U>Leaderf! rg --recall<CR>
 "let g:gutentags_auto_add_gtags_cscope = 0
 
 
+"--------------------------------------------------
+"--------------------------------------------------
+"  vim-wiki
+"--------------------------------------------------
+"--------------------------------------------------
+
+let g:vimwiki_list = [{'path': 'C:\Users\GRC\iCloudDrive\27N4MQEA55~pro~writer\Notes_PC\',
+\                      'diary_rel_path': 'Diary\', 'syntax': 'markdown', 'ext': '.md'},
+\                    ]
+"let g:vimwiki_diary_rel_path = {'type': type(''), 'default': '\Diary\', 'min_length': 1}
+let g:vimwiki_use_calendar = 1
+let g:vimwiki_global_ext = 0
+"autocmd FileType vimwiki map \c :call ToggleCalendar()<cr>
+"autocmd FileType vimwiki :set filetype=markdown.pandoc
+augroup vimwiki
+    autocmd!
+    autocmd FileType vimwiki inoremap <expr> <M-e> vimwiki#tbl#kbd_tab()
+    "autocmd FileType vimwiki :set filetype=markdown
+augroup end
 
 "--------------------------------------------------
 "--------------------------------------------------
 "  CoC Settings
 "--------------------------------------------------
 "--------------------------------------------------
-let g:coc_global_extensions = ['coc-pairs','coc-python','coc-snippets','coc-yank','coc-json','coc-tsserver']
+let g:coc_global_extensions = ['coc-word','coc-pairs','coc-python','coc-snippets','coc-yank','coc-json','coc-tsserver']
 " TextEdit might fail if hidden is not set.
 set hidden
 
@@ -1076,20 +1103,21 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+" Use <M-k> for trigger snippet expand.
+imap <M-k> <Plug>(coc-snippets-expand)
 
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
+" Use <M-j> for both expand and jump (make expand higher priority.)
+imap <M-j> <Plug>(coc-snippets-expand-jump)
 
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-n>'
+" Use <M-l> for select text for visual placeholder of snippet.
+vmap <M-l> <Plug>(coc-snippets-select)
 
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-p>'
+" Use <M-n> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<M-n>'
 
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
+" Use <M-p> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<M-p>'
+
 
 nnoremap <C-c> :CocCommand<cr>
 
@@ -1379,22 +1407,15 @@ nmap ss <plug>(SubversiveSubstituteLine)
 let g:vim_markdown_no_default_key_mappings = 1
 let g:vim_markdown_math = 1
 let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_conceal = 0
 
 
-" vim-wiki
-let g:vimwiki_list = [{'path': 'C:\Users\GRC\iCloudDrive\27N4MQEA55~pro~writer\Notes_PC\',
-\                      'diary_rel_path': 'Diary\', 'syntax': 'markdown', 'ext': '.md'},
-\                    ]
-"let g:vimwiki_diary_rel_path = {'type': type(''), 'default': '\Diary\', 'min_length': 1}
-let g:vimwiki_use_calendar = 1
-let g:vimwiki_global_ext = 0
-"autocmd FileType vimwiki map \c :call ToggleCalendar()<cr>
-"autocmd FileType vimwiki :set filetype=markdown.pandoc
 
-
-" ===
-" === vim-calendar
-" ===
+"--------------------------------------------------
+"--------------------------------------------------
+"  vim-calendar
+"--------------------------------------------------
+"--------------------------------------------------
 noremap \c :Calendar -view=year -position=right -width=27 -split=vertical<CR>
 noremap \\ :Calendar -view=day -position=right -width=50 -split=vertical<CR>
 let g:calendar_first_day = "monday"
