@@ -173,6 +173,7 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 "Plug 'altercation/vim-colors-solarized'
 Plug 'ajmwagar/vim-deus'
 Plug 'mgdreamingstar/peaksea'
+Plug 'reedes/vim-colors-pencil'
 
 Plug 'liuchengxu/vista.vim'
 "Plug 'ludovicchabant/vim-gutentags'
@@ -198,6 +199,7 @@ Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
 Plug 'plasticboy/vim-markdown'
 "Plug 'amix/vim-zenroom2'
 Plug 'mgdreamingstar/vim-zenroom2'
+Plug 'reedes/vim-pencil'
 "Plug 'vim-pandoc/vim-pandoc-syntax'
 "Plug 'vim-pandoc/vim-pandoc'
 
@@ -312,11 +314,11 @@ set completeopt=longest,noinsert,menuone,noselect,preview
 set ttyfast  " make scroll faster
 set lazyredraw  " faster redraw
 set visualbell
-set colorcolumn=80 " highlight 80 column
+set colorcolumn=100 " highlight 100 column
 set virtualedit=block
 set conceallevel=0 " no conceal
 set linebreak " break line 
-"set textwidth=80
+"set textwidth=100
 set showbreak=->  
 set fo+=tmB " break line at Unicode characters
 set cursorline " highlight the cursor line 
@@ -385,6 +387,10 @@ vnoremap Y "+y
 " indent
 nnoremap < <<
 nnoremap > >>
+
+" jumplist
+
+nnoremap <C-y> <C-i>
 
 "-------------------------------------------------- 
 " buffer
@@ -1415,13 +1421,26 @@ nmap ' <Plug>(easymotion-bd-f)
 "nmap 'w <Plug>(easymotion-overwin-w)
 
 
-" ===
-" === goyo
+"--------------------------------------------------
+"--------------------------------------------------
+"  vim-pencil
+"--------------------------------------------------
+"--------------------------------------------------
+"
+let g:pencil#wrapModeDefault = 'soft'
+
+
+"--------------------------------------------------
+"--------------------------------------------------
+"  goyo
+"--------------------------------------------------
+"--------------------------------------------------
+
 " ===
 map <LEADER>gy :Goyo<CR>
-let g:goyo_width = 150
-autocmd! User GoyoEnter call zenroom2#Zenroom_goyo_before()
-autocmd! User GoyoLeave call zenroom2#Zenroom_goyo_after()
+let g:goyo_width = 125
+"autocmd! User GoyoEnter call zenroom2#Zenroom_goyo_before()
+"autocmd! User GoyoLeave call zenroom2#Zenroom_goyo_after()
 
 "let g:goyo_callbacks = [ function('s:zenroom_goyo_before'), function('s:zenroom_goyo_after') ]
 
