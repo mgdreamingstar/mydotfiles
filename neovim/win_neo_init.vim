@@ -314,12 +314,12 @@ set completeopt=longest,noinsert,menuone,noselect,preview
 set ttyfast  " make scroll faster
 set lazyredraw  " faster redraw
 set visualbell
-set colorcolumn=100 " highlight 100 column
+set colorcolumn=99 " highlight 100 column
 set virtualedit=block
 set conceallevel=0 " no conceal
 set linebreak " break line 
-"set textwidth=100
-set showbreak=->  
+set textwidth=99
+set showbreak=>  
 set fo+=tmB " break line at Unicode characters
 set cursorline " highlight the cursor line 
 "set relativenumber
@@ -1290,7 +1290,9 @@ let g:mkdp_page_title = '「${name}」'
 
 " vim-auto-save
 let g:auto_save = 1
-
+let g:auto_save_silent = 1
+let g:auto_save_events = ["CursorHold", "CursorHoldI"]
+set updatetime=1000
 
 "--------------------------------------------------
 "--------------------------------------------------
@@ -1427,8 +1429,11 @@ nmap ' <Plug>(easymotion-bd-f)
 "--------------------------------------------------
 "--------------------------------------------------
 "
-let g:pencil#wrapModeDefault = 'soft'
-
+let g:pencil#wrapModeDefault = 'hard'
+let g:pencil#conceallevel = 0
+"let g:pencil#textwidth = 99
+let g:pencil#map#suspend_af = 'P'
+let g:pencil#autoformat = 1
 
 "--------------------------------------------------
 "--------------------------------------------------
@@ -1444,9 +1449,11 @@ let g:goyo_width = 125
 
 "let g:goyo_callbacks = [ function('s:zenroom_goyo_before'), function('s:zenroom_goyo_after') ]
 
-" ===
-" === fastfold
-" ===
+"--------------------------------------------------
+"--------------------------------------------------
+"  fastfold
+"--------------------------------------------------
+"--------------------------------------------------
 nmap zuz <Plug>(FastFoldUpdate)
 let g:fastfold_savehook = 1
 let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
@@ -1499,6 +1506,7 @@ nmap ss <plug>(SubversiveSubstituteLine)
 "--------------------------------------------------
 "--------------------------------------------------
 let g:vim_markdown_no_default_key_mappings = 1
+let g:tex_conceal = ""
 let g:vim_markdown_math = 1
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_conceal = 0
