@@ -16,7 +16,7 @@ endfunction
 
 " Run Python code
 function! moz#Run_Python_Complicate()
-    w
+    silent w " save file 
     let mp = &makeprg " save setting
     let ef = &errorformat " save setting
     let exefile = expand('%:t') " current file
@@ -30,9 +30,9 @@ function! moz#Run_Python_Complicate()
 endfunction
 
 function! moz#Run_Python_Simple()
-    w
+    silent w
     if &filetype == 'python'
-        exec "!python %"
+        silent exec "!python %"
     endif
 endfunction
 
@@ -91,3 +91,13 @@ function! moz#Help()
         exe "vert help " . topic
     endif
 endfunction
+
+" open python_sketchs
+fun! moz#Python_sketch()
+    let files = globpath(&backupdir."\\python_sketchs", "**/*.py", 0, 1)
+    let filename = fnamemodify(files[-1], ":t")
+    if filename[:9] == strftime("%Y-%m-%d")
+        exec "e ".files[-1]
+    endif
+endf
+
