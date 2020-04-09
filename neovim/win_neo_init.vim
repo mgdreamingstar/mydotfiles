@@ -199,10 +199,11 @@ Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown'] }
 Plug 'plasticboy/vim-markdown'
 "Plug 'amix/vim-zenroom2'
 Plug 'mgdreamingstar/vim-zenroom2'
-Plug 'reedes/vim-pencil'
+"Plug 'reedes/vim-pencil'
 "Plug 'vim-pandoc/vim-pandoc-syntax'
 "Plug 'vim-pandoc/vim-pandoc'
 
+Plug 'jiangmiao/auto-pairs'
 Plug '907th/vim-auto-save'
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
@@ -318,16 +319,30 @@ set colorcolumn=99 " highlight 100 column
 set virtualedit=block
 set conceallevel=0 " no conceal
 set linebreak " break line 
-set textwidth=99
+"set textwidth=99
 set showbreak=>  
 set fo+=tmB " break line at Unicode characters
 set cursorline " highlight the cursor line 
 "set relativenumber
+set t_Co=256
+" autoread file if changed outside of vim
+set autoread
+au CursorHold * checktime
+set mouse=r
 
+"-------------------------------------------------- 
 let g:python3_host_prog = $MOZ_PYTHON3
 if s:iswindows
     let g:python_host_prog = 'D:\Anaconda\python.exe'
 endif
+
+" Open up pudb
+"noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
+" Run script with Python
+nnoremap <M-r> :call moz#Run_Python_Simple()<cr>
+nnoremap <leader>pn :exec "e ".&backupdir."\\python_sketchs\\".strftime("%Y-%m-%d_%H-%M").".py"<cr>
+nnoremap <leader>pl :call moz#Python_sketch()<cr>
+"noremap <f5> :tab sp<CR>:term python3 -m pudb %<CR>
 
 set tags=./.tags;,.tags
 
@@ -586,11 +601,6 @@ nnoremap <leader>w :set wrap!<cr>
 noremap \g :term lazygit<CR>
 noremap <leader>gi :tabe<CR>:-tabmove<CR>:term lazygit<CR>
 
-" Open up pudb
-"noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
-" Run script with Python
-nnoremap <M-r> :call moz#Run_Python_Simple()<cr>
-"noremap <f5> :tab sp<CR>:term python3 -m pudb %<CR>
 
 " copy and paste
 inoremap <C-d> <Esc>:call moz#Duplicate_line()<cr>a
@@ -694,9 +704,7 @@ func! CompileRunGcc()
     elseif &filetype == 'sh'
     :!time bash %
     elseif &filetype == 'python'
-    set splitbelow
-    :sp
-    :term python3 %
+    call moz#Run_Python_Complicate()
     elseif &filetype == 'html'
     silent! exec "!".g:mkdp_browser." % &"
     elseif &filetype == 'markdown'
@@ -811,6 +819,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " " 关闭NERDTree快捷键
 map <F8> :NERDTreeToggle<cr>
 map <F7> :NERDTreeFromBookmark<space>
+map <F6> :Startify<cr>
 
 " change the working directory and print out after changing
 nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -999,9 +1008,12 @@ noremap go :<C-U>Leaderf! rg --recall<CR>
 "--------------------------------------------------
 "--------------------------------------------------
 
-let g:vimwiki_list = [{'path': 'C:\Users\GRC\iCloudDrive\27N4MQEA55~pro~writer\Notes_PC\',
+if s:iswindows
+let g:vimwiki_list = [{'path': $MOZ_GITHUB . '\Drafts\Notes_PC\',
 \                      'diary_rel_path': 'Diary\', 'syntax': 'markdown', 'ext': '.md'},
 \                    ]
+endif
+
 "let g:vimwiki_diary_rel_path = {'type': type(''), 'default': '\Diary\', 'min_length': 1}
 let g:vimwiki_use_calendar = 1
 let g:vimwiki_global_ext = 0
@@ -1024,7 +1036,7 @@ let g:vimwiki_key_mappings =
 "  CoC Settings
 "--------------------------------------------------
 "--------------------------------------------------
-let g:coc_global_extensions = ['coc-word','coc-pairs','coc-python','coc-snippets','coc-yank','coc-json','coc-tsserver']
+let g:coc_global_extensions = ['coc-word','coc-python','coc-snippets','coc-yank','coc-json','coc-tsserver']
 " TextEdit might fail if hidden is not set.
 set hidden
 
@@ -1429,11 +1441,11 @@ nmap ' <Plug>(easymotion-bd-f)
 "--------------------------------------------------
 "--------------------------------------------------
 "
-let g:pencil#wrapModeDefault = 'hard'
-let g:pencil#conceallevel = 0
+"let g:pencil#wrapModeDefault = 'hard'
+"let g:pencil#conceallevel = 0
 "let g:pencil#textwidth = 99
-let g:pencil#map#suspend_af = 'P'
-let g:pencil#autoformat = 1
+"let g:pencil#map#suspend_af = 'P'
+"let g:pencil#autoformat = 1
 
 "--------------------------------------------------
 "--------------------------------------------------
