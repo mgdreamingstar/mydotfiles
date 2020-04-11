@@ -1221,8 +1221,10 @@ nnoremap <C-c> :CocCommand<cr>
 "--------------------------------------------------
 
 nnoremap <leader>gca :Gcommit -a -v<cr>
-nnoremap <leader>gs :Git status<cr>
-nnoremap <leader>gl :Git log --pretty='format:%h %ad <%an> -%d %s' --date=short<cr>
+nnoremap <leader>gcm :Gcommit --amend<cr>
+nnoremap <leader>gs :Git status -s<cr>
+nnoremap <leader>gl :Git log --pretty=format:'%h %ad <%an> -%d %s' --date=short<cr>
+nnoremap <leader>gn :GMove
 
 "--------------------------------------------------
 "--------------------------------------------------
