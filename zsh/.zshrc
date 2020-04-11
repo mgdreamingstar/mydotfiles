@@ -26,8 +26,9 @@ autoload -U compinit && compinit -u
 # POWERLEVEL9K_ANACONDA_RIGHT_DELIMITER=""
 
 # ZSH_THEME="theunraveler"
-ZSH_THEME="spaceship"
-# ZSH_THEME="ys"
+# ZSH_THEME="spaceship"
+ZSH_THEME="ys"
+
 BULLETTRAIN_CONTEXT_BG=red
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
