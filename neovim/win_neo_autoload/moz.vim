@@ -32,7 +32,7 @@ endfunction
 function! moz#Run_Python_Simple()
     silent w
     if &filetype == 'python'
-        silent exec "!python %"
+        exec "!python %"
     endif
 endfunction
 

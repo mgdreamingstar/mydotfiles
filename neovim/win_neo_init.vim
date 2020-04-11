@@ -181,6 +181,9 @@ Plug 'liuchengxu/vista.vim'
 "Plug 'skywind3000/vim-preview'
 "Plug 'skywind3000/vim-quickui'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+
+
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'mg979/vim-visual-multi'
 "Plug 'machakann/vim-highlightedyank'
@@ -1211,6 +1214,15 @@ let g:coc_snippet_prev = '<M-p>'
 nnoremap <C-c> :CocCommand<cr>
 
 
+"--------------------------------------------------
+"--------------------------------------------------
+"  vim-fugitive
+"--------------------------------------------------
+"--------------------------------------------------
+
+nnoremap <leader>gca :Gcommit -a -v<cr>
+nnoremap <leader>gs :Git status<cr>
+nnoremap <leader>gl :Git log --pretty='format:%h %ad <%an> -%d %s' --date=short<cr>
 
 "--------------------------------------------------
 "--------------------------------------------------
@@ -1224,9 +1236,9 @@ set updatetime=100
 let g:gitgutter_max_signs = 800
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
-"nmap <leader>ha <Plug>(GitGutterStageHunk)
-"nmap <leader>hr <Plug>(GitGutterUndoHunk)
-"nmap <leader>hv <Plug>(GitGutterPreviewHunk)
+nmap <leader>ga <Plug>(GitGutterStageHunk)
+nmap <leader>gr <Plug>(GitGutterUndoHunk)
+nmap <leader>gv <Plug>(GitGutterPreviewHunk)
 
 
 "--------------------------------------------------
