@@ -19,6 +19,7 @@
         "markdown",
         "json"
     ],
+    "coc.preferences.extensionUpdateCheck": "never",
     "python.jediEnabled": false,
     "python.formatting.provider": "black",
     "python.linting.pylintEnabled": false,
