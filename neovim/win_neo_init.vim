@@ -343,7 +343,7 @@ endif
 "noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
 " Run script with Python
 nnoremap <M-r> :call moz#Run_Python_Simple()<cr>
-nnoremap <leader>pn :exec "e ".&backupdir."\\python_sketchs\\".strftime("%Y-%m-%d_%H-%M").".py"<cr>
+nnoremap <leader>pn :exec 'e '.&backupdir.'\\python_sketchs\\'.strftime('%Y-%m-%d_%H-%M').'.py'<cr>
 nnoremap <leader>pl :call moz#Python_sketch()<cr>
 "noremap <f5> :tab sp<CR>:term python3 -m pudb %<CR>
 
@@ -355,7 +355,7 @@ if exists("setup")
     silent! mkdir(s:undo, 'p')
 endif
 
-silent !mkdir -p ~/.config/nvim/tmp/sessions
+"silent !mkdir -p ~/.config/nvim/tmp/sessions
 set backupdir=C:\\Users\\GRC\\.config\\nvim\\moz_tmp\\backup
 set directory=C:\\Users\\GRC\\.config\\nvim\\moz_tmp\\backup
 if has('persistent_undo')
@@ -864,7 +864,7 @@ endif
 
 " should set ExpandTrigger: coc will use <tab>
 let g:UltiSnipsExpandTrigger = '<M-i>'
-"let g:UltiSnipsJumpForwardTrigger = '<M-i>'
+let g:UltiSnipsJumpForwardTrigger = '<M-i>'
 "let g:UltiSnipsJumpBackwardTrigger = '<M-o>'
 "let g:UltiSnipsListSnippets = '<M-c>'
 let g:UltisnipsEditSplit = 'vertical'
@@ -881,6 +881,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#fnametruncate = 16
 let g:airline#extensions#tabline#fnamecollapse = 2
 let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#coc#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_b = '%-0.30{getcwd()}'
@@ -1040,7 +1041,7 @@ let g:vimwiki_key_mappings =
 "  CoC Settings
 "--------------------------------------------------
 "--------------------------------------------------
-let g:coc_global_extensions = ['coc-word','coc-python','coc-snippets','coc-yank','coc-json','coc-tsserver']
+let g:coc_global_extensions = ['coc-word','coc-python','coc-yank','coc-json','coc-tsserver']
 " TextEdit might fail if hidden is not set.
 set hidden
 
@@ -1163,7 +1164,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline^=%{coc#status()}
 
 " Mappings using CoCList:
 " Show all diagnostics.
@@ -1197,13 +1198,13 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <M-k> for trigger snippet expand.
-imap <M-k> <Plug>(coc-snippets-expand)
+"imap <M-k> <Plug>(coc-snippets-expand)
 
 " Use <M-j> for both expand and jump (make expand higher priority.)
-imap <M-j> <Plug>(coc-snippets-expand-jump)
+"imap <M-j> <Plug>(coc-snippets-expand-jump)
 
 " Use <M-l> for select text for visual placeholder of snippet.
-vmap <M-l> <Plug>(coc-snippets-select)
+"vmap <M-l> <Plug>(coc-snippets-select)
 
 " Use <M-n> for jump to next placeholder, it's default of coc.nvim
 let g:coc_snippet_next = '<M-n>'
