@@ -560,6 +560,7 @@ noremap c <nop>
 nnoremap ci :silent call moz#SmartIME('0x0804')<cr>i
 nnoremap cI :silent call moz#SmartIME('0x0804')<cr>I
 nnoremap co :silent call moz#SmartIME('0x0804')<cr>o
+nnoremap cO :silent call moz#SmartIME('0x0804')<cr>o
 nnoremap ca :silent call moz#SmartIME('0x0804')<cr>a
 nnoremap cA :silent call moz#SmartIME('0x0804')<cr>A
 
@@ -575,7 +576,7 @@ noremap tc :tabclose<CR>
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-noremap te :tabedit <C-r>=expand("%:p:h")<cr>/
+noremap te :tabedit <C-r>=expand("%:p:h")<cr>\
 
 " Move around tabs with th and tl
 " left
@@ -1220,9 +1221,10 @@ nnoremap <C-c> :CocCommand<cr>
 "--------------------------------------------------
 "--------------------------------------------------
 
+nnoremap <leader>gcc :Gcommit<cr>
 nnoremap <leader>gca :Gcommit -a -v<cr>
 nnoremap <leader>gcm :Gcommit --amend<cr>
-nnoremap <leader>gs :Git status -s<cr>
+nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gl :Git log --pretty=format:'%h %ad <%an> -%d %s' --date=short<cr>
 nnoremap <leader>gn :GMove
 
