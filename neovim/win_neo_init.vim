@@ -321,7 +321,7 @@ set visualbell
 set colorcolumn=99 " highlight 100 column
 set virtualedit=block
 set conceallevel=0 " no conceal
-set linebreak " break line 
+"set linebreak " break line 
 "set textwidth=99
 set showbreak=>  
 set fo+=tmB " break line at Unicode characters
@@ -343,8 +343,8 @@ endif
 "noremap <c-.> :tab sp<CR>:term python3 -m pudb %<CR>
 " Run script with Python
 nnoremap <M-r> :call moz#Run_Python_Simple()<cr>
-nnoremap <leader>pn :exec 'e '.&backupdir.'\\python_sketchs\\'.strftime('%Y-%m-%d_%H-%M').'.py'<cr>
-nnoremap <leader>pl :call moz#Python_sketch()<cr>
+map <leader><leader> :call moz#Python_new_sketch()<cr>
+nnoremap <leader>kl :call moz#Python_last_sketch()<cr>
 "noremap <f5> :tab sp<CR>:term python3 -m pudb %<CR>
 
 set tags=./.tags;,.tags
@@ -672,7 +672,7 @@ au TermOpen * startinsert
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
 
 " Press <leader> twice to jump to the next '<++>' and edit it
-noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
+"noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " Spelling Check with <space>sc
 "noremap <LEADER>sc :set spell!<CR>

@@ -92,8 +92,13 @@ function! moz#Help()
     endif
 endfunction
 
-" open python_sketchs
-fun! moz#Python_sketch()
+" create python sketch
+fun! moz#Python_new_sketch()
+    exec 'e '.&backupdir.'\\python_sketchs\\'.strftime('%Y-%m-%d_%H-%M').'.py'
+endf
+
+" open last python sketch
+fun! moz#Python_last_sketch()
     let files = globpath(&backupdir."\\python_sketchs", "**/*.py", 0, 1)
     let filename = fnamemodify(files[-1], ":t")
     if filename[:9] == strftime("%Y-%m-%d")
