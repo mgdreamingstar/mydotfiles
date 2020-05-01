@@ -38,7 +38,7 @@ endfunction
 
 " Source init.vim
 function! moz#Source()
-    source $MOZ_VIMRC
+    source $MOZ_NVIMRC
     wincmd p
 endfunction
 

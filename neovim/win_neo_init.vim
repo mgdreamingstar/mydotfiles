@@ -1277,7 +1277,7 @@ let g:repl_stayatrepl_when_open = 0        " 打开REPL时是回到原文件（1
 
 
 nmap <leader>v :call moz#Source()<cr>
-nmap <leader>e :e $MOZ_VIMRC<cr>
+nmap <leader>e :e $MOZ_NVIMRC<cr>
 
 
 "--------------------------------------------------
