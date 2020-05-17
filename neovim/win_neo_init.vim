@@ -1164,7 +1164,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}
+"set statusline^=%{coc#status()}
 
 " Mappings using CoCList:
 " Show all diagnostics.
@@ -1196,22 +1196,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" Use <M-k> for trigger snippet expand.
-"imap <M-k> <Plug>(coc-snippets-expand)
-
-" Use <M-j> for both expand and jump (make expand higher priority.)
-"imap <M-j> <Plug>(coc-snippets-expand-jump)
-
-" Use <M-l> for select text for visual placeholder of snippet.
-"vmap <M-l> <Plug>(coc-snippets-select)
-
-" Use <M-n> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<M-n>'
-
-" Use <M-p> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<M-p>'
-
 
 nnoremap <C-c> :CocCommand<cr>
 
@@ -1320,7 +1304,7 @@ let g:mkdp_page_title = '「${name}」'
 " vim-auto-save
 let g:auto_save = 1
 let g:auto_save_silent = 1
-let g:auto_save_events = ["CursorHold", "CursorHoldI"]
+let g:auto_save_events = ["CursorHold", "InsertLeave"]
 set updatetime=1000
 
 "--------------------------------------------------

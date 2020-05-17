@@ -307,7 +307,10 @@ set foldmethod=indent
 set foldlevel=99
 set foldenable
 set formatoptions-=tc
-set guioptions-=mTLr
+set guioptions-=m
+set guioptions-=L
+set guioptions-=r
+set guioptions-=T
 set splitright
 set splitbelow
 set noshowmode

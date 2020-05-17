@@ -82,18 +82,18 @@ keywords={break,case,catch,classdef,continue,else,elseif,end,for,function,global
 
 \setmonofont{Consolas}    %设置字体为Consolas
 \lstset{                  %设置代码块
-         basicstyle=\footnotesize\ttfamily,% 基本风格
-         numbers=left,    % 行号
-         numbersep=10pt,  % 行号间隔 
-         tabsize=2,       % 缩进
-         extendedchars=true, % 扩展符号？
-         breaklines=true, % 自动换行
-         language=C++,
-         frame=leftline,  % 框架左边竖线
-         xleftmargin=19pt,% 竖线左边间距
-         showspaces=false,% 空格字符加下划线
-         showstringspaces=false,% 字符串中的空格加下划线
-         showtabs=false,  % 字符串中的tab加下划线
+	basicstyle=\footnotesize\ttfamily,% 基本风格
+	numbers=left,    % 行号
+	numbersep=10pt,  % 行号间隔 
+	tabsize=2,       % 缩进
+	extendedchars=true, % 扩展符号？
+	breaklines=true, % 自动换行
+	language=C++,
+	frame=leftline,  % 框架左边竖线
+	xleftmargin=19pt,% 竖线左边间距
+	showspaces=false,% 空格字符加下划线
+	showstringspaces=false,% 字符串中的空格加下划线
+	showtabs=false,  % 字符串中的tab加下划线
 }
 
 \pagestyle{fancy}         % 页眉页脚风格
@@ -144,7 +144,7 @@ endsnippet
 
 snippet enum "Enumerate" bA
 \begin{enumerate}
-    \item $0
+	\item $0
 \end{enumerate}
 endsnippet
 
@@ -192,7 +192,7 @@ endsnippet
 
 snippet am "Math" wA
 \[
-    $1
+	$1
 \] $0
 endsnippet
 
@@ -204,13 +204,13 @@ endsnippet
 
 snippet ali "Align" bA
 \begin{align*}
-    ${1:${VISUAL}}
+	${1:${VISUAL}}
 \end{align*}
 endsnippet
 
 snippet gath "Gather" bA
 \begin{gather*}
-    $1
+	$1
 \end{gather*}
 endsnippet
 
@@ -830,7 +830,7 @@ endsnippet
 
 snippet 'lpy' "code env" rA
 \begin{lstlisting}[language=python, numbers=left,numberstyle=\tiny, keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},frame=shadowbox,rulesepcolor=\color{red!20!green!20!blue!20},basicstyle=\ttfamily]
-    $1
+	$1
 \end{lstlisting}
 endsnippet
 
