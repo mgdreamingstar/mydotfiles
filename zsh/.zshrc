@@ -82,7 +82,11 @@ BULLETTRAIN_CONTEXT_BG=red
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git wd autojump fast-syntax-highlighting zsh-autosuggestions
+  git 
+  wd 
+  autojump 
+  fast-syntax-highlighting 
+  zsh-autosuggestions
 )
 
 ZSH_DISABLE_COMPFIX=true
