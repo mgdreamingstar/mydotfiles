@@ -4,9 +4,9 @@
 export PATH="/mnt/d/Program Files/gifsicle-1.89.win64:$PATH"
 export ZSH=$HOME/.oh-my-zsh
 export APT_CONFIG=~/apt_proxy.conf  # apt-get proxy
-export MOZ_NVIMRC=/root/GitHub/mydotfiles/neovim/win_neo_init.vim
+export MOZ_NVIMRC=~/GitHub/mydotfiles/neovim/win_neo_init.vim
 export MOZ_CONFIG=~/.config/nvim
-export MOZ_GITHUB=/root/GitHub
+export MOZ_GITHUB=~/GitHub
 export MOZ_PYTHON3=~/anaconda3/envs/new3/bin/python
 
 setopt no_nomatch
