@@ -85,7 +85,7 @@ plugins=(
   git 
   wd 
   autojump 
-  fast-syntax-highlighting 
+  zsh-syntax-highlighting 
   zsh-autosuggestions
 )
 
