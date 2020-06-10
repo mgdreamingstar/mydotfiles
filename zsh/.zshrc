@@ -122,7 +122,14 @@ alias de="conda deactivate"
 alias ju="jupyter notebook --allow-root"
 alias ip="ipython"
 
-proxyon() {
+proxyclash() {
+	export https_proxy=http://127.0.0.1:7890
+	export http_proxy=http://127.0.0.1:7891
+	export all_proxy=socks5://127.0.0.1:7891
+        echo "HTTP/HTTPS Proxy on"
+}
+
+proxyipad() {
 	export https_proxy=http://192.168.50.188:6152
 	export http_proxy=http://192.168.50.188:6153
 	export all_proxy=socks5://192.168.50.188:6153
