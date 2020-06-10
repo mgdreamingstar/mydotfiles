@@ -81,13 +81,7 @@ BULLETTRAIN_CONTEXT_BG=red
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git 
-  wd 
-  autojump 
-  zsh-syntax-highlighting 
-  zsh-autosuggestions
-)
+plugins=(git wd autojump zsh-syntax-highlighting zsh-autosuggestions)
 
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
