@@ -4,9 +4,9 @@
 export PATH="/mnt/d/Program Files/gifsicle-1.89.win64:$PATH"
 export ZSH=$HOME/.oh-my-zsh
 export APT_CONFIG=~/apt_proxy.conf  # apt-get proxy
-export MOZ_NVIMRC=/root/GitHub/mydotfiles/neovim/win_neo_init.vim
+export MOZ_NVIMRC=~/GitHub/mydotfiles/neovim/win_neo_init.vim
 export MOZ_CONFIG=~/.config/nvim
-export MOZ_GITHUB=/root/GitHub
+export MOZ_GITHUB=~/GitHub
 export MOZ_PYTHON3=~/anaconda3/envs/new3/bin/python
 
 setopt no_nomatch
@@ -25,9 +25,9 @@ autoload -U compinit && compinit -u
 # POWERLEVEL9K_ANACONDA_LEFT_DELIMITER=""
 # POWERLEVEL9K_ANACONDA_RIGHT_DELIMITER=""
 
-# ZSH_THEME="theunraveler"
+ZSH_THEME="theunraveler"
 # ZSH_THEME="spaceship"
-ZSH_THEME="ys"
+# ZSH_THEME="ys"
 BULLETTRAIN_CONTEXT_BG=red
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -82,7 +82,7 @@ BULLETTRAIN_CONTEXT_BG=red
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git wd autojump fast-syntax-highlighting zsh-autosuggestions
+  git wd autojump zsh-syntax-highlighting zsh-autosuggestions
 )
 
 ZSH_DISABLE_COMPFIX=true
