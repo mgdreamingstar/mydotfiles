@@ -4,9 +4,9 @@
 export PATH="/mnt/d/Program Files/gifsicle-1.89.win64:$PATH"
 export ZSH=$HOME/.oh-my-zsh
 export APT_CONFIG=~/apt_proxy.conf  # apt-get proxy
-export MOZ_NVIMRC=~/GitHub/mydotfiles/neovim/win_neo_init.vim
+export MOZ_NVIMRC=/root/GitHub/mydotfiles/neovim/win_neo_init.vim
 export MOZ_CONFIG=~/.config/nvim
-export MOZ_GITHUB=~/GitHub
+export MOZ_GITHUB=/root/GitHub
 export MOZ_PYTHON3=~/anaconda3/envs/new3/bin/python
 
 setopt no_nomatch
@@ -26,8 +26,8 @@ autoload -U compinit && compinit -u
 # POWERLEVEL9K_ANACONDA_RIGHT_DELIMITER=""
 
 # ZSH_THEME="theunraveler"
-ZSH_THEME="spaceship"
-# ZSH_THEME="ys"
+# ZSH_THEME="spaceship"
+ZSH_THEME="ys"
 BULLETTRAIN_CONTEXT_BG=red
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -121,8 +121,16 @@ alias an="conda activate new3"
 alias de="conda deactivate"
 alias ju="jupyter notebook --allow-root"
 alias ip="ipython"
+alias clash="~/Downloads/clash-linux-amd64"
 
-proxyon() {
+proxyclash() {
+	export https_proxy=http://127.0.0.1:7890
+	export http_proxy=http://127.0.0.1:7891
+	export all_proxy=socks5://127.0.0.1:7891
+        echo "HTTP/HTTPS Proxy on"
+}
+
+proxyipad() {
 	export https_proxy=http://192.168.50.188:6152
 	export http_proxy=http://192.168.50.188:6153
 	export all_proxy=socks5://192.168.50.188:6153
@@ -142,14 +150,14 @@ proxyoff() {
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/root/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/ysdz/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/root/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/root/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/ysdz/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/ysdz/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/root/anaconda3/bin:$PATH"
+        export PATH="/home/ysdz/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -169,3 +177,8 @@ fe() (
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 )
 
+
+# for cuda
+export PATH=/usr/local/cuda-10.0/bin${PATH:+:$PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export CUDA_HOME=/usr/local/cuda-10.0
