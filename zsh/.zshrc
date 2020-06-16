@@ -124,8 +124,8 @@ alias ip="ipython"
 alias clash="~/Downloads/clash-linux-amd64"
 
 proxyclash() {
-	export http_proxy=http://127.0.0.1:7890
-	export https_proxy=http://127.0.0.1:7891
+	export https_proxy=http://127.0.0.1:7890
+	export http_proxy=http://127.0.0.1:7891
 	export all_proxy=socks5://127.0.0.1:7891
         echo "HTTP/HTTPS Proxy on"
 }
